@@ -2,7 +2,7 @@ package com.example.user.newapp;
 
 /**
  * dit is de main activity dat is de plek waar de programma draait wanneer het programma opstart
- * dit is dus de plek waar de gebruiker van de app mee te maken zal hebben
+ * dit is dus de plek waar de gebruiker van de app het eerste mee te maken zal hebben
  */
 // dit zijn de libarries die worden gebruikt
 import android.graphics.Color;
@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     // je declareert ze private zodat niet alle klassen erbij kunnen komen en aanpassingen kunnen  maken aan deze variabelen
     private EditText txtNumber ;
     private Button btnCalc;
-    private RatingBar ratingBar;
+    private WebView webView;
     private EditText txtOutput;
     private int number;
 
@@ -40,13 +42,14 @@ public class MainActivity extends AppCompatActivity {
          */
         txtNumber = (EditText) findViewById(R.id.txtNumber);
         btnCalc = (Button) findViewById(R.id.calcBtn);
-        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        webView = (WebView) findViewById(R.id.webViewTest);
         txtOutput = (EditText) findViewById(R.id.txtOutput);
         // zet de output text op disabled
         txtOutput.setEnabled(false);
 
         // roep de methode aan die wij hier beneden hebben gemaakt
         setRating();
+        setView();
     }
 
     /**
@@ -60,30 +63,28 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // get the number that is entered and parse it tho a number
+                // pak de nummer die is ingevoerd en zet het om van tekst naar nummer
                 number = Integer.parseInt(txtNumber.getText().toString());
-                // check if the input is equal to a number
+                // kijk of de ingevoerde een getal is dit wordt aangegeven met de ID 2
                 if (txtNumber.getInputType() != 2){
-                    txtOutput.setText("You need to enter a number!! ");
-                    System.exit(0);
+                    txtOutput.setText("You need to enter a number!! "); // als dat geen nummer is dan geeft het aan dat het een nummer moet zijn
+                    System.exit(0);// en hij sluit de app
                 }
-               // while the number is not bigger then 0 then show a message which tells you that you need to enter higher then 0
+               // als de nummer die ingevoerd is kleinder dan 0 is of gelijk is aan 0 dan wordt de tekst kleur rood
                 if (number < 0 || number == 0) {
                     txtOutput.setTextColor(Color.RED);
                     txtOutput.setText("You cant enter numbers lower than 0 or 0 ");
-                } else {
-                    System.out.println(txtNumber.getInputType());
-
-                    // create a for loop to loop through till it reaches the amount that the user filled in
+                } else { // als de nummer hoger is dan 0
+                    // Dan wordt er een for loop gemaakt die doorgaat tot de grootte bereikt is van de ingevoerde getal
                     for (int i = 1; i < number; i++) {
                         // output the text
                         txtOutput.setText("Hello From android " + i + " \n");
-                        // if the number is higher then 5 then make the text red
+                        // als de nummer hoger is dan 5 dan wordt de text kleur geel
                         if (number > 5) {
                             txtOutput.setTextColor(Color.YELLOW);
-                        }else if (number < 5){
-                            txtOutput.setText("you entered a lower number then 5");
-                            txtOutput.setTextColor(Color.BLUE);
+                        }else if (number < 5){// als de nummer lager is dan 5
+                            txtOutput.setText("you entered a lower number then 5"); // dan wordt de volgende tekst aan de outputText gezet
+                            txtOutput.setTextColor(Color.BLUE); // en de text kleur wordt dan blauw
                         }
                     }
                 }
@@ -91,5 +92,24 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
+    }// einde van de methode setRating()
+
+    /**
+     * hier maken we een methode die ervoor zorgt dat er een webpagina ingeladen wordt
+     * - we maken de methode weer private we hoeven de methode nergens aan te passen aan de methode
+     * - we gebruiken de variable die wij webView hebben genoemd en daar laden we een URL in
+     * - vervolgens willen we dat Javascript ook erin wordt geladen
+     * - dit doen we door WebSettings aan te zetten en daarna met een methode die in de klasse WebSettings is gemaakt aan te roepen en de boolean waarde op true
+     * te zetten
+     */
+    private void setView(){
+        // laad de url in de webview
+        webView.loadUrl("http://support.adform.com/documentation/build-with-html5-studio/introduction/");
+        // maak een nieuwe instantie aan van de WebSettings klasse
+        WebSettings webSettings = webView.getSettings();
+        // gebruikt de methode SetJavaScriptEnabled() op true
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setUserAgentString("");
+
     }
 }
