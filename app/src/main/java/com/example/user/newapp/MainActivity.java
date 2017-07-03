@@ -1,5 +1,10 @@
 package com.example.user.newapp;
 
+/**
+ * dit is de main activity dat is de plek waar de programma draait wanneer het programma opstart
+ * dit is dus de plek waar de gebruiker van de app mee te maken zal hebben
+ */
+// dit zijn de libarries die worden gebruikt
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +16,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    // this is where we create the variables
+    // dit zijn de variabelen die zijn aangemaakt
+    // je declareert ze private zodat niet alle klassen erbij kunnen komen en aanpassingen kunnen  maken aan deze variabelen
     private EditText txtNumber ;
     private Button btnCalc;
     private RatingBar ratingBar;
@@ -19,31 +25,37 @@ public class MainActivity extends AppCompatActivity {
     private int number;
 
     /**
-     * when the app starts we initialize all the variables
+     * De onCreate() methode AKA function is het punt wat er gebeurd wanneer de app is opgestart
      * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // wannneer er een android app is aangemaakt staan deze twee methodes er standaart in
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // get the id of the inputfields
+
+        /**
+         * Je klikt en sleept componenten in je app en die krijgen allemaal een unieke ID mee om te werken met deze componenten
+         * hebben we dus de ID's nodig
+         */
         txtNumber = (EditText) findViewById(R.id.txtNumber);
         btnCalc = (Button) findViewById(R.id.calcBtn);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         txtOutput = (EditText) findViewById(R.id.txtOutput);
+        // zet de output text op disabled
         txtOutput.setEnabled(false);
 
-        // we make a call to the method which we made
+        // roep de methode aan die wij hier beneden hebben gemaakt
         setRating();
     }
 
     /**
-     * method to get the number that the user inputted
-     * it checks whether there is a number that the user inputted or not
-     * if the number entered is not equal to a number then is it will return a number
+     * Maak een private methode dit betekent dat andere klassen niet bij deze methode kunnen komen
+     * void betekent dat er geen return value is
+     * er is ook geen parameter meegegeven
      */
     private void setRating(){
-// when there is a click on the btnCalc the following action gets activated
+// Je maakt hiermee een action op de knopje die boven op is aangemaakt
         btnCalc.setOnClickListener(new View.OnClickListener() {
 
             @Override
