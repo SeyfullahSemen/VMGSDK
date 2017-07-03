@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
                         // if the number is higher then 5 then make the text red
                         if (number > 5) {
                             txtOutput.setTextColor(Color.YELLOW);
+                        }else if (number < 5){
+                            txtOutput.setText("you entered a lower number then 5");
+                            txtOutput.setTextColor(Color.BLUE);
                         }
                     }
                 }
