@@ -1,4 +1,4 @@
-**Project omschrijving**
+**Project omschrijving // **
 In App Video (sdk / mraid)
 
 Om advertenties in een app te vertonen is een mobile sdk nodig.
