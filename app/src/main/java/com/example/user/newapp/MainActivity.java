@@ -17,12 +17,15 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+
+
 public class MainActivity extends AppCompatActivity {
     // dit zijn de variabelen die zijn aangemaakt
     // je declareert ze private zodat niet alle klassen erbij kunnen komen en aanpassingen kunnen  maken aan deze variabelen
     private EditText txtNumber ;
     private Button btnCalc;
     private WebView webView;
+    private TextView txtLorem;
     private EditText txtOutput;
     private int number;
 
@@ -41,9 +44,10 @@ public class MainActivity extends AppCompatActivity {
          * hebben we dus de ID's nodig
          */
         txtNumber = (EditText) findViewById(R.id.txtNumber);
-        btnCalc = (Button) findViewById(R.id.calcBtn);
-        webView = (WebView) findViewById(R.id.webViewTest);
-        txtOutput = (EditText) findViewById(R.id.txtOutput);
+        txtLorem = (TextView) findViewById(R.id.txtLorem); // lorem ipsum tekst
+        btnCalc = (Button) findViewById(R.id.calcBtn); // de button
+        webView = (WebView) findViewById(R.id.webViewTest); // de webview
+        txtOutput = (EditText) findViewById(R.id.txtOutput); // de output tekst
         // zet de output text op disabled
         txtOutput.setEnabled(false);
 
@@ -109,7 +113,10 @@ public class MainActivity extends AppCompatActivity {
         WebSettings webSettings = webView.getSettings();
         // gebruikt de methode SetJavaScriptEnabled() op true
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setUserAgentString("");
+
+
+
+
 
     }
 }
