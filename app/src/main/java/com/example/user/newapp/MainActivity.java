@@ -7,17 +7,21 @@ package com.example.user.newapp;
 // dit zijn de libarries die worden gebruikt
 
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MediaController;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.webkit.WebViewClient;
+import android.widget.VideoView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     //    private Button btnCalc;
     private WebView webView;
     private TextView txtLorem;
-    private int number;
+
 
     /**
      * De onCreate() methode AKA function is het punt wat er gebeurd wanneer de app is opgestart
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         txtLorem = (TextView) findViewById(R.id.txtLorem); // lorem ipsum tekst
         webView = (WebView) findViewById(R.id.webViewTest); // de webview
+
      // roep de methode aan die wij hier beneden hebben gemaakt
         setView();
     }
@@ -61,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
      * te zetten
      */
     private void setView() {
+
 //        // laad de url in de webview
 //        webView.loadUrl("http://support.adform.com/documentation/build-with-html5-studio/introduction/");
         String playVideo = "<!DOCTYPE html>\n" +
@@ -92,8 +98,17 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
 
 
-        webView.loadData(playVideo, "text/html", "utf-8");
 
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setPluginState(WebSettings.PluginState.ON);
+
+        webView.setWebViewClient(new WebViewClient() {
+            // autoplay when finished loading via javascript injection
+            public void onPageFinished(WebView view, String url) { webView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()"); }
+        });
+        webView.setWebChromeClient(new WebChromeClient());
+
+        webView.loadData(playVideo, "text/html", "utf-8");
 
     }
 }
