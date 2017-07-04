@@ -9,16 +9,25 @@
     tools:context="com.example.user.newapp.MainActivity"
     tools:menu="@android:color/background_light">
 
+    <Button
+        android:id="@+id/showWebView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="show web view"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/webViewTest"
+        android:layout_marginStart="13dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/webViewTest" />
+
     <WebView
         android:id="@+id/webViewTest"
         android:layout_width="0dp"
-        android:layout_height="270dp"
+        android:layout_height="225dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
-        android:layout_marginStart="3dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintBottom_creator="1"
