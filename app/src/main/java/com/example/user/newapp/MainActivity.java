@@ -8,6 +8,7 @@ package com.example.user.newapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private WebView webView;
     private TextView txtLorem;
     private Button showWebView;
+    private Button closeWebView;
 
 
     /**
@@ -49,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
         txtLorem = (TextView) findViewById(R.id.txtLorem); // lorem ipsum tekst
         webView = (WebView) findViewById(R.id.webViewTest); // de webview
         showWebView = (Button) findViewById(R.id.showWebView);// de button om de webview te laten zien
+        closeWebView = (Button) findViewById(R.id.closeWebView);
+        //TODO: zorgen voor een Hover over event voor het open klappen van de webview
+//        webView.setOnHoverListener(new View.OnHoverListener() {
+//            @Override
+//            public boolean onHover(View v, MotionEvent event) {
+//                return false;
+//            }
+//        });
+
         /**
          * hier beneden hebben we een event voor de button die ervoor zorgt dat de webview open gaat
          */
@@ -56,7 +67,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 webView.setVisibility(View.VISIBLE);
+                closeWebView.setVisibility(View.VISIBLE);
                 setView();// hier roepen wij de methode aan die hier beneden is gemaakt
+            }
+        });
+        /**
+         * hier beneden hebben wij de event die ervoor zorgt dat de webview weer dicht gaat
+         */
+        closeWebView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webView.setVisibility(View.INVISIBLE);
+                closeWebView.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -115,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setPluginState(WebSettings.PluginState.ON);
+        //TODO: ervoor zorgen dat de video niet meer afspeelt nadat de webview is gesloten
         // maak een nieuwe instantie van de webviewclient
         webView.setWebViewClient(new WebViewClient() {
 
@@ -128,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 webView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()");
             }
         });
+        
         // maak een nieuwe instantie van de chrome webview client
         webView.setWebChromeClient(new WebChromeClient());
         // laad de datat in in de webview
