@@ -9,96 +9,50 @@
     tools:context="com.example.user.newapp.MainActivity"
     tools:menu="@android:color/background_light">
 
-    <Button
-        android:id="@+id/calcBtn"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="3dp"
-        android:background="@android:color/holo_blue_bright"
-        android:text="number"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintTop_creator="1" />
-
-    <EditText
-        android:id="@+id/txtNumber"
-        android:layout_width="97dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/txtOutput"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
-    <EditText
-        android:id="@+id/txtOutput"
-        android:layout_width="113dp"
-        android:layout_height="26dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="51dp"
-        android:editable="false"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:editable="false"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
-    <TextView
-        android:id="@+id/txtLorem"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="6dp"
-        android:background="@android:color/background_light"
-        android:text="  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed imperdiet neque. Maecenas a tellus nunc. Curabitur ut hendrerit nulla, at vulputate lorem. Nullam eget libero venenatis, bibendum diam gravida, accumsan tellus. Pellentesque vel mi blandit, pretium nulla ac, accumsan nunc. Cras accumsan malesuada sem. Suspendisse ligula libero, dapibus congue lobortis quis, gravida et tortor. Donec sed venenatis arcu, ut posuere dolor. Donec egestas sed mi dignissim laoreet. Donec sed malesuada sem. Aenean mi leo, hendrerit in ligula eu, ornare varius ante. Ut semper pellentesque pharetra.  Cras sapien diam, varius eget tellus in, tincidunt tempus eros. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam ultrices nisl nec arcu venenatis, non hendrerit arcu fringilla. Morbi scelerisque lectus vel quam volutpat, sed semper tellus lobortis. Integer accumsan orci id fermentum tristique. Nullam erat turpis, vehicula sed aliquet nec, faucibus nec arcu. Donec sed dapibus leo. Ut suscipit augue vitae odio porta ullamcorper. Duis est risus, pellentesque vel metus quis, blandit malesuada tellus. Morbi auctor malesuada ligula sed vestibulum. Duis tincidunt sem sed dictum rhoncus. Aenean condimentum sem ac magna fringilla, ac mollis metus egestas. Duis non risus non ligula ultricies efficitur ac non sem. Fusce dignissim sollicitudin erat, nec tempor mauris convallis sed.  Integer tellus ligula, consectetur et tortor eget, molestie condimentum est. Sed neque risus, aliquet vitae arcu vitae, vestibulum vestibulum dolor. Vivamus volutpat venenatis bibendum. Cras nec erat libero. Ut odio massa, lacinia id pharetra hendrerit, accumsan id arcu. Donec mollis est id neque pharetra maximus sit amet id ipsum. Aliquam erat volutpat. Phasellus vel fringilla mi, eu vulputate velit. In mattis nec neque nec feugiat.  Duis ac est eu felis ultricies blandit. Suspendisse quis nunc id ligula rhoncus venenatis. Mauris in ullamcorper mi, nec vulputate tellus. Nunc mollis imperdiet enim a pretium. Proin pharetra erat felis, vel sodales eros elementum vel. Maecenas molestie interdum elementum. Aenean congue purus ut varius suscipit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus bibendum, nulla sed aliquet dignissim, libero magna pellentesque sem, quis vulputate eros tellus id nisl. Aenean commodo, felis nec feugiat molestie, nulla ipsum venenatis eros, at vestibulum sem nibh in odio. Etiam pellentesque ornare massa, id malesuada lectus finibus ac. Donec pellentesque blandit metus vitae congue. Quisque at bibendum mi. Aliquam nisl metus, laoreet ut volutpat eget, viverra vitae erat.  Nunc libero mi, facilisis eget euismod eu, accumsan eget magna. Aliquam a suscipit diam. Fusce ut pretium sem, ac condimentum metus. Quisque sed suscipit leo. Maecenas sit amet mollis leo. Cras ut auctor nisl. Suspendisse pretium, felis ut aliquet pellentesque, diam velit interdum urna, sit amet dapibus turpis nisi sit amet orci. Quisque id egestas ante. Nunc ac eros ultrices tellus volutpat feugiat in sed est. Cras varius sed turpis et gravida. Curabitur eget mauris et leo placerat ornare non in velit. Cras posuere at nulla vitae tincidunt. Nunc efficitur ipsum ac nisl tincidunt, in aliquam leo volutpat. In eu scelerisque velit. "
-        app:layout_constraintBottom_toTopOf="@+id/webViewTest"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtOutput"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
     <WebView
         android:id="@+id/webViewTest"
         android:layout_width="0dp"
-        android:layout_height="235dp"
+        android:layout_height="270dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="3dp"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
         android:layout_marginStart="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        tools:layout_constraintRight_creator="1">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/dialog_holo_light_frame"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        tools:layout_constraintLeft_creator="1"
+    </WebView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_weight="0.36"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/txtOutput" />
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1">
+
+        <TextView
+            android:id="@+id/txtLorem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light"
+            android:text="  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed imperdiet neque. Maecenas a tellus nunc. Curabitur ut hendrerit nulla, at vulputate lorem. Nullam eget libero venenatis, bibendum diam gravida, accumsan tellus. Pellentesque vel mi blandit, pretium nulla ac, accumsan nunc. Cras accumsan malesuada sem. Suspendisse ligula libero, dapibus congue lobortis quis, gravida et tortor. Donec sed venenatis arcu, ut posuere dolor. Donec egestas sed mi dignissim laoreet. Donec sed malesuada sem. Aenean mi leo, hendrerit in ligula eu, ornare varius ante. Ut semper pellentesque pharetra.  Cras sapien diam, varius eget tellus in, tincidunt tempus eros. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam ultrices nisl nec arcu venenatis, non hendrerit arcu fringilla. Morbi scelerisque lectus vel quam volutpat, sed semper tellus lobortis. Integer accumsan orci id fermentum tristique. Nullam erat turpis, vehicula sed aliquet nec, faucibus nec arcu. Donec sed dapibus leo. Ut suscipit augue vitae odio porta ullamcorper. Duis est risus, pellentesque vel metus quis, blandit malesuada tellus. Morbi auctor malesuada ligula sed vestibulum. Duis tincidunt sem sed dictum rhoncus. Aenean condimentum sem ac magna fringilla, ac mollis metus egestas. Duis non risus non ligula ultricies efficitur ac non sem. Fusce dignissim sollicitudin erat, nec tempor mauris convallis sed.  Integer tellus ligula, consectetur et tortor eget, molestie condimentum est. Sed neque risus, aliquet vitae arcu vitae, vestibulum vestibulum dolor. Vivamus volutpat venenatis bibendum. Cras nec erat libero. Ut odio massa, lacinia id pharetra hendrerit, accumsan id arcu. Donec mollis est id neque pharetra maximus sit amet id ipsum. Aliquam erat volutpat. Phasellus vel fringilla mi, eu vulputate velit. In mattis nec neque nec feugiat.  Duis ac est eu felis ultricies blandit. Suspendisse quis nunc id ligula rhoncus venenatis. Mauris in ullamcorper mi, nec vulputate tellus. Nunc mollis imperdiet enim a pretium. Proin pharetra erat felis, vel sodales eros elementum vel. Maecenas molestie interdum elementum. Aenean congue purus ut varius suscipit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus bibendum, nulla sed aliquet dignissim, libero magna pellentesque sem, quis vulputate eros tellus id nisl. Aenean commodo, felis nec feugiat molestie, nulla ipsum venenatis eros, at vestibulum sem nibh in odio. Etiam pellentesque ornare massa, id malesuada lectus finibus ac. Donec pellentesque blandit metus vitae congue. Quisque at bibendum mi. Aliquam nisl metus, laoreet ut volutpat eget, viverra vitae erat.  Nunc libero mi, facilisis eget euismod eu, accumsan eget magna. Aliquam a suscipit diam. Fusce ut pretium sem, ac condimentum metus. Quisque sed suscipit leo. Maecenas sit amet mollis leo. Cras ut auctor nisl. Suspendisse pretium, felis ut aliquet pellentesque, diam velit interdum urna, sit amet dapibus turpis nisi sit amet orci. Quisque id egestas ante. Nunc ac eros ultrices tellus volutpat feugiat in sed est. Cras varius sed turpis et gravida. Curabitur eget mauris et leo placerat ornare non in velit. Cras posuere at nulla vitae tincidunt. Nunc efficitur ipsum ac nisl tincidunt, in aliquam leo volutpat. In eu scelerisque velit. "
+            app:layout_constraintBottom_toTopOf="@+id/webViewTest"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1" />
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
