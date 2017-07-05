@@ -53,12 +53,23 @@ public class MainActivity extends AppCompatActivity {
         showWebView = (Button) findViewById(R.id.showWebView);// de button om de webview te laten zien
         closeWebView = (Button) findViewById(R.id.closeWebView);
         //TODO: zorgen voor een Hover over event voor het open klappen van de webview
-//        webView.setOnHoverListener(new View.OnHoverListener() {
-//            @Override
-//            public boolean onHover(View v, MotionEvent event) {
-//                return false;
-//            }
-//        });
+        webView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_HOVER_ENTER) {
+                    webView.setVisibility(View.VISIBLE);
+                    closeWebView.setVisibility(View.VISIBLE);
+                    setView();// hier roepen wij de methode aan die hier beneden is gemaakt
+                    return true;
+                }
+                if (event.getAction() == MotionEvent.ACTION_HOVER_EXIT) {
+                    webView.setVisibility(View.INVISIBLE);
+                    closeWebView.setVisibility(View.INVISIBLE);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         /**
          * hier beneden hebben we een event voor de button die ervoor zorgt dat de webview open gaat
@@ -67,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 webView.setVisibility(View.VISIBLE);
+                webView.setEnabled(true);
                 closeWebView.setVisibility(View.VISIBLE);
                 setView();// hier roepen wij de methode aan die hier beneden is gemaakt
             }
@@ -79,11 +91,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 webView.setVisibility(View.INVISIBLE);
                 closeWebView.setVisibility(View.INVISIBLE);
+                webView.setEnabled(false);
             }
         });
 
 
+    }// end onCreate()
 
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
 
@@ -112,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 "<body>\n" +
                 "  <div>\n" +
                 "    <video id='video' controls preload='none'\n" +
-                "      poster=\"https://media.w3.org/2010/05/sintel/poster.png\" width=\"320\" height=\"240\" autoplay>\n" +
+                "      poster=\"https://media.w3.org/2010/05/sintel/poster.png\" width=\"354\" height=\"240\" autoplay>\n" +
                 "\n" +
                 "      <source id='mp4'\n" +
                 "        src=\"https://media.w3.org/2010/05/sintel/trailer.mp4\"\n" +
@@ -151,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 webView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()");
             }
         });
-        
+
         // maak een nieuwe instantie van de chrome webview client
         webView.setWebChromeClient(new WebChromeClient());
         // laad de datat in in de webview
