@@ -6,8 +6,10 @@ package com.example.user.newapp;
  */
 // dit zijn de libarries die worden gebruikt
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -51,25 +53,10 @@ public class MainActivity extends AppCompatActivity {
         txtLorem = (TextView) findViewById(R.id.txtLorem); // lorem ipsum tekst
         webView = (WebView) findViewById(R.id.webViewTest); // de webview
         showWebView = (Button) findViewById(R.id.showWebView);// de button om de webview te laten zien
-        closeWebView = (Button) findViewById(R.id.closeWebView);
+        closeWebView = (Button) findViewById(R.id.closeWebView);// de button om de webview af te sluiten
+
         //TODO: zorgen voor een Hover over event voor het open klappen van de webview
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_HOVER_ENTER) {
-                    webView.setVisibility(View.VISIBLE);
-                    closeWebView.setVisibility(View.VISIBLE);
-                    setView();// hier roepen wij de methode aan die hier beneden is gemaakt
-                    return true;
-                }
-                if (event.getAction() == MotionEvent.ACTION_HOVER_EXIT) {
-                    webView.setVisibility(View.INVISIBLE);
-                    closeWebView.setVisibility(View.INVISIBLE);
-                    return true;
-                }
-                return false;
-            }
-        });
+
 
         /**
          * hier beneden hebben we een event voor de button die ervoor zorgt dat de webview open gaat
@@ -78,7 +65,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 webView.setVisibility(View.VISIBLE);
-                webView.setEnabled(true);
+                // de webview wordt weer geactiveerd waardoor het filmpje weer afspeelt
+                webView.setActivated(true);
+                // de video wordt hervat met geluid en al
+                webView.onResume();
                 closeWebView.setVisibility(View.VISIBLE);
                 setView();// hier roepen wij de methode aan die hier beneden is gemaakt
             }
@@ -90,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 webView.setVisibility(View.INVISIBLE);
+                webView.onPause();// zorgt ervoor dat de video gaat pauzeren
+                // de webview is hierdoor niet meer actief dus het filmpje speelt zich niet meer af
+                webView.setActivated(false);
                 closeWebView.setVisibility(View.INVISIBLE);
                 webView.setEnabled(false);
             }
@@ -129,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 "<body>\n" +
                 "  <div>\n" +
                 "    <video id='video' controls preload='none'\n" +
-                "      poster=\"https://media.w3.org/2010/05/sintel/poster.png\" width=\"354\" height=\"240\" autoplay>\n" +
+                "      poster=\"https://media.w3.org/2010/05/sintel/poster.png\" width=\"354\" height=\"240\">\n" +
                 "\n" +
                 "      <source id='mp4'\n" +
                 "        src=\"https://media.w3.org/2010/05/sintel/trailer.mp4\"\n" +
@@ -154,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setPluginState(WebSettings.PluginState.ON);
-        //TODO: ervoor zorgen dat de video niet meer afspeelt nadat de webview is gesloten
+       
         // maak een nieuwe instantie van de webviewclient
         webView.setWebViewClient(new WebViewClient() {
 
@@ -166,13 +159,19 @@ public class MainActivity extends AppCompatActivity {
              */
             public void onPageFinished(WebView view, String url) {
                 webView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()");
+
             }
+
         });
 
         // maak een nieuwe instantie van de chrome webview client
-        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebChromeClient(new WebChromeClient() {
+
+        });
         // laad de datat in in de webview
         webView.loadData(playVideo, "text/html", "utf-8");
 
     }
+
+
 }
