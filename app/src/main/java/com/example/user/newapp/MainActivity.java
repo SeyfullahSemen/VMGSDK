@@ -6,17 +6,21 @@ package com.example.user.newapp;
  */
 // dit zijn de libarries die worden gebruikt
 
-import android.graphics.Color;
+
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+
 import android.widget.Button;
 import android.widget.TextView;
 import android.webkit.WebViewClient;
@@ -34,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtLorem;
     private Button showWebView;
     private Button closeWebView;
+    private DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+
 
 
     /**
@@ -47,15 +54,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);// dit zorgt voor het inladen van de scherm
 
+
         /**
          * Je klikt en sleept componenten in je app en die krijgen allemaal een unieke ID mee om te werken met deze componenten
          * hebben we dus de ID's nodig
          */
 
+
         txtLorem = (TextView) findViewById(R.id.txtLorem); // lorem ipsum tekst
         webView = (WebView) findViewById(R.id.webViewTest); // de webview
         showWebView = (Button) findViewById(R.id.showWebView);// de button om de webview te laten zien
         closeWebView = (Button) findViewById(R.id.closeWebView);// de button om de webview af te sluiten
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        //setSupportActionBar(toolbar);
+        getSupportActionBar();
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
 
         //TODO: zorgen voor een Hover over event voor het open klappen van de webview
 
@@ -94,34 +111,12 @@ public class MainActivity extends AppCompatActivity {
     }// end onCreate()
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        actionBarDrawerToggle.syncState();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * hier maken we een methode die ervoor zorgt dat er een webpagina ingeladen wordt
