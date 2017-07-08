@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
         closeWebView = (Button) findViewById(R.id.closeWebView);// de button om de webview af te sluiten
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        //setSupportActionBar(toolbar);
-        getSupportActionBar();
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -112,11 +112,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
         actionBarDrawerToggle.syncState();
+        super.onPostCreate(savedInstanceState, persistentState);
+
     }
 
+    /**
+     *deze methode zorgt ervoor dat de menu wordt gevuld met de items die wij erin hebben gezet
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.drawer_menu,menu);
+        return super.onCreateOptionsMenu(menu);
 
+    }
 
     /**
      * hier maken we een methode die ervoor zorgt dat er een webpagina ingeladen wordt
@@ -139,19 +150,21 @@ public class MainActivity extends AppCompatActivity {
         String playVideo = "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
                 "<head>\n" +
+                "\t\n" +
                 "</head>\n" +
                 "<body>\n" +
-                "  <div>\n" +
+                "<article style=\"\">\n" +
+                "\n" +
+                "  <div id=\"container-media-player\">\n" +
                 "    <video id='video' controls preload='none'\n" +
-                "      poster=\"https://media.w3.org/2010/05/sintel/poster.png\" width=\"354\" height=\"240\">\n" +
+                "      poster=\"https://media.w3.org/2010/05/sintel/poster.png\" width=\"320\" height=\"240\" padding:50px; top:50px;  left:600px;  position: fixed; autoplay>\n" +
                 "\n" +
                 "      <source id='mp4'\n" +
                 "        src=\"https://media.w3.org/2010/05/sintel/trailer.mp4\"\n" +
                 "        type='video/mp4'>\n" +
-                "      \n" +
-                "\n" +
                 "    </video>\n" +
-                "    \n" +
+                "    <div>\n" +
+                "    </article>\n" +
                 "\n" +
                 "     </body>\n" +
                 "</html>";//einde van de HTML code
@@ -167,7 +180,8 @@ public class MainActivity extends AppCompatActivity {
         // gebruikt de methode SetJavaScriptEnabled() op true
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setPluginState(WebSettings.PluginState.ON);
+
+        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
 
         // maak een nieuwe instantie van de webviewclient
         webView.setWebViewClient(new WebViewClient() {
