@@ -7,15 +7,20 @@ package com.example.user.newapp;
 // dit zijn de libarries die worden gebruikt
 
 
+import android.content.ClipData;
+import android.content.Intent;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -34,13 +39,17 @@ public class MainActivity extends AppCompatActivity {
      * de reden dat we ze private maken is zodat andere klassen de waarde van deze UI components niet kunnen aanpassen
      * het zorgt voor encapsulatie
      */
+    public static final String ABOUT_PAGE = "com.example.user.AboutVMG";
+    private MenuItem home;
     private WebView webView;
     private TextView txtLorem;
     private Button showWebView;
     private Button closeWebView;
     private DrawerLayout drawerLayout;
-    ActionBarDrawerToggle actionBarDrawerToggle;
-
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private Toolbar toolbar;
+    private ConstraintLayout mainLayout;
+    private NestedScrollView scroll;
 
 
     /**
@@ -65,17 +74,40 @@ public class MainActivity extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webViewTest); // de webview
         showWebView = (Button) findViewById(R.id.showWebView);// de button om de webview te laten zien
         closeWebView = (Button) findViewById(R.id.closeWebView);// de button om de webview af te sluiten
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);// de toolbar die boven op komt
+        mainLayout = (ConstraintLayout) findViewById(R.id.mainLayout);// de layout die onder andere de scrollview in zich heeft
+        scroll = (NestedScrollView) findViewById(R.id.scroll);// de scroll view waar de tekst in staat
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        setSupportActionBar(toolbar);// dit zorgt ervoor dat de toolbar tevoorschijn komt
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);// op de toolbar komt er een soort pijltje zodat je het menu kan open klappen
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);// dit is de drawer menu
+        /**
+         * dit is het knopje -> die ervoor zorgt dat de drawer tevoorschijn komt
+         */
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);// hier voegen we de event aan het knopje toe
 
 
         //TODO: zorgen voor een Hover over event voor het open klappen van de webview
 
+//        scroll.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_UP) {
+//
+//                        webView.setVisibility(View.VISIBLE);
+//                        // de webview wordt weer geactiveerd waardoor het filmpje weer afspeelt
+//                        webView.setActivated(true);
+//                        // de video wordt hervat met geluid en al
+//                        webView.onResume();
+//                        closeWebView.setVisibility(View.VISIBLE);
+//                        setView();// hier roepen wij de methode aan die hier beneden is gemaakt
+//
+//                }
+//                return false;
+//            }
+//        });
 
         /**
          * hier beneden hebben we een event voor de button die ervoor zorgt dat de webview open gaat
@@ -118,14 +150,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *deze methode zorgt ervoor dat de menu wordt gevuld met de items die wij erin hebben gezet
+     * deze methode zorgt ervoor dat de menu wordt gevuld met de items die wij erin hebben gezet
+     *
      * @param menu
      * @return
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.drawer_menu,menu);
+        getMenuInflater().inflate(R.menu.drawer_menu, menu);
         return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                Intent myIntent = new Intent(this,AboutVMG.class);
+                startActivity(myIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+
+
+        }
+
 
     }
 
@@ -207,6 +257,11 @@ public class MainActivity extends AppCompatActivity {
         webView.loadData(playVideo, "text/html", "utf-8");
 
     }
+
+//    public void open_About_Page(View view) {
+//        Intent intent = new Intent(this, AboutVMG.class);
+//        startActivity(intent);
+//    }
 
 
 }
