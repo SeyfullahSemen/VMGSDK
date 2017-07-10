@@ -7,12 +7,9 @@ package com.example.user.newapp;
 // dit zijn de libarries die worden gebruikt
 
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -23,7 +20,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -31,7 +27,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.webkit.WebViewClient;
 
@@ -129,15 +124,18 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
-                Intent myIntent = new Intent(this, AboutVMG.class);
-                startActivity(myIntent);
-                return true;
+                Intent aboutIntent = new Intent(this, AboutVMG.class);
+                startActivity(aboutIntent);
+                break;
+            case R.id.listView:
+                Intent listViewIntent = new Intent (this,ListView_page.class);
+                startActivity(listViewIntent);
             default:
                 return super.onOptionsItemSelected(item);
 
 
         }
-
+    return false;
 
     }
 
@@ -166,6 +164,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.about:
                         Intent myIntent = new Intent(MainActivity.this, AboutVMG.class);
                         startActivity(myIntent);
+                        break;
+                    case R.id.listView:
+                        Intent ListViewIntent = new Intent (MainActivity.this,ListView_page.class);
+                        startActivity(ListViewIntent);
                         break;
 
                 }

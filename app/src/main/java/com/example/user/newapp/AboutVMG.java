@@ -59,6 +59,9 @@ public class AboutVMG extends AppCompatActivity {
                 Intent myIntent = new Intent(AboutVMG.this, MainActivity.class);
                 startActivity(myIntent);
                 break;
+            case R.id.listView:
+                Intent ListViewIntent = new Intent (this, ListView_page.class);
+                startActivity(ListViewIntent);
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -109,6 +112,10 @@ public class AboutVMG extends AppCompatActivity {
                     case R.id.home:
                         Intent myIntent = new Intent(AboutVMG.this, MainActivity.class);
                         startActivity(myIntent);
+                        break;
+                    case R.id.listView:
+                        Intent ListViewIntent = new Intent (AboutVMG.this, ListView_page.class);
+                        startActivity(ListViewIntent);
                         break;
 
                 }
