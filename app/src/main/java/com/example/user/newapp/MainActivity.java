@@ -20,15 +20,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.webkit.WebViewClient;
 
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
      * de reden dat we ze private maken is zodat andere klassen de waarde van deze UI components niet kunnen aanpassen
      * het zorgt voor encapsulatie
      */
-    public static final String ABOUT_PAGE = "com.example.user.AboutVMG";
+
     private MenuItem home;
     private WebView webView;
     private TextView txtLorem;
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar toolbar;
-    private ConstraintLayout mainLayout;
+
     private NestedScrollView scroll;
     private NavigationView navigation_view;
 
@@ -78,70 +81,15 @@ public class MainActivity extends AppCompatActivity {
         showWebView = (Button) findViewById(R.id.showWebView);// de button om de webview te laten zien
         closeWebView = (Button) findViewById(R.id.closeWebView);// de button om de webview af te sluiten
         toolbar = (Toolbar) findViewById(R.id.toolbar);// de toolbar die boven op komt
-        mainLayout = (ConstraintLayout) findViewById(R.id.mainLayout);// de layout die onder andere de scrollview in zich heeft
+
         scroll = (NestedScrollView) findViewById(R.id.scroll);// de scroll view waar de tekst in staat
         navigation_view = (NavigationView) findViewById(R.id.navigation_view);
 
 
         setSupportActionBar(toolbar);// dit zorgt ervoor dat de toolbar tevoorschijn komt
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);// op de toolbar komt er een soort pijltje zodat je het menu kan open klappen
-//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);// dit is de drawer menu
-//        /**
-//         * dit is het knopje -> die ervoor zorgt dat de drawer tevoorschijn komt
-//         */
-//        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
-//        drawerLayout.addDrawerListener(actionBarDrawerToggle);// hier voegen we de event aan het knopje toe
+
         makeDrawerMenuClickable();
-
-        //TODO: zorgen voor een Hover over event voor het open klappen van de webview
-
-//        scroll.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (event.getAction() == MotionEvent.ACTION_UP) {
-//
-//                        webView.setVisibility(View.VISIBLE);
-//                        // de webview wordt weer geactiveerd waardoor het filmpje weer afspeelt
-//                        webView.setActivated(true);
-//                        // de video wordt hervat met geluid en al
-//                        webView.onResume();
-//                        closeWebView.setVisibility(View.VISIBLE);
-//                        setView();// hier roepen wij de methode aan die hier beneden is gemaakt
-//
-//                }
-//                return false;
-//            }
-//        });
-
-        /**
-         * hier beneden hebben we een event voor de button die ervoor zorgt dat de webview open gaat
-         */
-        showWebView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                webView.setVisibility(View.VISIBLE);
-                // de webview wordt weer geactiveerd waardoor het filmpje weer afspeelt
-                webView.setActivated(true);
-                // de video wordt hervat met geluid en al
-                webView.onResume();
-                closeWebView.setVisibility(View.VISIBLE);
-                setView();// hier roepen wij de methode aan die hier beneden is gemaakt
-            }
-        });
-        /**
-         * hier beneden hebben wij de event die ervoor zorgt dat de webview weer dicht gaat
-         */
-        closeWebView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                webView.setVisibility(View.INVISIBLE);
-                webView.onPause();// zorgt ervoor dat de video gaat pauzeren
-                // de webview is hierdoor niet meer actief dus het filmpje speelt zich niet meer af
-                webView.setActivated(false);
-                closeWebView.setVisibility(View.INVISIBLE);
-                webView.setEnabled(false);
-            }
-        });
+        seeWebView();
 
 
     }// end onCreate()
@@ -173,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
      * - als parameter komt er een item in te staan
      * - daarna vragen we aan de computer om de id op te halen van de gekozen item
      * - hierna gaat de computer aan de hand van de id bepalen naar welke pagina hij moet gaan
+     *
      * @param item
      * @return
      */
@@ -180,12 +129,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
-                Intent myIntent = new Intent(this,AboutVMG.class);
+                Intent myIntent = new Intent(this, AboutVMG.class);
                 startActivity(myIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
 
 
         }
@@ -213,10 +161,10 @@ public class MainActivity extends AppCompatActivity {
         navigation_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                int id = menuItem.getItemId();
-                switch (id) {
+
+                switch (menuItem.getItemId()) {
                     case R.id.about:
-                        Intent myIntent = new Intent(MainActivity.this,AboutVMG.class);
+                        Intent myIntent = new Intent(MainActivity.this, AboutVMG.class);
                         startActivity(myIntent);
                         break;
 
@@ -305,6 +253,58 @@ public class MainActivity extends AppCompatActivity {
         webView.loadData(playVideo, "text/html", "utf-8");
 
     }
+
+    /**
+     * dit is een methode die ervoor zorgt dat de webview weer openklapt en weer dicht gaat
+     * het zorgt er ook voor dat de video tussen de tekst door komt
+     */
+    private void seeWebView() {
+        int dimensionInPixel = 233;// we maken hier een variable aan die de pixels aangeeft
+        webView = (WebView) findViewById(R.id.webViewTest); // we pakken hier de ID van de webview zodat we die kunnen gebruiken
+        scroll = (NestedScrollView) findViewById(R.id.scroll);// we pakken hier de ID van de scrollview waar de webview in zit
+        // de pixels die we hierboven hadden aangemaakt converteren we naar db dit zorgt ervoor dat de video op elke telefoon hetzelfde is
+        final int dimensionInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dimensionInPixel, getResources().getDisplayMetrics());
+
+        // vervolgens maken we listeners aan voor de knopjes die ervoor zorgen dat de webview gezien en weer gesloten kan worden
+        showWebView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webView.getLayoutParams().height = dimensionInDp; // dit bepaalde de hoogte van de video in dp
+                webView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT; // en deze voor de breedte van de video
+                webView.requestLayout();// deze methode moet je opvragen anders werkt het niet
+                webView.setVisibility(View.VISIBLE); // maak de webview eer zichtbaar
+                // de webview wordt weer geactiveerd waardoor het filmpje weer afspeelt
+                webView.setActivated(true);
+                // de video wordt hervat met geluid en al
+                webView.onResume();
+                closeWebView.setVisibility(View.VISIBLE);
+                setView();// hier roepen wij de methode aan die hier beneden is gemaakt
+            }
+        });
+        /**
+         * hier beneden hebben wij de event die ervoor zorgt dat de webview weer dicht gaat
+         */
+        closeWebView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * als de webview wordt gesloten dan zorgen we ervoor dat de hoogte en de breedte van de webview weer op 0 komen te staan
+                 */
+                webView.getLayoutParams().height = 0;
+                webView.getLayoutParams().width = 0;
+                webView.requestLayout();
+                webView.setVisibility(View.INVISIBLE);
+                webView.onPause();// zorgt ervoor dat de video gaat pauzeren
+                // de webview is hierdoor niet meer actief dus het filmpje speelt zich niet meer af
+                webView.setActivated(false);
+                closeWebView.setVisibility(View.INVISIBLE);
+                webView.setEnabled(false);
+            }
+        });
+
+
+    }
+
 
 /**
  * dit is een niet gebruikte methode, maar deze methode kun je gebruken om met een button

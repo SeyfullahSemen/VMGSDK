@@ -2,5 +2,62 @@
     <string name="app_name">Video Media Group</string>
     <string name="drawer_open">drawer open</string>
     <string name="drawer_close">drawer close</string>
+    <string name="video_media_group_text">As TV advertisers are shifting budgets online, video advertising will only grow.
+        But advertisers are confronted with a growing lack of visible, measurable, engaging and brand safe quality video inventory.
+        Available on trusted and transparent publisher websites only. Dedicated to help overcome this situation,
+        VMG offers publishers, broadcasters, ad networks and advertisers highly innovative, reliable video advertisement formats.
+        Plus a comprehensive high end monetization platform.</string>
+
+    <string name="wat_hebben_wij_te_bieden">
+         VIDEO STACK AND DASHBOARD
+
+    We offer a modular video platform created for publishers, broadcasters and ad networks. Enabling to manage both your supply and demand through an intuitive designed user interface. Or connected to your own ad server and reporting tools by API.
+
+    The VMG unified ad server and open RTB based SSP are connected with all major video demand platforms. It allows for setting up and managing VAST and VPAID tag-based and full programmatic video campaigning. Also allowing publishers and networks to create their own PMP’s.
+
+    Monetization and campaign engagement and performance data generated come real time due to the AWS back-end infrastructure. All in one modular platform.<br/><br/><br/>
+
+        INPAGEVIDEO
+
+
+    The most powerful and successful native outstream video format available worldwide to really engage with your audiences.
+
+    Global acceptance by publishers and advertisers alike, due to the elegant and natural way InPageVideo commercials unfold and position themselves within the heart of article content.
+    InPageVideo is both user friendly and highly impactful. Impactful because the video ad plays in a large format in the heart of publisher’s website content. User friendly because the viewer can always choose to watch the video or not by scrolling or clicking away. Sound is by default user initiated (by mouse over or tap). InPageVideo campaigns invariably show good VTR and CTR performance across all screens.
+
+    Available on desktop, mobile web and in-app, all common devices and in various formats like horizontal, vertical and rectangular.
+
+
+    </string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sapien in ligula aliquet consectetur. Fusce felis felis,
+        cursus ut felis sit amet, interdum porttitor est. Morbi lacinia imperdiet erat, sed ullamcorper libero dictum non.
+        Aenean scelerisque accumsan aliquam. In et mauris in purus volutpat ullamcorper eget nec purus. Morbi pulvinar, metus et tempus malesuada,
+        sapien urna varius quam, vitae convallis massa nibh eu ante. Phasellus ornare diam risus, vitae finibus lacus ullamcorper eget. Sed nec mi nisi.
+        Suspendisse viverra urna tortor, in lobortis risus tincidunt eget. Nunc accumsan nec arcu a vehicula.
+
+Duis pretium lorem in ante aliquam, quis tincidunt lectus elementum. Proin et quam nec nulla viverra rutrum a vel lectus.
+        Aliquam sollicitudin finibus magna, at fringilla mi sodales non. Vestibulum cursus tortor a sem mattis, eu dapibus mauris volutpat.
+        Maecenas posuere elit sit amet metus gravida finibus. Vestibulum quis dapibus nisi, vel euismod lectus. Aliquam non nunc tempus, gravida justo eu,
+        ultrices dui. Sed interdum, nunc quis dignissim viverra, lectus lectus vulputate diam, volutpat semper magna nunc et massa. Etiam sagittis nunc tellus,
+        et finibus elit blandit id. In pretium egestas ipsum, ut mattis mauris viverra ac. Sed efficitur eros quam, eget maximus sapien malesuada quis.
+        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris et mattis elit, sed ultricies quam.
+        Phasellus aliquam eget tortor at efficitur. Praesent iaculis, lectus vel rhoncus placerat, metus turpis accumsan ligula, a rutrum justo nisi vitae dolor.
+
+Cras felis mi, varius sed pulvinar eget, laoreet at dolor. In sit amet nulla in diam pulvinar ullamcorper sit amet sit amet odio.
+        Vivamus id leo id ligula finibus efficitur. Aenean id bibendum ex, at egestas sapien. Donec luctus bibendum tincidunt.
+        Ut a turpis gravida, sagittis lacus vel, maximus lorem. Pellentesque et diam vitae enim mattis consectetur eu sit amet neque.
+        Etiam rutrum lectus quis quam tincidunt, a euismod ipsum consequat. Aenean pretium, lorem quis mollis dapibus, dui neque ornare enim,
+        at lobortis massa odio nec ipsum. Maecenas hendrerit ante vel metus mattis sagittis. Mauris laoreet mattis tincidunt. Duis eu vulputate diam, eget venenatis felis.
+
+Sed eget porttitor metus. Nam mattis maximus purus, ut eleifend dolor ullamcorper eget. Duis eget lectus et est aliquam convallis.
+        Sed vitae nibh at diam facilisis hendrerit. Nam ultricies pellentesque justo eget faucibus. Maecenas a erat odio.
+        Sed facilisis enim non sodales luctus. Proin iaculis vehicula semper. Donec at mi vitae elit malesuada imperdiet id quis orci.
+        Nulla facilisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque lacinia tincidunt enim,
+        a posuere ligula scelerisque et. Aenean quis viverra orci.
+
+    </string>
+
 
 </resources>
