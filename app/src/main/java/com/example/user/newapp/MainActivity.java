@@ -10,8 +10,10 @@ package com.example.user.newapp;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ConstraintLayout mainLayout;
     private NestedScrollView scroll;
+    private NavigationView navigation_view;
 
 
     /**
@@ -77,17 +80,18 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);// de toolbar die boven op komt
         mainLayout = (ConstraintLayout) findViewById(R.id.mainLayout);// de layout die onder andere de scrollview in zich heeft
         scroll = (NestedScrollView) findViewById(R.id.scroll);// de scroll view waar de tekst in staat
+        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
 
 
         setSupportActionBar(toolbar);// dit zorgt ervoor dat de toolbar tevoorschijn komt
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);// op de toolbar komt er een soort pijltje zodat je het menu kan open klappen
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);// dit is de drawer menu
-        /**
-         * dit is het knopje -> die ervoor zorgt dat de drawer tevoorschijn komt
-         */
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);// hier voegen we de event aan het knopje toe
-
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);// op de toolbar komt er een soort pijltje zodat je het menu kan open klappen
+//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);// dit is de drawer menu
+//        /**
+//         * dit is het knopje -> die ervoor zorgt dat de drawer tevoorschijn komt
+//         */
+//        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+//        drawerLayout.addDrawerListener(actionBarDrawerToggle);// hier voegen we de event aan het knopje toe
+        makeDrawerMenuClickable();
 
         //TODO: zorgen voor een Hover over event voor het open klappen van de webview
 
@@ -162,6 +166,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * dit zorgt voor de event wanneer een menu item is geklikt hierdoor kunnen we naar de
+     * volgende paginas gaan
+     * wat wij hier meegeven is het volgende
+     * - als parameter komt er een item in te staan
+     * - daarna vragen we aan de computer om de id op te halen van de gekozen item
+     * - hierna gaat de computer aan de hand van de id bepalen naar welke pagina hij moet gaan
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -176,6 +190,40 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+
+    }
+
+
+    /**
+     * deze methode zorgt ervoor dat de navigation drawer oftewel onze hamburger menu klikbaar wordt
+     * zodat we ook kunnen navigeren met deze menu
+     */
+    private void makeDrawerMenuClickable() {
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
+        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
+        /**
+         * in grote lijnen zorgt deze methode er voor dat deze klik event kan uitgevoerd worden
+         */
+        navigation_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                switch (id) {
+                    case R.id.about:
+                        Intent myIntent = new Intent(MainActivity.this,AboutVMG.class);
+                        startActivity(myIntent);
+                        break;
+
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -258,6 +306,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+/**
+ * dit is een niet gebruikte methode, maar deze methode kun je gebruken om met een button
+ * naar een ander pagina te gaan
+ */
 //    public void open_About_Page(View view) {
 //        Intent intent = new Intent(this, AboutVMG.class);
 //        startActivity(intent);
