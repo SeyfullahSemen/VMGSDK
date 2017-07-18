@@ -8,6 +8,8 @@ package com.example.user.newapp;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -22,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         txtLorem = (TextView) findViewById(R.id.txtLorem); // lorem ipsum tekst
         webView = (WebView) findViewById(R.id.webViewTest); // de webview
-        showWebView = (Button) findViewById(R.id.showWebView);// de button om de webview te laten zien
+
         closeWebView = (Button) findViewById(R.id.closeWebView);// de button om de webview af te sluiten
         toolbar = (Toolbar) findViewById(R.id.toolbar);// de toolbar die boven op komt
 
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         makeDrawerMenuClickable();
         seeWebView();
+        setView();
 
 
     }// end onCreate()
@@ -128,14 +132,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(aboutIntent);
                 break;
             case R.id.listView:
-                Intent listViewIntent = new Intent (this,ListView_page.class);
+                Intent listViewIntent = new Intent(this, ListView_page.class);
                 startActivity(listViewIntent);
             default:
                 return super.onOptionsItemSelected(item);
 
 
         }
-    return false;
+        return false;
 
     }
 
@@ -166,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(myIntent);
                         break;
                     case R.id.listView:
-                        Intent ListViewIntent = new Intent (MainActivity.this,ListView_page.class);
+                        Intent ListViewIntent = new Intent(MainActivity.this, ListView_page.class);
                         startActivity(ListViewIntent);
                         break;
 
@@ -187,35 +191,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setView() {
 
-//        // laad de url in de webview
-//        webView.loadUrl("http://support.adform.com/documentation/build-with-html5-studio/introduction/");
-        // maak een string aan met HTML codee erin
-        /**
-         * in deze string zit de code van:
-         * - de layout van de video
-         * - de formaat van de video
-         */
-        String playVideo = "<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "\t\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<article style=\"\">\n" +
-                "\n" +
-                "  <div id=\"container-media-player\">\n" +
-                "    <video id='video' controls preload='none'\n" +
-                "      poster=\"https://media.w3.org/2010/05/sintel/poster.png\" width=\"320\" height=\"240\" padding:50px; top:50px;  left:600px;  position: fixed; autoplay>\n" +
-                "\n" +
-                "      <source id='mp4'\n" +
-                "        src=\"https://media.w3.org/2010/05/sintel/trailer.mp4\"\n" +
-                "        type='video/mp4'>\n" +
-                "    </video>\n" +
-                "    <div>\n" +
-                "    </article>\n" +
-                "\n" +
-                "     </body>\n" +
-                "</html>";//einde van de HTML code
 
         /**
          * alles wat hier beneden gebeurd heeft te maken met het inladen van de video in de webview
@@ -230,29 +205,25 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
         webView.getSettings().setPluginState(WebSettings.PluginState.ON);
-
+        webView.loadUrl("file:///android_asset/www/index.html");
         // maak een nieuwe instantie van de webviewclient
         webView.setWebViewClient(new WebViewClient() {
-
-            /**
-             *
-             * @param view
-             * @param url
-             * autoplay gaat in ze werking zodra de pagina is geladen dit wordt gedaan via een javascript functie
-             */
+            @Override
             public void onPageFinished(WebView view, String url) {
-                webView.loadUrl("javascript:(function() { document.getElementsByTagName('video')[0].play(); })()");
+
+                super.onPageFinished(view, url);
+
+
 
             }
-
         });
+
 
         // maak een nieuwe instantie van de chrome webview client
         webView.setWebChromeClient(new WebChromeClient() {
 
         });
-        // laad de datat in in de webview
-        webView.loadData(playVideo, "text/html", "utf-8");
+
 
     }
 
@@ -264,25 +235,7 @@ public class MainActivity extends AppCompatActivity {
         int dimensionInPixel = 233;// we maken hier een variable aan die de pixels aangeeft
         webView = (WebView) findViewById(R.id.webViewTest); // we pakken hier de ID van de webview zodat we die kunnen gebruiken
         scroll = (NestedScrollView) findViewById(R.id.scroll);// we pakken hier de ID van de scrollview waar de webview in zit
-        // de pixels die we hierboven hadden aangemaakt converteren we naar db dit zorgt ervoor dat de video op elke telefoon hetzelfde is
-        final int dimensionInDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dimensionInPixel, getResources().getDisplayMetrics());
 
-        // vervolgens maken we listeners aan voor de knopjes die ervoor zorgen dat de webview gezien en weer gesloten kan worden
-        showWebView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                webView.getLayoutParams().height = dimensionInDp; // dit bepaalde de hoogte van de video in dp
-                webView.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT; // en deze voor de breedte van de video
-                webView.requestLayout();// deze methode moet je opvragen anders werkt het niet
-                webView.setVisibility(View.VISIBLE); // maak de webview eer zichtbaar
-                // de webview wordt weer geactiveerd waardoor het filmpje weer afspeelt
-                webView.setActivated(true);
-                // de video wordt hervat met geluid en al
-                webView.onResume();
-                closeWebView.setVisibility(View.VISIBLE);
-                setView();// hier roepen wij de methode aan die hier beneden is gemaakt
-            }
-        });
         /**
          * hier beneden hebben wij de event die ervoor zorgt dat de webview weer dicht gaat
          */
