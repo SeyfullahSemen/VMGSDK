@@ -8,9 +8,11 @@ package com.example.user.newapp;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -32,6 +34,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.user.newapp.Interfaces.JavascriptInterface;
+
 
 public class MainActivity extends AppCompatActivity {
     /**
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private MenuItem home;
-//    private WebView webView;
+    //    private WebView webView;
     private TextView txtLorem;
     private Button showWebView;
     //private Button closeWebView;
@@ -74,16 +78,15 @@ public class MainActivity extends AppCompatActivity {
          */
         fragment_container = (FrameLayout) findViewById(R.id.fragment_container);
 
-        Log.i("info:","We zijn hier skjagfsdafh");
-
-
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        BlankFragment fragment = new BlankFragment();
+        final BlankFragment fragment = new BlankFragment();
         fragmentTransaction.add(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
+
+
 
         txtLorem = (TextView) findViewById(R.id.txtLorem); // lorem ipsum tekst
 
@@ -92,12 +95,21 @@ public class MainActivity extends AppCompatActivity {
         scroll = (NestedScrollView) findViewById(R.id.scroll);// de scroll view waar de tekst in staat
         navigation_view = (NavigationView) findViewById(R.id.navigation_view);
 
+        scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                fragment.Scrollding(scrollY,scrollX );
+
+
+            }
+        });
+
 
         setSupportActionBar(toolbar);// dit zorgt ervoor dat de toolbar tevoorschijn komt
 
         makeDrawerMenuClickable();
 
-//        setView();
+
 
 
     }// end onCreate()
@@ -135,7 +147,10 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Fragment fragment = null;
+        FragmentManager fragmentManager = getSupportFragmentManager();
         switch (item.getItemId()) {
+
             case R.id.about:
                 Intent aboutIntent = new Intent(this, AboutVMG.class);
                 startActivity(aboutIntent);
@@ -143,11 +158,21 @@ public class MainActivity extends AppCompatActivity {
             case R.id.listView:
                 Intent listViewIntent = new Intent(this, ListView_page.class);
                 startActivity(listViewIntent);
+                break;
+            case R.id.home:
+                 fragment = new BlankFragment();
+                break;
+            case R.id.testOff:
+             fragment = new testOffset();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
 
 
         }
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
         return false;
 
     }
@@ -189,11 +214,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
-
-
-
 
 
 

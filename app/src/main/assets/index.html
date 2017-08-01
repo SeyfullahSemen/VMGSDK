@@ -16,11 +16,14 @@
         mraid.getVersion();
         mraid.getState();
        console.log(mraid.getDefaultPosition());
+
+       console.log(mraid.isViewable());
 })();
 function openSite(url){
     mraid.open(url);
     console.log("opening Url");
 }
+
 
 function mraidIsReady(){
     mraid.removeEventListener("ready", mraidIsReady);

@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -25,9 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class BlankFragment extends Fragment implements com.example.user.newapp.Interfaces.JavascriptInterface {
     // create the variables
     private WebView webView;
@@ -35,6 +33,9 @@ public class BlankFragment extends Fragment implements com.example.user.newapp.I
     private String mraidjs;
     private String baseUrl;
     private String HTMLName = "index.html";
+    private boolean isViewable;
+    private boolean isPageFinished = true;
+    private boolean isLaidOut = true;
 
 
     // this is a default constructor this is required in a fragment
@@ -74,21 +75,22 @@ public class BlankFragment extends Fragment implements com.example.user.newapp.I
         // set debugging on for debugging on google chrome
         webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
         // we use our own webViewClient so we have more control over our webView
-        webView.setWebViewClient(new VMGWebViewClient());
+//        webView.setWebViewClient(new VMGWebViewClient());
         // here we add our mraid file
         addMraid(webView);
         // here we test a couple of things to check whether mraid is working with java or not
 
         fireReadyEvent(); // fire the ready event
         getScreenSize();
+        addJavaScript("mraid.isViewable();");
+
+
 //        removeEventListener();
         addJavaScript("mraid.getState();");// get the state of our mraid
         return v; // return the view
     }
 
     /**
-     *
-     *
      * @param webView
      */
     @SuppressLint("newApi")
@@ -141,6 +143,7 @@ public class BlankFragment extends Fragment implements com.example.user.newapp.I
 
     /**
      * we just need to add the baseUrl and the HTML file name
+     *
      * @param baseUrl
      * @param HTMLName
      */
@@ -179,46 +182,89 @@ public class BlankFragment extends Fragment implements com.example.user.newapp.I
 
     }
 
-    private void getScreenSize(){
+    private void getScreenSize() {
         addJavaScript("mraid.getScreenSize();");
         Log.i("Info about Screen Size ", "Screen size is working");
     }
 
-    private void isViewable(){
+    private void isViewable() {
         addJavaScript("mraid.isViewable();");
-        Log.i("info about viewable "," Viewable works");
+        Log.i("info about viewable ", " Viewable works");
 
     }
 
-    private void getDefaultPosition(){
+    private void getDefaultPosition() {
         addJavaScript("mraid.getDefaultPosition();");
         Log.i("Info default Position ", " Default position is working");
     }
 
-    private void getState(){
+    private void getState() {
         addJavaScript("mraid.getState();");
-        Log.i("info State "," State is working");
+        Log.i("info State ", " State is working");
     }
 
-    private void removeEventListener(){
+    private void removeEventListener() {
         addJavaScript("mraid.removeEventListener();");
         Log.i("info Remove", " Removing");
     }
 
-    /**
-     * this is our own WebViewClient this will make sure that a new browser will open without closing our app
-     */
-    private class VMGWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
-            return true;
-        }
+    private void fireViewableChangeEvent() {
+        Log.i("INFORMATION", "fireViewableChangeEvent");
+        addJavaScript("mraid.fireViewableChangeEvent(" + isViewable + ");");
 
 
     }
+
+    public void setViewable(int visibility) {
+        boolean isCurrentlyViewable = (visibility == View.VISIBLE);
+        if (isCurrentlyViewable != isViewable) {
+            isViewable = isCurrentlyViewable;
+            if (isPageFinished && isLaidOut) {
+                fireViewableChangeEvent();
+                Log.i("INFOTJE","yes it is visible");
+            }
+        }
+        }
+
+        public void Scrollding(float scrollY, float scrollX){
+            int [] location =  {0,0};
+            int height = 255;
+            webView.getLocationOnScreen(location);
+            int topper = webView.getTop();
+            int all = height + location[1];
+            if (all < 0){
+                isViewable = false;
+                addJavaScript("mraid.fireViewableChangeEvent("+isViewable+");");
+                Log.i("Viewer"," "+isViewable);
+                addJavaScript("mraid.isViewable();");
+            }else {
+                isViewable = true;
+                addJavaScript("mraid.fireViewableChangeEvent("+isViewable+");");
+                Log.i("Viewert"," "+isViewable);
+                addJavaScript("mraid.isViewable();");
+
+            }
+            Log.i("sdhg ",""+scrollY+" "+scrollX+" "+location[0]+" "+location[1] );
+
+        }
+
+
+
+//    /**
+//     * this is our own WebViewClient this will make sure that a new browser will open without closing our app
+//     */
+//    private class VMGWebViewClient extends WebViewClient {
+//        @Override
+//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//
+//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+//            startActivity(intent);
+//            return true;
+//        }
+//
+//
+//    }
 
 
 }
