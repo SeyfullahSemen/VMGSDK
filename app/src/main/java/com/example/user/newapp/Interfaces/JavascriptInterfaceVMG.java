@@ -6,7 +6,7 @@ import android.webkit.WebView;
  * Created by Seyfullah Semen on 26-7-2017.
  */
 
-public interface JavascriptInterface {
+public interface JavascriptInterfaceVMG {
 
      void addMraid (WebView webView);
      void addJavaScript(String javaScript);

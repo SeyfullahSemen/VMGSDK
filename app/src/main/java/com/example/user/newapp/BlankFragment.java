@@ -2,15 +2,13 @@ package com.example.user.newapp;
 
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
+
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -20,16 +18,18 @@ import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
+
+
+import com.example.user.newapp.Interfaces.JavascriptInterfaceVMG;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 
-public class BlankFragment extends Fragment implements com.example.user.newapp.Interfaces.JavascriptInterface {
+public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
     // create the variables
     private WebView webView;
-    private Context context;
+
     private String mraidjs;
     private String baseUrl;
     private String HTMLName = "index.html";
@@ -52,7 +52,7 @@ public class BlankFragment extends Fragment implements com.example.user.newapp.I
 
     /**
      * this is the method where the webview is filled with our index file
-     *
+     *and tests are done to see whether the functions work correctly or not
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -90,6 +90,7 @@ public class BlankFragment extends Fragment implements com.example.user.newapp.I
         return v; // return the view
     }
 
+    /////////////////////////////////////// {Implementeer de methodes uit de interface }//////////////////////////////////////////////////////////////
     /**
      * @param webView
      */
@@ -140,7 +141,7 @@ public class BlankFragment extends Fragment implements com.example.user.newapp.I
 
 
     }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * we just need to add the baseUrl and the HTML file name
      *
@@ -227,7 +228,7 @@ public class BlankFragment extends Fragment implements com.example.user.newapp.I
         }
         }
 
-        public void Scrollding(float scrollY, float scrollX){
+        public void ScrollEventVMG(float scrollY, float scrollX){
             int [] location =  {0,0};
             int height = 255;
             webView.getLocationOnScreen(location);
