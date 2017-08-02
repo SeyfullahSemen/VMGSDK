@@ -13,7 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-
+//TODO: make the list_view page also a fragment and implement it in our app
+//TODO: try to get the jw player in this app
 public class ListView_page extends AppCompatActivity {
     private Toolbar toolbar_listView;
     private DrawerLayout drawerLayout;
@@ -48,9 +49,7 @@ public class ListView_page extends AppCompatActivity {
                 Intent myIntent = new Intent(ListView_page.this, MainActivity.class);
                 startActivity(myIntent);
                 break;
-            case R.id.about:
-                Intent aboutIntent = new Intent(ListView_page.this, AboutVMG.class);
-                startActivity(aboutIntent);
+            
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -97,10 +96,7 @@ public class ListView_page extends AppCompatActivity {
                         Intent myIntent = new Intent(ListView_page.this, MainActivity.class);
                         startActivity(myIntent);
                         break;
-                    case R.id.about:
-                        Intent about_intent = new Intent(ListView_page.this, AboutVMG.class);
-                        startActivity(about_intent);
-                        break;
+
 
                 }
                 return false;

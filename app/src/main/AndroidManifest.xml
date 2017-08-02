@@ -32,12 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AboutVMG"
-            android:hardwareAccelerated="true"
-            android:parentActivityName=".MainActivity">
 
-        </activity>
         <activity android:name=".ListView_page" android:parentActivityName=".MainActivity" android:hardwareAccelerated="true">
 
         </activity>

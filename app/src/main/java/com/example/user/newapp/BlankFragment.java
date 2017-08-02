@@ -1,14 +1,20 @@
 package com.example.user.newapp;
+/**
+ * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
+ */
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -18,6 +24,7 @@ import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 import com.example.user.newapp.Interfaces.JavascriptInterfaceVMG;
@@ -36,6 +43,7 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
     private boolean isViewable;
     private boolean isPageFinished = true;
     private boolean isLaidOut = true;
+    private NestedScrollView scroll;
 
 
     // this is a default constructor this is required in a fragment
@@ -75,7 +83,7 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
         // set debugging on for debugging on google chrome
         webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
         // we use our own webViewClient so we have more control over our webView
-//        webView.setWebViewClient(new VMGWebViewClient());
+//     webView.setWebViewClient(new VMGWebViewClient());
         // here we add our mraid file
         addMraid(webView);
         // here we test a couple of things to check whether mraid is working with java or not
@@ -83,7 +91,17 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
         fireReadyEvent(); // fire the ready event
         getScreenSize();
         addJavaScript("mraid.isViewable();");
+        scroll = (NestedScrollView) v.findViewById(R.id.scroll);
 
+
+        scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                ScrollEventVMG(scrollY, scrollX); // we roepen hier de methode aan die we hebben gemaakt in onze BlankFragment
+
+
+            }
+     });
 
 //        removeEventListener();
         addJavaScript("mraid.getState();");// get the state of our mraid

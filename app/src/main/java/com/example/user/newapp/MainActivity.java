@@ -22,10 +22,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -42,16 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
     private MenuItem home;
 
-    private TextView txtLorem;
-    private Button showWebView;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar toolbar;
-    private FrameLayout fragment_container;
 
-    private NestedScrollView scroll;
+    private FrameLayout frags_container;
+    private static HomeFragment fragment = new HomeFragment();
+    // private NestedScrollView scroll;
     private NavigationView navigation_view;
+    private DrawerLayout.DrawerListener drawerListener;
 
 
     /**
@@ -66,47 +68,74 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);// dit zorgt voor het inladen van de scherm
 
 
+        // dit is de ID van onze textView die is gevuld met lorem ipsum tekst
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);// de toolbar die boven op komt
+
+        //scroll = (NestedScrollView) findViewById(R.id.scroll);// de scroll view waar de tekst in staat
+        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        frags_container = (FrameLayout) findViewById(R.id.frags_container);
+        setSupportActionBar(toolbar);
+
+        if (savedInstanceState == null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+
+            fragmentTransaction.add(R.id.frags_container, fragment); // voeg deze toe aan de frameLayout
+            fragmentTransaction.commit(); // en vergeet het niet te committen
+        }
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.drawer_open,
+                R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+
+                if (drawerListener != null) {
+                    drawerListener.onDrawerClosed(drawerLayout);
+                }
+
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+                if (drawerListener != null) {
+                    drawerListener.onDrawerOpened(drawerLayout);
+                }
+
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
         /**
          * in de onCreate methode roepen wij de framelayout aan die is gemaakt in activity_main.xml
          * wij gaan hier onze fragment in laden.
          */
-        fragment_container = (FrameLayout) findViewById(R.id.fragment_container);
-
-        /**
-         * hier roepen wij de fragment manager aan die ervoor gaat zorgen
-         * dat we nieuwe fragmenten aan de framelayout kunnen toevoegen
-         * dit is niet alleen onze BlankFragment maar ook toekomstige Fragments die gaan komen
-         */
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        final BlankFragment fragment = new BlankFragment(); // maak een nieuwe instantie aan van BlankFragment();
-        fragmentTransaction.add(R.id.fragment_container, fragment); // voeg deze toe aan de frameLayout
-        fragmentTransaction.commit(); // en vergeet het niet te committen
-
-        // dit is de ID van onze textView die is gevuld met lorem ipsum tekst
-        txtLorem = (TextView) findViewById(R.id.txtLorem); // lorem ipsum tekst
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);// de toolbar die boven op komt
-
-        scroll = (NestedScrollView) findViewById(R.id.scroll);// de scroll view waar de tekst in staat
-        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
-        // er is een scrollview gemaakt in de activity_main.xml en deze roepen we aan om een event uit te voeren wanneer de gebruiker over de
-        // advertentie scrolled willen we natuurlijk weten waar de gebrukiker zich bevind en aan de hand van die informatie kunnen we bepalenm
-        // of de advertentie moet stoppen of door moet gaan
-        scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                fragment.ScrollEventVMG(scrollY, scrollX); // we roepen hier de methode aan die we hebben gemaakt in onze BlankFragment
 
 
-            }
-        });
-
-        // dit zorgt ervoor dat we een toolbar hebben aan de bovenkant van onze app dit is de toolbar die is gemaakt in  toolbar_layout.xml
-        setSupportActionBar(toolbar);// dit zorgt ervoor dat de toolbar tevoorschijn komt
-
-        makeDrawerMenuClickable(); // dit is een methode die ervoor zorgt dat er acties optreden wanneer erop op de knopjes worden gedrukt van de hamburger menu
+        onClick();
 
 
     }// end onCreate()
@@ -116,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
         super.onPostCreate(savedInstanceState, persistentState);
 
-    }
+    }//end of onPostCreate()
 
     /**
      * deze methode zorgt ervoor dat de menu wordt gevuld met de items die wij erin hebben gezet
@@ -129,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.drawer_menu, menu);
         return super.onCreateOptionsMenu(menu);
 
-    }
+    }//end of onCreateOptionsMenu
 
     /**
      * dit zorgt voor de event wanneer een menu item is geklikt hierdoor kunnen we naar de
@@ -149,77 +178,74 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) { // pak de ID van de gekozen Item uit de menu
 
             case R.id.about:
-                Intent aboutIntent = new Intent(this, AboutVMG.class);
-                startActivity(aboutIntent);
+                openNewFragment(new AboutVMGFragment());
                 break;
             case R.id.listView:
                 Intent listViewIntent = new Intent(this, ListView_page.class);
                 startActivity(listViewIntent);
                 break;
             case R.id.home:
-                fragment = new BlankFragment();
+                openNewFragment(new HomeFragment());
                 break;
-            case R.id.testOff:
-                fragment = new testOffset();
+
+            case R.id.scroller_id:
+                openNewFragment(new BlankFragment());
                 break;
+
             default:
                 return super.onOptionsItemSelected(item);
 
 
         }
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.frags_container, fragment)
                 .commit();
         return false;
 
     }
 
 
-    /**
-     * deze methode zorgt ervoor dat de navigation drawer oftewel onze hamburger menu klikbaar wordt
-     * zodat we ook kunnen navigeren met deze menu
-     */
-    private void makeDrawerMenuClickable() {
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    public void onClick() {
+        Button about_drawer = (Button) findViewById(R.id.about_drawer);
+        Button home = (Button) findViewById(R.id.home);
+        Button scroll_drawer = (Button) findViewById(R.id.scroll_drawer);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-
-        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
-        /**
-         * in grote lijnen zorgt deze methode er voor dat deze klik event kan uitgevoerd worden
-         */
-        navigation_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        about_drawer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                Fragment fragment = null; // maak een nieuwe instantie van de fragment aan
-                FragmentManager fragmentManager = getSupportFragmentManager();
-
-                switch (menuItem.getItemId()) {
-                    case R.id.about:
-                        Intent myIntent = new Intent(MainActivity.this, AboutVMG.class);
-                        startActivity(myIntent);
-                        break;
-                    case R.id.listView:
-                        Intent ListViewIntent = new Intent(MainActivity.this, ListView_page.class);
-                        startActivity(ListViewIntent);
-                        break;
-                 case R.id.home:
-                        fragment = new BlankFragment();
-                        break;
-                    case R.id.testOff:
-                        fragment = new testOffset();
-                        break;
-
-                }
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, fragment)
-                        .commit();
-                return false;
+            public void onClick(View v) {
+                openNewFragment(new AboutVMGFragment());
             }
         });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNewFragment(new HomeFragment());
+            }
+        });
+
+        scroll_drawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNewFragment(new BlankFragment());
+            }
+        });
+
+    }
+
+
+    private void openNewFragment(Fragment fragment) {
+        String stateName = ((Object) fragment).getClass().getName();
+        try {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.frags_container, fragment, ((Object) fragment).getClass().getName());
+            transaction.addToBackStack(stateName);
+            transaction.commit();
+        } catch (IllegalStateException ex) {
+            System.err.println("An error occurred with the Fragment");
+            Log.e("Error Fragment ", " " + ex.getMessage());
+        }
 
     }
 
