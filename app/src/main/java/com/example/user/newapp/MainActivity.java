@@ -2,6 +2,8 @@ package com.example.user.newapp;
 
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
+ *
+ * Created by Seyfullah Semen
  */
 
 
@@ -32,6 +34,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 /////////////////////////////////////////////////////////
+//TODO: we are getting to the rigth way but find ways to make the code more efficient
+
 
 public class MainActivity extends AppCompatActivity {
     /**
@@ -122,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.syncState();
 
 
-        onClick(); // make a call to the method to go to the next page
+        change(); // make a call to the method to go to the next page
 
 
     }// end onCreate()
@@ -197,31 +201,25 @@ public class MainActivity extends AppCompatActivity {
      * I found it more convenient to do it like this
      * But maybe I can use an Interface
      */
-    public void onClick() {
+
+    private void change() {
         Button about_drawer = (Button) findViewById(R.id.about_drawer);
         Button home = (Button) findViewById(R.id.home);
         Button scroll_drawer = (Button) findViewById(R.id.scroll_drawer);
 
-        about_drawer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openNewFragment(new AboutVMGFragment());
-            }
+        home.setOnClickListener(e->{
+            openNewFragment(new HomeFragment());
         });
 
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openNewFragment(new HomeFragment());
-            }
-        });
+       about_drawer.setOnClickListener(e->{
+           openNewFragment(new AboutVMGFragment());
+       });
 
-        scroll_drawer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openNewFragment(new BlankFragment());
-            }
-        });
+       scroll_drawer.setOnClickListener(e->{
+           openNewFragment(new BlankFragment());
+       });
+
+
 
     }
 

@@ -5,7 +5,7 @@ package com.example.user.newapp;
 
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+
 import android.content.res.AssetManager;
 import android.graphics.Color;
 
@@ -28,12 +28,16 @@ import android.webkit.WebViewClient;
 
 
 import com.example.user.newapp.Interfaces.JavascriptInterfaceVMG;
+import com.example.user.newapp.Interfaces.VMGMraidEvents;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Created by Seyfullah Semen
+ */
 
-public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
+public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, VMGMraidEvents {
     // create the variables
     private WebView webView;
 
@@ -60,7 +64,8 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
 
     /**
      * this is the method where the webview is filled with our index file
-     *and tests are done to see whether the functions work correctly or not
+     * and tests are done to see whether the functions work correctly or not
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -73,6 +78,7 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_blank, container, false);
         Log.d("info", "We zijn er "); // this is for debugging reasons
+        scroll = (NestedScrollView) v.findViewById(R.id.scroll);
 
         // get the webView that we created in our XML file
         webView = (WebView) v.findViewById(R.id.webView); // get the id of the webview
@@ -91,7 +97,6 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
         fireReadyEvent(); // fire the ready event
         getScreenSize();
         addJavaScript("mraid.isViewable();");
-        scroll = (NestedScrollView) v.findViewById(R.id.scroll);
 
 
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -101,7 +106,7 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
 
 
             }
-     });
+        });
 
 //        removeEventListener();
         addJavaScript("mraid.getState();");// get the state of our mraid
@@ -109,6 +114,7 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
     }
 
     /////////////////////////////////////// {Implementeer de methodes uit de interface }//////////////////////////////////////////////////////////////
+
     /**
      * @param webView
      */
@@ -160,6 +166,7 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
 
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * we just need to add the baseUrl and the HTML file name
      *
@@ -194,41 +201,47 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
      * the methods below is for checking if java can communicate with Javascript
      * we accomplish this with simple getters to check everything
      */
-    private void fireReadyEvent() {
+    @Override
+    public void fireReadyEvent() {
         addJavaScript("mraid.fireReadyEvent();");
         Log.i("info", "READYYYY NIFFFOOOO");
 
 
     }
 
-    private void getScreenSize() {
+    @Override
+    public void getScreenSize() {
         addJavaScript("mraid.getScreenSize();");
         Log.i("Info about Screen Size ", "Screen size is working");
     }
 
-    private void isViewable() {
+    @Override
+    public void isViewable() {
         addJavaScript("mraid.isViewable();");
         Log.i("info about viewable ", " Viewable works");
 
     }
 
-    private void getDefaultPosition() {
+    @Override
+    public void getDefaultPosition() {
         addJavaScript("mraid.getDefaultPosition();");
         Log.i("Info default Position ", " Default position is working");
     }
 
-    private void getState() {
+    @Override
+    public void getState() {
         addJavaScript("mraid.getState();");
         Log.i("info State ", " State is working");
     }
 
-    private void removeEventListener() {
+    @Override
+    public void removeEventListener() {
         addJavaScript("mraid.removeEventListener();");
         Log.i("info Remove", " Removing");
     }
 
-
-    private void fireViewableChangeEvent() {
+    @Override
+    public void fireViewableChangeEvent() {
         Log.i("INFORMATION", "fireViewableChangeEvent");
         addJavaScript("mraid.fireViewableChangeEvent(" + isViewable + ");");
 
@@ -241,33 +254,32 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG {
             isViewable = isCurrentlyViewable;
             if (isPageFinished && isLaidOut) {
                 fireViewableChangeEvent();
-                Log.i("INFOTJE","yes it is visible");
+                Log.i("INFOTJE", "yes it is visible");
             }
         }
-        }
+    }
 
-        public void ScrollEventVMG(float scrollY, float scrollX){
-            int [] location =  {0,0};
-            int height = 255;
-            webView.getLocationOnScreen(location);
-            int topper = webView.getTop();
-            int all = height + location[1];
-            if (all < 0){
-                isViewable = false;
-                addJavaScript("mraid.fireViewableChangeEvent("+isViewable+");");
-                Log.i("Viewer"," "+isViewable);
-                addJavaScript("mraid.isViewable();");
-            }else {
-                isViewable = true;
-                addJavaScript("mraid.fireViewableChangeEvent("+isViewable+");");
-                Log.i("Viewert"," "+isViewable);
-                addJavaScript("mraid.isViewable();");
-
-            }
-            Log.i("sdhg ",""+scrollY+" "+scrollX+" "+location[0]+" "+location[1] );
+    public void ScrollEventVMG(float scrollY, float scrollX) {
+        int[] location = {0, 0};
+        int height = 255;
+        webView.getLocationOnScreen(location);
+        int topper = webView.getTop();
+        int all = height + location[1];
+        if (all < 0) {
+            isViewable = false;
+            addJavaScript("mraid.fireViewableChangeEvent(" + isViewable + ");");
+            Log.i("Viewer", " " + isViewable);
+            addJavaScript("mraid.isViewable();");
+        } else {
+            isViewable = true;
+            addJavaScript("mraid.fireViewableChangeEvent(" + isViewable + ");");
+            Log.i("Viewert", " " + isViewable);
+            addJavaScript("mraid.isViewable();");
 
         }
+        Log.i("sdhg ", "" + scrollY + " " + scrollX + " " + location[0] + " " + location[1]);
 
+    }
 
 
 //    /**

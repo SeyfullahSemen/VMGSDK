@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
+ * Created by Seyfullah Semen
  */
 public class HomeFragment extends Fragment {
     private TextView txt_home;

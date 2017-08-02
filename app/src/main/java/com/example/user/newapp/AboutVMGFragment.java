@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
+ * Created by Seyfullah Semen
  */
 public class AboutVMGFragment extends Fragment {
 
