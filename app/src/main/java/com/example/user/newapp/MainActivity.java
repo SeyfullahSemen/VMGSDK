@@ -35,23 +35,16 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     /**
-     * hier worden de variabelen gecreeered voor de app
-     * we hebben onder andere de webview, de text met lorem ipsum
-     * en de button die de video laad wanneer er op wordt geklikt
-     * de reden dat we ze private maken is zodat andere klassen de waarde van deze UI components niet kunnen aanpassen
-     * het zorgt voor encapsulatie
+     * here we decalre our components that we use in our activities
+     * we make them private because we dont need to change them in other classes
      */
-
-    private MenuItem home;
-
-
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar toolbar;
 
     private FrameLayout frags_container;
-    private static HomeFragment fragment = new HomeFragment();
-    // private NestedScrollView scroll;
+    private HomeFragment fragment = new HomeFragment();
+
     private NavigationView navigation_view;
     private DrawerLayout.DrawerListener drawerListener;
 
@@ -70,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         // dit is de ID van onze textView die is gevuld met lorem ipsum tekst
 
-
+////////////////////////////{FINDING THE ID OF THE COMPONENTS}/////////////////////////////////////////////////////////////////////////////////
         toolbar = (Toolbar) findViewById(R.id.toolbar);// de toolbar die boven op komt
 
         //scroll = (NestedScrollView) findViewById(R.id.scroll);// de scroll view waar de tekst in staat
@@ -80,15 +73,14 @@ public class MainActivity extends AppCompatActivity {
 
         frags_container = (FrameLayout) findViewById(R.id.frags_container);
         setSupportActionBar(toolbar);
-
+////////////////////////////{FINDING THE ID OF THE COMPONENTS}/////////////////////////////////////////////////////////////////////////////////
         if (savedInstanceState == null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-
             fragmentTransaction.add(R.id.frags_container, fragment); // voeg deze toe aan de frameLayout
             fragmentTransaction.commit(); // en vergeet het niet te committen
-        }
+        }// end of the if statement
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -129,13 +121,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        /**
-         * in de onCreate methode roepen wij de framelayout aan die is gemaakt in activity_main.xml
-         * wij gaan hier onze fragment in laden.
-         */
 
-
-        onClick();
+        onClick(); // make a call to the method to go to the next page
 
 
     }// end onCreate()
@@ -204,7 +191,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * this is the method for going to the next page with the help of our navigation drawer
+     * We get the ids of the buttons and we place it in one place.
+     * I found it more convenient to do it like this
+     * But maybe I can use an Interface
+     */
     public void onClick() {
         Button about_drawer = (Button) findViewById(R.id.about_drawer);
         Button home = (Button) findViewById(R.id.home);
