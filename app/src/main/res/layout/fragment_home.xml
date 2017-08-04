@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.user.newapp.HomeFragment">
+    tools:context="com.example.user.newapp.HomeFragment"
+    android:animateLayoutChanges="true"
+    >
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView

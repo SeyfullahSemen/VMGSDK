@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
+    android:animateLayoutChanges="true"
     tools:context="com.example.user.newapp.AboutVMGFragment">
 
     <android.support.v4.widget.NestedScrollView

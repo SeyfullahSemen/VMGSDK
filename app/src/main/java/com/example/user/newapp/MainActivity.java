@@ -2,7 +2,7 @@ package com.example.user.newapp;
 
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
- *
+ * <p>
  * Created by Seyfullah Semen
  */
 
@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.transition.Transition;
+import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -22,8 +24,10 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +37,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 /////////////////////////////////////////////////////////
 //TODO: we are getting to the rigth way but find ways to make the code more efficient
 
@@ -164,17 +169,13 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Fragment fragment = null; // maak een nieuwe instantie van de fragment aan
-        FragmentManager fragmentManager = getSupportFragmentManager();
+
         switch (item.getItemId()) { // pak de ID van de gekozen Item uit de menu
 
             case R.id.about:
                 openNewFragment(new AboutVMGFragment());
                 break;
-            case R.id.listView:
-                Intent listViewIntent = new Intent(this, ListView_page.class);
-                startActivity(listViewIntent);
-                break;
+
             case R.id.home:
                 openNewFragment(new HomeFragment());
                 break;
@@ -188,9 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-        fragmentManager.beginTransaction()
-                .replace(R.id.frags_container, fragment)
-                .commit();
+
         return false;
 
     }
@@ -206,19 +205,35 @@ public class MainActivity extends AppCompatActivity {
         Button about_drawer = (Button) findViewById(R.id.about_drawer);
         Button home = (Button) findViewById(R.id.home);
         Button scroll_drawer = (Button) findViewById(R.id.scroll_drawer);
+        Button ListView = (Button) findViewById(R.id.listview);
 
-        home.setOnClickListener(e->{
-            openNewFragment(new HomeFragment());
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNewFragment(new HomeFragment());
+            }
         });
 
-       about_drawer.setOnClickListener(e->{
-           openNewFragment(new AboutVMGFragment());
-       });
+        about_drawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNewFragment(new AboutVMGFragment());
+            }
+        });
 
-       scroll_drawer.setOnClickListener(e->{
-           openNewFragment(new BlankFragment());
-       });
+        scroll_drawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNewFragment(new BlankFragment());
+            }
+        });
 
+        ListView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNewFragment(new ListViewFragment());
+            }
+        });
 
 
     }
@@ -229,8 +244,11 @@ public class MainActivity extends AppCompatActivity {
         try {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
+
             transaction.replace(R.id.frags_container, fragment, ((Object) fragment).getClass().getName());
             transaction.addToBackStack(stateName);
+
+
             transaction.commit();
         } catch (IllegalStateException ex) {
             System.err.println("An error occurred with the Fragment");

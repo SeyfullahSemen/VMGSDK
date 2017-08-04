@@ -33,10 +33,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ListView_page" android:parentActivityName=".MainActivity" android:hardwareAccelerated="true">
-
-        </activity>
-
 
     </application>
 

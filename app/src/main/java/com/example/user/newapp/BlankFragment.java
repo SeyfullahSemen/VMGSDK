@@ -28,6 +28,7 @@ import android.webkit.WebViewClient;
 
 
 import com.example.user.newapp.Interfaces.JavascriptInterfaceVMG;
+import com.example.user.newapp.Interfaces.VMGInternal;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ import java.io.InputStream;
  * Created by Seyfullah Semen
  */
 
-public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, VMGMraidEvents {
+public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, VMGMraidEvents,VMGInternal {
     // create the variables
     private WebView webView;
 
@@ -173,7 +174,8 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, V
      * @param baseUrl
      * @param HTMLName
      */
-    private void openWeb(String baseUrl, String HTMLName) { // this is the method that will make sure that we can open a HTML file with
+    @Override
+    public void openWeb(String baseUrl, String HTMLName) { // this is the method that will make sure that we can open a HTML file with
 
         AssetManager assetManager = getActivity().getAssets(); // this wil get the HTML file that we mad e
         // byte buffer into a string
@@ -258,7 +260,7 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, V
             }
         }
     }
-
+@Override
     public void ScrollEventVMG(float scrollY, float scrollX) {
         int[] location = {0, 0};
         int height = 255;

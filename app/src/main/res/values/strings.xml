@@ -144,6 +144,14 @@ Quisque vel tincidunt arcu. Phasellus ullamcorper vitae libero at mattis. Curabi
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="cities">
+        <item>Amsterdam</item>
+        <item>Istanbul</item>
+        <item>New York</item>
+        <item>Rome</item>
+        <item>Tokyo</item>
+        <item>Seoul </item>
+    </string-array>
 
 
 </resources>

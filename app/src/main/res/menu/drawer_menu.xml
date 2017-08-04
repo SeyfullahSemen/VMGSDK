@@ -16,10 +16,7 @@
             android:icon="@mipmap/ic_launcher_logo"
             android:title="scrollview" />
 
-        <item
-            android:id="@+id/listView"
-            android:icon="@mipmap/ic_launcher_logo"
-            android:title="ListView" />
+
         <item
             android:id="@+id/testOff"
             android:icon="@drawable/cast_ic_expanded_controller_pause"
