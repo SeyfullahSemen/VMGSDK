@@ -13,8 +13,5 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="MyButton" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">@android:color/darker_gray</item>
-        <item name="colorButtonNormal">@color/colorPrimary</item>
-    </style>
+
 </resources>

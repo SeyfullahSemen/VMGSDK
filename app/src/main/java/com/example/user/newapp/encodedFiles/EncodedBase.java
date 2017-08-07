@@ -1,4 +1,4 @@
-package com.example.user.newapp;
+package com.example.user.newapp.encodedFiles;
 
 /**
  * Created by Seyfullah Semen on 25-7-2017.

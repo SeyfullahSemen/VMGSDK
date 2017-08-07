@@ -6,34 +6,22 @@ package com.example.user.newapp;
 
 import android.annotation.SuppressLint;
 
-import android.content.res.AssetManager;
 import android.graphics.Color;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 
 import android.support.v4.widget.NestedScrollView;
-import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
-import com.example.user.newapp.Interfaces.JavascriptInterfaceVMG;
-import com.example.user.newapp.Interfaces.VMGInternal;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by Seyfullah Semen
@@ -42,10 +30,6 @@ import java.io.InputStream;
 public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     // create the variables
     private WebView webView;
-
-    private String mraidjs;
-    private String baseUrl;
-    private String HTMLName = "index.html";
     private boolean isViewable;
     private boolean isPageFinished = true;
     private boolean isLaidOut = true;
@@ -92,13 +76,13 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
         // we use our own webViewClient so we have more control over our webView
 //     webView.setWebViewClient(new VMGWebViewClient());
-         super.openWeb(webView);
-         super.addMraid(webView);
+        super.openWeb(webView);
+        super.addMraid(webView);
         // here we test a couple of things to check whether mraid is working with java or not
 
         fireReadyEvent(); // fire the ready event
         getScreenSize();
-        super.addJavascript(webView,"mraid.isViewable();");
+        super.addJavascript(webView, "mraid.isViewable();");
 
 
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -110,19 +94,10 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
             }
         });
 
-//        removeEventListener();
-        super.addJavascript(webView,"mraid.getState();");// get the state of our mraid
+
+        super.addJavascript(webView, "mraid.getState();");// get the state of our mraid
         return v; // return the view
     }
-
-    /////////////////////////////////////// {Implementeer de methodes uit de interface }//////////////////////////////////////////////////////////////
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
     /**
      * the methods below is for checking if java can communicate with Javascript
@@ -130,63 +105,51 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
      */
     @Override
     public void fireReadyEvent() {
-       super.addJavascript(webView,"mraid.fireReadyEvent();");
+        super.addJavascript(webView, "mraid.fireReadyEvent();");
         Log.i("info", "READYYYY NIFFFOOOO");
-
-
 
 
     }
 
     @Override
     public void getScreenSize() {
-        super.addJavascript(webView,"mraid.getScreenSize();");
+        super.addJavascript(webView, "mraid.getScreenSize();");
         Log.i("Info about Screen Size ", "Screen size is working");
     }
 
     @Override
     public void isViewable() {
-        super.addJavascript(webView,"mraid.isViewable();");
+        super.addJavascript(webView, "mraid.isViewable();");
         Log.i("info about viewable ", " Viewable works");
 
     }
 
     @Override
     public void getDefaultPosition() {
-        super.addJavascript(webView,"mraid.getDefaultPosition();");
+        super.addJavascript(webView, "mraid.getDefaultPosition();");
         Log.i("Info default Position ", " Default position is working");
     }
 
     @Override
     public void getState() {
-        super.addJavascript(webView,"mraid.getState();");
+        super.addJavascript(webView, "mraid.getState();");
         Log.i("info State ", " State is working");
     }
 
     @Override
     public void removeEventListener() {
-        super.addJavascript(webView,"mraid.removeEventListener();");
+        super.addJavascript(webView, "mraid.removeEventListener();");
         Log.i("info Remove", " Removing");
     }
 
     @Override
     public void fireViewableChangeEvent() {
         Log.i("INFORMATION", "fireViewableChangeEvent");
-        super.addJavascript(webView,"mraid.fireViewableChangeEvent(" + isViewable + ");");
+        super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
 
 
     }
 
-    public void setViewable(int visibility) {
-        boolean isCurrentlyViewable = (visibility == View.VISIBLE);
-        if (isCurrentlyViewable != isViewable) {
-            isViewable = isCurrentlyViewable;
-            if (isPageFinished && isLaidOut) {
-                fireViewableChangeEvent();
-                Log.i("INFOTJE", "yes it is visible");
-            }
-        }
-    }
 
     public void ScrollEventVMG(float scrollY, float scrollX) {
         int[] location = {0, 0};
@@ -196,14 +159,14 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         int all = height + location[1];
         if (all < 0) {
             isViewable = false;
-            super.addJavascript(webView,"mraid.fireViewableChangeEvent(" + isViewable + ");");
+            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
-            super.addJavascript(webView,"mraid.isViewable();");
+            super.addJavascript(webView, "mraid.isViewable();");
         } else {
             isViewable = true;
-            super.addJavascript(webView,"mraid.fireViewableChangeEvent(" + isViewable + ");");
+            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewert", " " + isViewable);
-            super.addJavascript(webView,"mraid.isViewable();");
+            super.addJavascript(webView, "mraid.isViewable();");
 
         }
         Log.i("sdhg ", "" + scrollY + " " + scrollX + " " + location[0] + " " + location[1]);

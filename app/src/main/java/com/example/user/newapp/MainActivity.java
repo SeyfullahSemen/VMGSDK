@@ -36,10 +36,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-/////////////////////////////////////////////////////////
-//TODO: we are getting to the rigth way but find ways to make the code more efficient
 
 
 public class MainActivity extends AppCompatActivity {
@@ -75,8 +72,7 @@ public class MainActivity extends AppCompatActivity {
 ////////////////////////////{FINDING THE ID OF THE COMPONENTS}/////////////////////////////////////////////////////////////////////////////////
         toolbar = (Toolbar) findViewById(R.id.toolbar);// de toolbar die boven op komt
 
-//        //scroll = (NestedScrollView) findViewById(R.id.scroll);// de scroll view waar de tekst in staat
-//        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -206,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
         Button home = (Button) findViewById(R.id.home);
         Button scroll_drawer = (Button) findViewById(R.id.scroll_drawer);
         Button ListView = (Button) findViewById(R.id.listview);
+        Button recyclerview = (Button) findViewById(R.id.recyclerview);
 
         home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,6 +229,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openNewFragment(new ListViewFragment());
+            }
+        });
+        recyclerview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"Still in the making ",Toast.LENGTH_SHORT).show();
             }
         });
 
