@@ -1,0 +1,44 @@
+<html>
+<head>
+    <script src="file:///android_asset/mraid.js"></script>
+
+
+</head>
+
+<body style="margin:0px; padding:0px;">
+<script>
+        (function() {
+	window.mraid.addEventListener(window.mraid.EVENTS.READY,function(){console.log("Hellow")});
+
+
+        setTimeout(function(){window.mraid.fireReadyEvent();},500);
+
+        mraid.getVersion();
+        mraid.getState();
+       console.log(mraid.getDefaultPosition());
+
+       console.log(mraid.isViewable());
+})();
+function openSite(url){
+    mraid.open(url);
+    console.log("opening Url");
+}
+
+
+function mraidIsReady(){
+    mraid.removeEventListener("ready", mraidIsReady);
+    console.log("removed event ");
+
+}
+    </script>
+
+<!--<button onclick="javascript:openSite('http://www.google.com/')">click to open google</button>-->
+<div id="inPageVideo"></div>
+<script  type="text/javascript" src="https://nl.vmg.host/adServ/placement/id/6178"></script>
+
+<!--<button onclick="javascript:openSite('http://www.google.com/')">click to go to google</button>-->
+<!--<button onclick="javascript:mraidIsReady()">remove Event</button>-->
+
+<!-- end  Persgroep -->
+</body>
+</html>
