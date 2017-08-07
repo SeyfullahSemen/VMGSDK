@@ -32,11 +32,11 @@ import java.io.InputStream;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListViewFragment extends Fragment implements JavascriptInterfaceVMG, VMGMraidEvents,VMGInternal {
-private ListView listView;
-  private WebView webber;
-  private String mraidjs;
-  private String baseUrl;
+public class ListViewFragment extends Fragment implements JavascriptInterfaceVMG, VMGMraidEvents, VMGInternal {
+    private ListView listView;
+    private WebView webber;
+    private String mraidjs;
+    private String baseUrl;
     private String HTMLName = "index.html";
     private boolean isViewable;
     private boolean isPageFinished = true;
@@ -55,7 +55,7 @@ private ListView listView;
         listView = (ListView) v.findViewById(R.id.listView);
 
         webber = (WebView) v.findViewById(R.id.webber); // get the id of the webview
-      webber.setBackgroundColor(Color.TRANSPARENT); // set the background to transparent
+        webber.setBackgroundColor(Color.TRANSPARENT); // set the background to transparent
         WebSettings settings = webber.getSettings(); // this is for enabling the javascript
         settings.setJavaScriptEnabled(true); // set javascript enabled
 
@@ -82,22 +82,22 @@ private ListView listView;
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Set ListView basic adapter
-        setListViewAdapter(listView);
+        setValues(listView);
 
 
     }
 
-    private void setListViewAdapter(ListView listView) {
+    private void setValues(ListView listView) {
         int size = 50;
-        String values[] = new String[size];
+        String[] vals = new String[size];
 
-        for (int i = 0; i < values.length; i++) {
-            values[i] = "VMG " + i;
+        for (int i = 0; i < vals.length; i++) {
+            vals[i] = "VMG Demo " + i;
         }
 
-        // use your custom layout
+
         ArrayAdapter adapter = new ArrayAdapter<>(getActivity(),
-                R.layout.list_row, R.id.listViewText, values);
+                R.layout.list_row, R.id.listViewText, vals);
         listView.setAdapter(adapter);
     }
 
@@ -257,8 +257,6 @@ private ListView listView;
         Log.i("sdhg ", "" + scrollY + " " + scrollX + " " + location[0] + " " + location[1]);
 
     }
-
-
 
 
 }

@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
 ////////////////////////////{FINDING THE ID OF THE COMPONENTS}/////////////////////////////////////////////////////////////////////////////////
         toolbar = (Toolbar) findViewById(R.id.toolbar);// de toolbar die boven op komt
 
-        //scroll = (NestedScrollView) findViewById(R.id.scroll);// de scroll view waar de tekst in staat
-        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
+//        //scroll = (NestedScrollView) findViewById(R.id.scroll);// de scroll view waar de tekst in staat
+//        navigation_view = (NavigationView) findViewById(R.id.navigation_view);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
