@@ -27,6 +27,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 
+import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.Interfaces.JavascriptInterfaceVMG;
 import com.example.user.newapp.Interfaces.VMGInternal;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
@@ -38,7 +39,7 @@ import java.io.InputStream;
  * Created by Seyfullah Semen
  */
 
-public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, VMGMraidEvents,VMGInternal {
+public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     // create the variables
     private WebView webView;
 
@@ -91,13 +92,13 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, V
         webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
         // we use our own webViewClient so we have more control over our webView
 //     webView.setWebViewClient(new VMGWebViewClient());
-        // here we add our mraid file
-        addMraid(webView);
+         super.openWeb(webView);
+         super.addMraid(webView);
         // here we test a couple of things to check whether mraid is working with java or not
 
         fireReadyEvent(); // fire the ready event
         getScreenSize();
-        addJavaScript("mraid.isViewable();");
+        super.addJavascript(webView,"mraid.isViewable();");
 
 
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -110,94 +111,18 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, V
         });
 
 //        removeEventListener();
-        addJavaScript("mraid.getState();");// get the state of our mraid
+        super.addJavascript(webView,"mraid.getState();");// get the state of our mraid
         return v; // return the view
     }
 
     /////////////////////////////////////// {Implementeer de methodes uit de interface }//////////////////////////////////////////////////////////////
 
-    /**
-     * @param webView
-     */
-    @SuppressLint("newApi")
-    @Override
-    public void addMraid(WebView webView) { // we expect a webview to load our mraid in
-        if (TextUtils.isEmpty(mraidjs)) { // we made a string to save our mraid file in
-            byte[] mraidArray = Base64.decode(EncodedBase.mraidFile, Base64.DEFAULT); // decode the file that we made in our Asset Class
-            mraidjs = new String(mraidArray); // save what we decoded in the String mraidJs
-        }
-        System.out.println("adding mraid is oke and ready to goo " + mraidjs.length()); // check the length of our mraid
-
-        webView.loadData("<html></html>", "text/html", "UTF-8");
-        webView.evaluateJavascript(mraidjs, new ValueCallback<String>() { // make a callback to see if the mraid file is correctly loaded
-            @Override
-            public void onReceiveValue(String s) {
-                Log.i("Info", "Mraiding " + mraidjs);
-            }
-
-        });
-        openWeb("http://vmg.host/", HTMLName); // make a call to the method that we made to open our HTML file with mraid injected
-
-//       webView.loadUrl("javascript:" + mraidjs);
-//        Log.i("IMPORTANTE ",mraidjs);
-    }
-
-    @Override
-    public void addJavaScript(String javaScript) {
-        addJavaScript(webView, javaScript);
-    }
-
-    @SuppressLint("newApi")
-    @Override
-    public void addJavaScript(WebView webView, String javaScript) {
-        if (!javaScript.isEmpty()) {
-
-            webView.evaluateJavascript(javaScript, new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String s) {
-                    Log.i("info:", "Evalution done " + s);
-                }
-            });
-        } else {
-            System.out.println("Loading" + javaScript);
-            webView.loadUrl("javascript:" + javaScript);
-
-        }
 
 
-    }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * we just need to add the baseUrl and the HTML file name
-     *
-     * @param baseUrl
-     * @param HTMLName
-     */
-    @Override
-    public void openWeb(String baseUrl, String HTMLName) { // this is the method that will make sure that we can open a HTML file with
 
-        AssetManager assetManager = getActivity().getAssets(); // this wil get the HTML file that we mad e
-        // byte buffer into a string
-        String text = "";
-        try {
-            InputStream input = assetManager.open(HTMLName); // this is will get our file named index
-            int size = input.available();
-            byte[] buffer = new byte[size];
-            input.read(buffer);
-            input.close();
-
-            text = new String(buffer);
-
-        } catch (IOException e) { // catch any exceptions
-            e.printStackTrace();
-        }
-        Log.i("info", "HTML file " + text); // this is for debugging reasons
-
-        webView.loadDataWithBaseURL(baseUrl, text, "text/html", "UTF-8", ""); // this will load the HTML file with the baseURL
-
-
-    }
 
     /**
      * the methods below is for checking if java can communicate with Javascript
@@ -205,47 +130,49 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, V
      */
     @Override
     public void fireReadyEvent() {
-        addJavaScript("mraid.fireReadyEvent();");
+       super.addJavascript(webView,"mraid.fireReadyEvent();");
         Log.i("info", "READYYYY NIFFFOOOO");
+
+
 
 
     }
 
     @Override
     public void getScreenSize() {
-        addJavaScript("mraid.getScreenSize();");
+        super.addJavascript(webView,"mraid.getScreenSize();");
         Log.i("Info about Screen Size ", "Screen size is working");
     }
 
     @Override
     public void isViewable() {
-        addJavaScript("mraid.isViewable();");
+        super.addJavascript(webView,"mraid.isViewable();");
         Log.i("info about viewable ", " Viewable works");
 
     }
 
     @Override
     public void getDefaultPosition() {
-        addJavaScript("mraid.getDefaultPosition();");
+        super.addJavascript(webView,"mraid.getDefaultPosition();");
         Log.i("Info default Position ", " Default position is working");
     }
 
     @Override
     public void getState() {
-        addJavaScript("mraid.getState();");
+        super.addJavascript(webView,"mraid.getState();");
         Log.i("info State ", " State is working");
     }
 
     @Override
     public void removeEventListener() {
-        addJavaScript("mraid.removeEventListener();");
+        super.addJavascript(webView,"mraid.removeEventListener();");
         Log.i("info Remove", " Removing");
     }
 
     @Override
     public void fireViewableChangeEvent() {
         Log.i("INFORMATION", "fireViewableChangeEvent");
-        addJavaScript("mraid.fireViewableChangeEvent(" + isViewable + ");");
+        super.addJavascript(webView,"mraid.fireViewableChangeEvent(" + isViewable + ");");
 
 
     }
@@ -260,7 +187,7 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, V
             }
         }
     }
-@Override
+
     public void ScrollEventVMG(float scrollY, float scrollX) {
         int[] location = {0, 0};
         int height = 255;
@@ -269,14 +196,14 @@ public class BlankFragment extends Fragment implements JavascriptInterfaceVMG, V
         int all = height + location[1];
         if (all < 0) {
             isViewable = false;
-            addJavaScript("mraid.fireViewableChangeEvent(" + isViewable + ");");
+            super.addJavascript(webView,"mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
-            addJavaScript("mraid.isViewable();");
+            super.addJavascript(webView,"mraid.isViewable();");
         } else {
             isViewable = true;
-            addJavaScript("mraid.fireViewableChangeEvent(" + isViewable + ");");
+            super.addJavascript(webView,"mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewert", " " + isViewable);
-            addJavaScript("mraid.isViewable();");
+            super.addJavascript(webView,"mraid.isViewable();");
 
         }
         Log.i("sdhg ", "" + scrollY + " " + scrollX + " " + location[0] + " " + location[1]);

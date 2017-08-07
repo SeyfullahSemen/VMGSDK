@@ -1,15 +1,18 @@
 package com.example.user.newapp.BaseFrag;
 
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.webkit.ValueCallback;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.example.user.newapp.EncodedBase;
 import com.example.user.newapp.Interfaces.JavascriptInterfaceVMG;
+import com.example.user.newapp.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,19 +24,18 @@ import static com.example.user.newapp.R.id.webView;
  */
 
 public abstract class VMGBaseFragment extends Fragment {
-    private String HTML;
-    private final String baseUrl = "http://vmg.host/";
+    public  final String HTML = "index.html";
+    public  final String baseUrl = "http://vmg.host/";
     private WebView webview;
     private String mraidJs;
 
     public VMGBaseFragment() {
 
+
     }
 
 
-    public  void addJavascript(String javascript) {
-        addJavascript(webview, javascript);
-    }
+
 
     public  void addJavascript(WebView webView, String javascript) {
         if (!javascript.isEmpty()) {
@@ -63,11 +65,11 @@ public abstract class VMGBaseFragment extends Fragment {
                 Log.i("Info", "Mraiding" + mraidJs);
             }
         });
-        openWeb(baseUrl, HTML);
+        openWeb(webview);
 
     }
 
-    public void openWeb(String baseUrl, String HTML) {
+    public void openWeb(WebView webView) {
         AssetManager assetManager = getActivity().getAssets();
         String text = "";
         try {
@@ -82,7 +84,7 @@ public abstract class VMGBaseFragment extends Fragment {
             e.printStackTrace();
         }
 
-        this.webview.loadDataWithBaseURL(baseUrl, text, "text/html", "UTF-8", "");
+        webView.loadDataWithBaseURL(this.baseUrl, text, "text/html", "UTF-8", "");
     }
 
     @Override
