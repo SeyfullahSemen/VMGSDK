@@ -3,6 +3,7 @@
  */
 package com.example.vmgdemo.BaseFrag;
 
+import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -11,7 +12,7 @@ import android.util.Log;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
-import com.example.user.newapp.encodedFiles.EncodedBase;
+import com.example.vmgdemo.encodedFiles.EncodedBase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +35,7 @@ public abstract class VMGBaseFragment extends Fragment {
 
 
     }
-
+    @SuppressLint("newApi")
     /**
      * with this method we can send calls to out mraid file via java
      * @param webView
@@ -54,6 +55,7 @@ public abstract class VMGBaseFragment extends Fragment {
         }
     }
 
+    @SuppressLint("newApi")
     /**
      * here within this method we add our mraid file to our app
      * @param webview

@@ -234,7 +234,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"Still in the making ",Toast.LENGTH_SHORT).show();
+                openNewFragment(new RecyclerFragment());
+
             }
         });
 

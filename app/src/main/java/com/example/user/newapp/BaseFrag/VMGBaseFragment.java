@@ -1,5 +1,9 @@
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
+ *
+ * this is a class to make everything more efficient it is our very own fragment that the client
+ * can use whenever he makes a new fragment or layout he just needs to add a couple of simple
+ * methods
  */
 package com.example.user.newapp.BaseFrag;
 
@@ -30,6 +34,7 @@ public abstract class VMGBaseFragment extends Fragment {
     public final String HTML = "index.html";
     public final String baseUrl = "http://vmg.host/";
     private String mraidJs;
+
     // this is an empty constructor
     public VMGBaseFragment() {
 
@@ -38,6 +43,7 @@ public abstract class VMGBaseFragment extends Fragment {
 
     /**
      * with this method we can send calls to out mraid file via java
+     *
      * @param webView
      * @param javascript
      */
@@ -57,6 +63,7 @@ public abstract class VMGBaseFragment extends Fragment {
 
     /**
      * here within this method we add our mraid file to our app
+     *
      * @param webview
      */
     public void addMraid(WebView webview) {
@@ -79,6 +86,7 @@ public abstract class VMGBaseFragment extends Fragment {
 
     /**
      * this method opens up our webview filled with the index file and the baseUrl
+     *
      * @param webView
      */
     public void openWeb(WebView webView) {
