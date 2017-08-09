@@ -140,6 +140,8 @@ public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents 
 
     }
 
+
+
     public void ScrollEventVMG(float scrollY, float scrollX) {
         int[] location = {0, 0};
         int height = 255;

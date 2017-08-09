@@ -6,21 +6,28 @@ package com.example.user.newapp;
 
 import android.annotation.SuppressLint;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.support.v4.widget.NestedScrollView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.RelativeLayout;
 
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
+import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
 
 /**
@@ -34,6 +41,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     private boolean isPageFinished = true;
     private boolean isLaidOut = true;
     private NestedScrollView scroll;
+    private RelativeLayout rela;
 
 
     // this is a default constructor this is required in a fragment
@@ -65,6 +73,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         final View v = inflater.inflate(R.layout.fragment_blank, container, false);
         Log.d("info", "We zijn er "); // this is for debugging reasons
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
+        rela = (RelativeLayout) v.findViewById(R.id.rela);
 
         // get the webView that we created in our XML file
         webView = (WebView) v.findViewById(R.id.webView); // get the id of the webview
@@ -151,24 +160,38 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     }
 
 
-    private void scrollEventVMG (float scrollY, float scrollX){
+    private void scrollEventVMG(float scrollY, float scrollX) {
         int[] location = {0, 0};
         int height = 255;
-        webView.getLocationOnScreen(location);
-        int topper = webView.getTop();
-        int all = height + location[1];
-        int half = all/2;
-        if (all < 0 || all > 1430) {
+        int heightOfContent = webView.getContentHeight();
+
+
+        double layoutH = rela.getMeasuredHeight();
+        int width = webView.getWidth();
+        int heightWeb = webView.getHeight();
+
+        Log.i("content Height", "" + heightOfContent);
+        Log.i("widthWeb ", "" + width);
+        Log.i("heightWeb ", "" + heightWeb);
+        int all = heightOfContent + location[1];
+        if (scrollY - webView.getY() > (heightOfContent * VMGConfig.geVMGInstance().getPercentageUp())) {
+            isViewable = false;
+            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+            Log.i("Viewer", " " + isViewable);
+            super.addJavascript(webView, "mraid.isViewable();");
+        } else if (scrollY + layoutH < webView.getY() + (heightOfContent * VMGConfig.geVMGInstance().getPercentageDown())) {
             isViewable = false;
             super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
             super.addJavascript(webView, "mraid.isViewable();");
         } else {
             isViewable = true;
-            super. addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
-            super. addJavascript(webView, "mraid.isViewable();");
+            super.addJavascript(webView, "mraid.isViewable();");
         }
+
+
         Log.i("sdhg ", "" + scrollY + " " + scrollX + " " + location[0] + " " + location[1]);
 
     }

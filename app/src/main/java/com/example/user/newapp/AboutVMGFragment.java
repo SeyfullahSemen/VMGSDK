@@ -138,6 +138,8 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
         super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
 
     }
+
+
     private void scrollEventVMG (float scrollY, float scrollX){
         int[] location = {0, 0};
         int height = 255;

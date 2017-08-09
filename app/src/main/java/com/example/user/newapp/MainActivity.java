@@ -38,6 +38,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.user.newapp.ConfigVMG.VMGConfig;
+
 
 public class MainActivity extends AppCompatActivity {
     /**
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+VMGConfig.geVMGInstance().showValues();
 
 
 ////////////////////////////{FINDING THE ID OF THE COMPONENTS}/////////////////////////////////////////////////////////////////////////////////

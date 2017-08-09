@@ -160,6 +160,8 @@
         call("close"); // this will make a call to the call function which will create a iFrame
 
     };// end close function
+
+
 // this is the removeListenere function which has the ability to remove an event when it is not used
     mraid.removeEventListener = function (event, listener) { // this function has two parameters
         console.log("mraid.removeeventListener " + event + ",  " + String(listener)); // this is for debugging reasons

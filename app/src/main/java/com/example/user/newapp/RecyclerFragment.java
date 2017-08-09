@@ -123,4 +123,6 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
     public void fireViewableChangeEvent() {
 
     }
+
+
 }
