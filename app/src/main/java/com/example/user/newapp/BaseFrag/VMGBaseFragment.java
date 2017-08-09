@@ -35,6 +35,7 @@ public abstract class VMGBaseFragment extends Fragment {
     public final String baseUrl = "http://vmg.host/";
     private String mraidJs;
 
+
     // this is an empty constructor
     public VMGBaseFragment() {
 
@@ -106,6 +107,8 @@ public abstract class VMGBaseFragment extends Fragment {
 
         webView.loadDataWithBaseURL(this.baseUrl, text, "text/html", "UTF-8", "");
     }
+
+
 
     @Override
     public void onResume() {

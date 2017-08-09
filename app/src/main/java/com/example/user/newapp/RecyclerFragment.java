@@ -1,8 +1,9 @@
 package com.example.user.newapp;
 /**
- * copyright  2017 Seyfullah Semen, Video media group
+ * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
+ * <p>
+ * Created by Seyfullah Semen
  */
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,11 +37,9 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
     private WebView webbs;
 
 
-
     public RecyclerFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override

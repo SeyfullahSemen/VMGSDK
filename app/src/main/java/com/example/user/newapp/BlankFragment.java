@@ -88,7 +88,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                ScrollEventVMG(scrollY, scrollX); // we roepen hier de methode aan die we hebben gemaakt in onze BlankFragment
+                scrollEventVMG(scrollY, scrollX); // we roepen hier de methode aan die we hebben gemaakt in onze BlankFragment
 
 
             }
@@ -106,7 +106,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     @Override
     public void fireReadyEvent() {
         super.addJavascript(webView, "mraid.fireReadyEvent();");
-        Log.i("info", "READYYYY NIFFFOOOO");
+        Log.i("info", "READYYYY  TO GOOO");
 
 
     }
@@ -151,28 +151,27 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     }
 
 
-    public void ScrollEventVMG(float scrollY, float scrollX) {
+    private void scrollEventVMG (float scrollY, float scrollX){
         int[] location = {0, 0};
         int height = 255;
         webView.getLocationOnScreen(location);
         int topper = webView.getTop();
         int all = height + location[1];
-        if (all < 0) {
+        int half = all/2;
+        if (all < 0 || all > 1430) {
             isViewable = false;
             super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
             super.addJavascript(webView, "mraid.isViewable();");
         } else {
             isViewable = true;
-            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewert", " " + isViewable);
-            super.addJavascript(webView, "mraid.isViewable();");
-
+            super. addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+            Log.i("Viewer", " " + isViewable);
+            super. addJavascript(webView, "mraid.isViewable();");
         }
         Log.i("sdhg ", "" + scrollY + " " + scrollX + " " + location[0] + " " + location[1]);
 
     }
-
 
 //    /**
 //     * this is our own WebViewClient this will make sure that a new browser will open without closing our app

@@ -142,8 +142,7 @@ Quisque vel tincidunt arcu. Phasellus ullamcorper vitae libero at mattis. Curabi
 
     <string name="home_hello">Welcome to our demo SDK Go to the navigation drawer and choose!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string-array name="cities">
         <item>Amsterdam</item>
         <item>Istanbul</item>

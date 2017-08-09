@@ -62,16 +62,13 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // wannneer er een android app is aangemaakt staan deze twee methodes er standaart in
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);// dit zorgt voor het inladen van de scherm
+        setContentView(R.layout.activity_main);
 
-
-        // dit is de ID van onze textView die is gevuld met lorem ipsum tekst
 
 ////////////////////////////{FINDING THE ID OF THE COMPONENTS}/////////////////////////////////////////////////////////////////////////////////
-        toolbar = (Toolbar) findViewById(R.id.toolbar);// de toolbar die boven op komt
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -83,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            fragmentTransaction.add(R.id.frags_container, fragment); // voeg deze toe aan de frameLayout
-            fragmentTransaction.commit(); // en vergeet het niet te committen
+            fragmentTransaction.add(R.id.frags_container, fragment);
+            fragmentTransaction.commit();
         }// end of the if statement
 
         if (getSupportActionBar() != null) {
@@ -140,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }//end of onPostCreate()
 
     /**
-     * deze methode zorgt ervoor dat de menu wordt gevuld met de items die wij erin hebben gezet
+     * this method takes care of getting the menu filled with the chooseable options
      *
      * @param menu
      * @return
@@ -153,13 +150,6 @@ public class MainActivity extends AppCompatActivity {
     }//end of onCreateOptionsMenu
 
     /**
-     * dit zorgt voor de event wanneer een menu item is geklikt hierdoor kunnen we naar de
-     * volgende paginas gaan
-     * wat wij hier meegeven is het volgende
-     * - als parameter komt er een item in te staan
-     * - daarna vragen we aan de computer om de id op te halen van de gekozen item
-     * - hierna gaat de computer aan de hand van de id bepalen naar welke pagina hij moet gaan
-     *
      * @param item
      * @return
      */
@@ -201,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
         Button about_drawer = (Button) findViewById(R.id.about_drawer);
         Button home = (Button) findViewById(R.id.home);
         Button scroll_drawer = (Button) findViewById(R.id.scroll_drawer);
-        Button ListView = (Button) findViewById(R.id.listview);
-        Button recyclerview = (Button) findViewById(R.id.recyclerview);
+        Button inReadTopListView = (Button) findViewById(R.id.in_read_top_listview);
+        Button inReadToprecyclerview = (Button) findViewById(R.id.in_read_top_recyclerview);
 
         home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,13 +215,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ListView.setOnClickListener(new View.OnClickListener() {
+        inReadTopListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewFragment(new ListViewFragment());
             }
         });
-        recyclerview.setOnClickListener(new View.OnClickListener() {
+        inReadToprecyclerview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewFragment(new RecyclerFragment());
@@ -242,6 +232,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * this is the method for changing from fragment to fragment
+     *
+     * @param fragment
+     */
 
     private void openNewFragment(Fragment fragment) {
         String stateName = ((Object) fragment).getClass().getName();
