@@ -1,5 +1,7 @@
 package com.example.user.newapp.ConfigVMG;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -11,14 +13,18 @@ import java.util.Map;
  */
 
 public class VMGConfig {
+    private static final String TAG = "VMGConfig";
+    // make a static instance of the Singleton
     private static VMGConfig VMGInstance = null;
+    // hashmap for the key value pairs
     private static HashMap<String, Object> VMGValues = new HashMap<>();
+
 
     private VMGConfig() {
     }
 
     /**
-     * create a lazy lazy initialization, this version is thread safe
+     * create a lazy initialization, this version is thread safe
      *
      * @return
      */
@@ -28,8 +34,9 @@ public class VMGConfig {
             synchronized (ConfigClass) {
                 if (VMGInstance == null) {
                     VMGInstance = new VMGConfig();
-                    VMGValues.put("Percentage_up", 0.6);
-                    VMGValues.put("Percentage_under", 0.4);
+                    VMGValues.put("Percentage_up", 0.5);
+                    VMGValues.put("Percentage_under", 0.5);
+                    VMGValues.put("Placement_id", "6178");
 
                 }
             }
@@ -37,30 +44,50 @@ public class VMGConfig {
         return VMGInstance;
     }
 
-    public double getPercentageUp() {
-
-        double percentage_up = (double)VMGValues.get("Percentage_up");
-        Log.i("up ", " " + percentage_up);
-        return percentage_up;
-    }
-
-    public double getPercentageDown() {
-
-        double percentage_down = (double)VMGValues.get("Percentage_under");
-        Log.i("down ", " " + percentage_down);
-        return percentage_down;
-    }
-
-    public void showValues() {
-        Log.i("Config ", " we are Singleton");
-
-
-        for (Map.Entry<String, Object> entry : VMGValues.entrySet()) {
-            Log.i("Values", " " + entry.getKey() + "    " + entry.getValue());
+    /**
+     *  set a new value in the hashmap
+     * @param key
+     * @param value
+     * @param <T>
+     * @param <E>
+     */
+    public   < T extends  String , E > void setValue(T key , E value){
+        if (VMGValues.containsKey(key)){
+            VMGValues.remove(key);
+            VMGValues.put(key,value);
+        }else {
+            VMGValues.put(key, value);
         }
 
-
     }
+
+    /**
+     *  get the values of the hashmap
+     * @return
+     */
+    public  HashMap<String, Object> getValues(){
+        for (Map.Entry<String, Object> entry : VMGValues.entrySet()){
+            Log.i(TAG," "+entry.getKey()+"  "+entry.getValue());
+        }
+        return VMGValues;
+    }
+
+    /**
+     *  get a specific value out of the hashmap
+     * @param key
+     * @return
+     */
+    public Object retrieveSpecific (Object key){
+        Object val = null;
+        if (!VMGValues.containsKey(key)){
+            Log.i(TAG," No value found");
+        }else {
+            val = VMGValues.get(key);
+        }
+       return val;
+    }
+
+
 
 
 }

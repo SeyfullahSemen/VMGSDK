@@ -9,9 +9,11 @@ package com.example.user.newapp;
 
 // dit zijn de libarries die worden gebruikt
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.transition.Transition;
@@ -19,6 +21,7 @@ import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -42,6 +45,9 @@ import com.example.user.newapp.ConfigVMG.VMGConfig;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String SHAREDPREF_PID = "placement_id";
+    public static final String SHAREDPREF_PID_DEFAULT = "6178";
     /**
      * here we decalre our components that we use in our activities
      * we make them private because we dont need to change them in other classes
@@ -68,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-VMGConfig.geVMGInstance().showValues();
+
 
 
 ////////////////////////////{FINDING THE ID OF THE COMPONENTS}/////////////////////////////////////////////////////////////////////////////////
@@ -250,7 +256,7 @@ VMGConfig.geVMGInstance().showValues();
 
             transaction.replace(R.id.frags_container, fragment, ((Object) fragment).getClass().getName());
             transaction.addToBackStack(stateName);
-
+            drawerLayout.closeDrawer(GravityCompat.START);
 
             transaction.commit();
         } catch (IllegalStateException ex) {
@@ -258,6 +264,13 @@ VMGConfig.geVMGInstance().showValues();
             Log.e("Error Fragment ", " " + ex.getMessage());
         }
 
+    }
+
+    public String getPid(Context context) {
+
+        return PreferenceManager
+                .getDefaultSharedPreferences(context)
+                .getString(SHAREDPREF_PID, SHAREDPREF_PID_DEFAULT);
     }
 
 

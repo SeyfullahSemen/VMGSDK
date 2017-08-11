@@ -16,6 +16,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
 
+import com.example.user.newapp.MainActivity;
 import com.example.user.newapp.encodedFiles.EncodedBase;
 
 import java.io.IOException;
@@ -40,6 +41,10 @@ public abstract class VMGBaseFragment extends Fragment {
     public VMGBaseFragment() {
 
 
+    }
+
+    public String getPid(){
+        return ((MainActivity) getActivity()).getPid(this.getActivity());
     }
 
     /**
