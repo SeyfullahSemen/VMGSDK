@@ -66,10 +66,16 @@ public class VMGConfig {
      * @return
      */
     public  HashMap<String, Object> getValues(){
-        for (Map.Entry<String, Object> entry : VMGValues.entrySet()){
-            Log.i(TAG," "+entry.getKey()+"  "+entry.getValue());
+        if (VMGValues.isEmpty()){
+            Log.i(TAG, "There are no values");
+            return null;
+        }else {
+            for (Map.Entry<String, Object> entry : VMGValues.entrySet()) {
+                Log.i(TAG, " " + entry.getKey() + "  " + entry.getValue());
+            }
+            return VMGValues;
         }
-        return VMGValues;
+
     }
 
     /**

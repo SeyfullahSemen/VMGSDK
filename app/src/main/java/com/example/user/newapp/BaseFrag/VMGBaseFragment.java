@@ -1,6 +1,6 @@
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
- *
+ * <p>
  * this is a class to make everything more efficient it is our very own fragment that the client
  * can use whenever he makes a new fragment or layout he just needs to add a couple of simple
  * methods
@@ -16,6 +16,8 @@ import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
 
+import com.example.user.newapp.ConfigVMG.VMGBuilder;
+import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.MainActivity;
 import com.example.user.newapp.encodedFiles.EncodedBase;
 
@@ -35,16 +37,15 @@ public abstract class VMGBaseFragment extends Fragment {
     public final String HTML = "index.html";
     public final String baseUrl = "http://vmg.host/";
     private String mraidJs;
+    private VMGBuilder builder;
 
 
     // this is an empty constructor
     public VMGBaseFragment() {
 
+        builder = new VMGBuilder("6178");
+        VMGConfig.geVMGInstance().getValues();
 
-    }
-
-    public String getPid(){
-        return ((MainActivity) getActivity()).getPid(this.getActivity());
     }
 
     /**
@@ -112,7 +113,6 @@ public abstract class VMGBaseFragment extends Fragment {
 
         webView.loadDataWithBaseURL(this.baseUrl, text, "text/html", "UTF-8", "");
     }
-
 
 
     @Override

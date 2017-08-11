@@ -75,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-
 ////////////////////////////{FINDING THE ID OF THE COMPONENTS}/////////////////////////////////////////////////////////////////////////////////
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -266,12 +264,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public String getPid(Context context) {
 
-        return PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .getString(SHAREDPREF_PID, SHAREDPREF_PID_DEFAULT);
-    }
 
 
 }

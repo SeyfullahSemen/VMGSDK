@@ -95,7 +95,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                scrollEventVMG(scrollY, scrollX); // we roepen hier de methode aan die we hebben gemaakt in onze BlankFragment
+                scrollEventVMG(scrollY, scrollX,rela,webView); // we roepen hier de methode aan die we hebben gemaakt in onze BlankFragment
 
 
             }
@@ -169,7 +169,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
      * @param scrollY
      * @param scrollX
      */
-    private void scrollEventVMG(float scrollY, float scrollX) {
+    private void scrollEventVMG(float scrollY, float scrollX, ViewGroup rela,WebView webView) {
         int[] location = {0, 0}; // save the locations x and y of the sroll
 
         int heightOfContent = webView.getContentHeight(); // get the heigth of the webview
