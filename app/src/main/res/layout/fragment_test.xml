@@ -1,18 +1,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rela_test"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.user.newapp.TestFragment">
 
+<com.example.user.newapp.VMGCustom.VMGCustomView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:exampleColor="#33b5e5"
+    app:exampleDimension="24sp"
+    app:exampleDrawable="@android:drawable/ic_menu_add"
+    app:exampleString="Hello, VMGCustomView"
+    >
 
-    <WebView
-        android:id="@+id/webView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="218dp"></WebView>
-
+</com.example.user.newapp.VMGCustom.VMGCustomView>
 
 </RelativeLayout>

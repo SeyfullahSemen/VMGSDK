@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
+import com.example.user.newapp.VMGCustom.VMGCustomView;
 
 
 /**
@@ -19,7 +20,7 @@ import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 public class TestFragment extends VMGBaseFragment {
     private WebView webView2;
     private NestedScrollView nestedTest;
-    private VMGCustomView rela_test;
+    private VMGCustomView view;
 
 
 
@@ -36,10 +37,10 @@ public class TestFragment extends VMGBaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_test, container, false);
-         webView2 = (WebView) v.findViewById(R.id.webView2);
 
-         rela_test = (VMGCustomView) v.findViewById(R.id.rela_test);
-         super.startVMG(webView2);
+
+
+
 
 
 
