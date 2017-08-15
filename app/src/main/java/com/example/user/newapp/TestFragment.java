@@ -37,9 +37,9 @@ public class TestFragment extends VMGBaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_test, container, false);
+        webView2 = (WebView) v.findViewById(R.id.webview2);
 
-
-
+super.startVMG(webView2);
 
 
 
