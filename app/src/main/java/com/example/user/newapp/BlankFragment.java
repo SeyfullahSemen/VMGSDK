@@ -74,11 +74,6 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         rela = (RelativeLayout) v.findViewById(R.id.rela);
         webView = (WebView) v.findViewById(R.id.webView);
 
-        super.startVMG(webView); // this will start everything that you need to load inside the view
-
-        getScreenSize();
-        super.addJavascript(webView, "mraid.isViewable();");
-
 
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -89,7 +84,8 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
             }
         });
 
-
+        getScreenSize();
+        super.addJavascript(webView, "mraid.isViewable();");
         super.addJavascript(webView, "mraid.getState();");// get the state of our mraid
         return v; // return the view
     }
@@ -97,6 +93,8 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        super.startVMG(webView); // this will start everything that you need to load inside the view
         vmg = new VMGBuilder(getActivity(), "6178");
 
 
@@ -152,7 +150,6 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
 
 
     }
-
 
 
 //    /**

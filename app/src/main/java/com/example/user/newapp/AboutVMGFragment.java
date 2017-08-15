@@ -53,25 +53,19 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
         about__scroll = (NestedScrollView) v.findViewById(R.id.scroll__about);
         layout_about = (LinearLayout) v.findViewById(R.id.layout_about);
 
-        webView.setBackgroundColor(Color.TRANSPARENT); // set the background to transparent
-        WebSettings settings = webView.getSettings(); // this is for enabling the javascript
-        settings.setJavaScriptEnabled(true); // set javascript enabled
 
-        // set debugging on for debugging on google chrome
-        webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
-
+        super.startVMG(webView);
 
         about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                AboutVMGFragment.super.VMGScrollEvent(scrollX,scrollY,layout_about,webView);
+                AboutVMGFragment.super.VMGScrollEvent(scrollY,scrollX,layout_about,webView);
 
             }
         });
 
 
-        super.openWeb(webView);
-        super.addMraid(webView);
+
 
         fireReadyEvent();
 
@@ -144,50 +138,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
 
     }
 
-//    /**
-//     *
-//     * @param scrollY
-//     * @param scrollX
-//     * @param rela
-//     * @param webView
-//     */
-//    private void scrollEventVMG(float scrollY, float scrollX, ViewGroup rela,WebView webView) {
-//        int[] location = {0, 0}; // save the locations x and y of the sroll
-//
-//        int heightOfContent = webView.getContentHeight(); // get the heigth of the webview
-//
-//
-//        double layoutH = rela.getMeasuredHeight(); // get the height of the layout where the webview is saved in
-//        int width = webView.getWidth(); // get the width of the webview
-//        int heightWeb = webView.getHeight(); // get the height of the webview
-//
-//        Log.i("content Height", "" + heightOfContent);
-//        Log.i("widthWeb ", "" + width);
-//        Log.i("heightWeb ", "" + heightWeb);
-////        int all = heightOfContent + location[1];
-//        if (scrollY - webView.getY() > (heightOfContent * (double) VMGConfig.geVMGInstance().retrieveSpecific("Percentage_up"))) {
-//            isViewable = false;
-//            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-//            Log.i("Viewer", " " + isViewable );
-//            super.addJavascript(webView, "mraid.isViewable();");
-//        } else if (scrollY + layoutH < webView.getY() + (heightOfContent * (double) VMGConfig.geVMGInstance().retrieveSpecific("Percentage_under"))) {
-//            isViewable = false;
-//            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-//            Log.i("Viewer", " " + isViewable );
-//            super.addJavascript(webView, "mraid.isViewable();");
-//        } else {
-//
-//            isViewable = true;
-//            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-//            Log.i("Viewer", " " + isViewable);
-//            super.addJavascript(webView, "mraid.isViewable();");
-//            fireReadyEvent(); // fire the ready event
-//        }
-//
-//
-//        Log.i("sdhg ", "" + scrollY + " " + scrollX + " " + location[0] + " " + location[1]);
-//
-//    }
+
 
 
 

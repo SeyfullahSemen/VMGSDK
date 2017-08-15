@@ -49,17 +49,7 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
         View v = inflater.inflate(R.layout.fragment_recycler, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler);
         webbs = (WebView) v.findViewById(R.id.webbs); // get the id of the webview
-        webbs.setBackgroundColor(Color.TRANSPARENT); // set the background to transparent
-        WebSettings settings = webbs.getSettings(); // this is for enabling the javascript
-        settings.setJavaScriptEnabled(true); // set javascript enabled
-
-        // set debugging on for debugging on google chrome
-        webbs.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
-        // we use our own webViewClient so we have more control over our webView
-//     webView.setWebViewClient(new VMGWebViewClient());
-        // here we add our mraid file
-        super.openWeb(webbs);
-        super.addMraid(webbs);
+        super.startVMG(webbs);
         fireReadyEvent(); // fire the ready event
         super.addJavascript(webbs, "mraid.isViewable();");
 

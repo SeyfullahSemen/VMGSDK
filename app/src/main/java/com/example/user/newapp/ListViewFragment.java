@@ -41,18 +41,7 @@ public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents 
         listView = (ListView) v.findViewById(R.id.listView);
 
         webber = (WebView) v.findViewById(R.id.webber); // get the id of the webview
-        webber.setBackgroundColor(Color.TRANSPARENT); // set the background to transparent
-        WebSettings settings = webber.getSettings(); // this is for enabling the javascript
-        settings.setJavaScriptEnabled(true); // set javascript enabled
-
-        // set debugging on for debugging on google chrome
-        webber.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
-        // we use our own webViewClient so we have more control over our webView
-//     webView.setWebViewClient(new VMGWebViewClient());
-        // here we add our mraid file
-        super.openWeb(webber);
-        super.addMraid(webber);
-        // here we test a couple of things to check whether mraid is working with java or not
+      super.startVMG(webber);
 
         fireReadyEvent(); // fire the ready event
         getScreenSize();
@@ -142,27 +131,7 @@ public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents 
 
 
 
-    public void ScrollEventVMG(float scrollY, float scrollX) {
-        int[] location = {0, 0};
-        int height = 255;
-        webber.getLocationOnScreen(location);
-        int topper = webber.getTop();
-        int all = height + location[1];
-        if (all < 0) {
-            isViewable = false;
-            super.addJavascript(webber, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewer", " " + isViewable);
-            super.addJavascript(webber, "mraid.isViewable();");
-        } else {
-            isViewable = true;
-            super.addJavascript(webber, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewert", " " + isViewable);
-            super.addJavascript(webber, "mraid.isViewable();");
 
-        }
-        Log.i("sdhg ", "" + scrollY + " " + scrollX + " " + location[0] + " " + location[1]);
-
-    }
 
 
 }
