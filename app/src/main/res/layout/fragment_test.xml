@@ -1,44 +1,18 @@
-<RelativeLayout
-    android:id="@+id/rela_test"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rela_test"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.user.newapp.TestFragment">
 
 
-<android.support.v4.widget.NestedScrollView
-    android:id="@+id/nestedTest"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
     <WebView
-
+        android:id="@+id/webView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/webView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="244dp">
-
-    </WebView>
-
-
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/webView2"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="34dp"
-        android:text="TextView" />
-    </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>
+        android:layout_marginTop="218dp"></WebView>
 
 
 </RelativeLayout>

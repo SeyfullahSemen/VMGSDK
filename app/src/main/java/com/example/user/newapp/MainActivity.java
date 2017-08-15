@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private FrameLayout frags_container;
-    private HomeFragment fragment = new HomeFragment();
+    private TestFragment fragment = new TestFragment();
 
     private NavigationView navigation_view;
     private DrawerLayout.DrawerListener drawerListener;

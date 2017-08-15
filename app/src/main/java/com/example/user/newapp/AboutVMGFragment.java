@@ -1,7 +1,7 @@
 package com.example.user.newapp;
 
 /**
- *Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
+ * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  */
 
 import android.graphics.Color;
@@ -33,7 +33,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     private ImageView img_logo_about;
     private TextView text_about;
     private WebView webView;
-    private boolean  isViewable ;
+    private boolean isViewable;
     private NestedScrollView about__scroll;
     private LinearLayout layout_about;
 
@@ -59,12 +59,10 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
         about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                AboutVMGFragment.super.VMGScrollEvent(scrollY,scrollX,layout_about,webView);
+                AboutVMGFragment.super.VMGScrollEvent(scrollY, scrollX, layout_about, webView);
 
             }
         });
-
-
 
 
         fireReadyEvent();
@@ -100,7 +98,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void fireReadyEvent() {
         Log.i(TAG, " fired the ready event");
-        super.addJavascript(webView,"mraid.fireReadyEvent()");
+        super.addJavascript(webView, "mraid.fireReadyEvent()");
 
     }
 
@@ -112,7 +110,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void isViewable() {
         Log.i(TAG, " VIEWABLE");
-        super.addJavascript(webView,"mraid.isViewable()");
+        super.addJavascript(webView, "mraid.isViewable()");
 
     }
 
@@ -137,9 +135,6 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
         super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
 
     }
-
-
-
 
 
 }
