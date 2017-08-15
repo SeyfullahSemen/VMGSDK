@@ -1,27 +1,29 @@
 package com.example.user.newapp.ConfigVMG;
-
-import android.util.Log;
-
 /**
- * Created by User on 11-8-2017.
+ * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
+ * <p>
  */
 
-public class VMGBuilder {
-    private static String TAG  =  "VMGBuilder";
+
+
+import android.content.Context;
+
+import com.example.user.newapp.BaseFrag.VMGBaseFragment;
+
+/**
+ * Created by Seyfullah Semen on 11-8-2017.
+ */
+
+public class VMGBuilder  {
+    private static String TAG = "VMGBuilder";
     private String placementId;
-    private VMGConfig config;
 
-    public VMGBuilder(String placementId){
+
+    public VMGBuilder(Context context , String placementId) {
         this.placementId = placementId;
-        config = VMGConfig.geVMGInstance();
-        config.setValue("test",0.6);
-
-        Log.i("vals",""+config.getValues());
-
-
-
-        Log.i(TAG,""+config.retrieveSpecific("test"));
-
+        VMGConfig.geVMGInstance();
 
     }
+
+
 }

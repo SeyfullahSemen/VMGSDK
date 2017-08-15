@@ -46,8 +46,7 @@ import com.example.user.newapp.ConfigVMG.VMGConfig;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String SHAREDPREF_PID = "placement_id";
-    public static final String SHAREDPREF_PID_DEFAULT = "6178";
+
     /**
      * here we decalre our components that we use in our activities
      * we make them private because we dont need to change them in other classes

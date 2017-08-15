@@ -16,14 +16,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
+
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.ConfigVMG.VMGBuilder;
-import com.example.user.newapp.ConfigVMG.VMGConfig;
+
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
 
 /**
@@ -63,7 +63,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
      * @param savedInstanceState
      * @return
      */
-    @SuppressLint("newApi")
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,21 +72,9 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         Log.d(TAG, "We zijn er "); // this is for debugging reasons
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
         rela = (RelativeLayout) v.findViewById(R.id.rela);
+        webView = (WebView) v.findViewById(R.id.webView);
 
-        // get the webView that we created in our XML file
-        webView = (WebView) v.findViewById(R.id.webView); // get the id of the webview
-        webView.setBackgroundColor(Color.TRANSPARENT); // set the background to transparent
-        WebSettings settings = webView.getSettings(); // this is for enabling the javascript
-        settings.setJavaScriptEnabled(true); // set javascript enabled
-
-        // set debugging on for debugging on google chrome
-        webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
-        // we use our own webViewClient so we have more control over our webView
-//     webView.setWebViewClient(new VMGWebViewClient());
-        super.openWeb(webView);
-        super.addMraid(webView);
-        // here we test a couple of things to check whether mraid is working with java or not
-
+        super.startVMG(webView); // this will start everything that you need to load inside the view
 
         getScreenSize();
         super.addJavascript(webView, "mraid.isViewable();");
@@ -95,7 +83,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                scrollEventVMG(scrollY, scrollX,rela,webView); // we roepen hier de methode aan die we hebben gemaakt in onze BlankFragment
+                BlankFragment.super.VMGScrollEvent(scrollY, scrollX, rela, webView);
 
 
             }
@@ -109,7 +97,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        vmg = new VMGBuilder("6178");
+        vmg = new VMGBuilder(getActivity(), "6178");
 
 
     }
@@ -165,47 +153,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
 
     }
 
-    /**
-     * @param scrollY
-     * @param scrollX
-     */
-    private void scrollEventVMG(float scrollY, float scrollX, ViewGroup rela,WebView webView) {
-        int[] location = {0, 0}; // save the locations x and y of the sroll
 
-        int heightOfContent = webView.getContentHeight(); // get the heigth of the webview
-
-
-        double layoutH = rela.getMeasuredHeight(); // get the height of the layout where the webview is saved in
-        int width = webView.getWidth(); // get the width of the webview
-        int heightWeb = webView.getHeight(); // get the height of the webview
-
-        Log.i("content Height", "" + heightOfContent);
-        Log.i("widthWeb ", "" + width);
-        Log.i("heightWeb ", "" + heightWeb);
-//        int all = heightOfContent + location[1];
-        if (scrollY - webView.getY() > (heightOfContent * (double) VMGConfig.geVMGInstance().retrieveSpecific("Percentage_up"))) {
-            isViewable = false;
-            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewer", " " + isViewable );
-            super.addJavascript(webView, "mraid.isViewable();");
-        } else if (scrollY + layoutH < webView.getY() + (heightOfContent * (double) VMGConfig.geVMGInstance().retrieveSpecific("Percentage_under"))) {
-            isViewable = false;
-            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewer", " " + isViewable );
-            super.addJavascript(webView, "mraid.isViewable();");
-        } else {
-
-            isViewable = true;
-            super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewer", " " + isViewable);
-            super.addJavascript(webView, "mraid.isViewable();");
-            fireReadyEvent(); // fire the ready event
-        }
-
-
-        Log.i("sdhg ", "" + scrollY + " " + scrollX + " " + location[0] + " " + location[1]);
-
-    }
 
 //    /**
 //     * this is our own WebViewClient this will make sure that a new browser will open without closing our app
