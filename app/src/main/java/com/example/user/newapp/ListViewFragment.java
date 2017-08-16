@@ -86,7 +86,7 @@ public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void fireReadyEvent() {
         super.addJavascript(webber, "mraid.fireReadyEvent();");
-        Log.i("info", "READYYYY NIFFFOOOO");
+        Log.i("info", "READYYYY TO GOO");
 
 
     }

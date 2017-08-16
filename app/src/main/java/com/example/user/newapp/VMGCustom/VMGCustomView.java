@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 
@@ -31,8 +32,10 @@ public class VMGCustomView extends WebView {
 
 
         WebView webView = (WebView) findViewById(R.id.our_web);
-        setBackgroundColor(Color.TRANSPARENT); // set the background to transparent
-
+        setBackgroundColor(Color.WHITE); // set the background to transparent
+        setWebViewClient(new VMGWebViewClient());
+         setTranslationZ(16);
+        setElevation(10);
         animate();
     }
 
@@ -51,7 +54,7 @@ public class VMGCustomView extends WebView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        // TODO: consider storing these as member variables to reduce
+
         // allocations per draw cycle.
         int paddingLeft = getPaddingLeft();
         int paddingTop = getPaddingTop();
