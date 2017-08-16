@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
+import com.example.user.newapp.ConfigVMG.VMGBuilder;
 import com.example.user.newapp.VMGCustom.VMGCustomView;
 
 
@@ -23,6 +24,7 @@ public class TestFragment extends VMGBaseFragment {
     private NestedScrollView scroller;
     private RelativeLayout rela_test;
     private VMGCustomView view;
+   private  VMGBuilder build;
 
 
     public TestFragment() {
@@ -48,6 +50,7 @@ public class TestFragment extends VMGBaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       build = new VMGBuilder(getActivity());
 
     }
 }

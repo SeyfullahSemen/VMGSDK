@@ -97,7 +97,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         super.onViewCreated(view, savedInstanceState);
 
         super.startVMG(webView); // this will start everything that you need to load inside the view
-        vmg = new VMGBuilder(getActivity(), "6178");
+
 
 
     }

@@ -57,13 +57,13 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
 
         super.startVMG(view);
 
-        about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                AboutVMGFragment.super.VMGScrollEvent(scrollY, scrollX, layout_about, view);
-
-            }
-        });
+//        about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                AboutVMGFragment.super.VMGScrollEvent(scrollY, scrollX, layout_about, view);
+//
+//            }
+//        });
 
 
         fireReadyEvent();

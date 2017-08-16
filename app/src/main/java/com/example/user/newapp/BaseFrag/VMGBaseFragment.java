@@ -7,6 +7,7 @@
  */
 package com.example.user.newapp.BaseFrag;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
@@ -135,16 +136,17 @@ public abstract class VMGBaseFragment extends Fragment {
         int width = custom.getWidth(); // get the width of the webview
         int heightWeb = custom.getHeight(); // get the height of the webview
 
+
         Log.i("content Height", "" + heightOfContent);
         Log.i("widthWeb ", "" + width);
         Log.i("heightWeb ", "" + heightWeb);
 //        int all = heightOfContent + location[1];
-        if (scrollY - custom.getY() > (heightOfContent * (double) VMGConfig.geVMGInstance().retrieveSpecific("Percentage_up"))) {
+        if (scrollY - custom.getY() > (heightOfContent *  (double)VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("topOffset"))) {
             isViewable = false;
             addJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewer", " " + isViewable);
+            Log.i("Viewer", " " + isViewable+"  ");
             addJavascript(custom, "mraid.isViewable();");
-        } else if (scrollY + layoutH < custom.getY() + (heightOfContent * (double) VMGConfig.geVMGInstance().retrieveSpecific("Percentage_under"))) {
+        } else if (scrollY + layoutH < custom.getY() + (heightOfContent * (double) VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("bottomOffset"))) {
             isViewable = false;
             addJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
