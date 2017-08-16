@@ -154,20 +154,6 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     }
 
 
-//    /**
-//     * this is our own WebViewClient this will make sure that a new browser will open without closing our app
-//     */
-//    private class VMGWebViewClient extends WebViewClient {
-//        @Override
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//
-//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-//            startActivity(intent);
-//            return true;
-//        }
-//
-//
-//    }
 
 
 }

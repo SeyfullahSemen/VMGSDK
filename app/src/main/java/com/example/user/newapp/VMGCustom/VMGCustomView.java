@@ -9,11 +9,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 
 
-import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 
 
 import com.example.user.newapp.R;
@@ -24,28 +20,28 @@ public class VMGCustomView extends WebView {
 
     public VMGCustomView(Context context) {
         super(context);
-//        init(context,null, 0);
+        init(context, null, 0);
     }
 
     public VMGCustomView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context, attrs, 0);
 
 
-        WebView webView = (WebView) findViewById(R.id.our_web);
-        setBackgroundColor(Color.WHITE); // set the background to transparent
-        setWebViewClient(new VMGWebViewClient());
-         setTranslationZ(16);
-        setElevation(10);
-        animate();
     }
 
     public VMGCustomView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-//        init(context,attrs, defStyle);
+        init(context, attrs, defStyle);
     }
 
     private void init(Context context, AttributeSet attrs, int defStyle) {
+        WebView webView = (WebView) findViewById(R.id.our_web);
+        setBackgroundColor(Color.WHITE); // set the background to transparent
 
+        setTranslationZ(16);
+        setElevation(10);
+        animate();
 
     }
 

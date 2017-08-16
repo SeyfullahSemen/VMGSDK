@@ -34,8 +34,8 @@ public class VMGConfig {
             synchronized (ConfigClass) {
                 if (VMGInstance == null) {
                     VMGInstance = new VMGConfig();
-                    VMGValues.put("Percentage_up", 0.5);
-                    VMGValues.put("Percentage_under", 0.5);
+                    VMGValues.put("Percentage_up", 0.6);
+                    VMGValues.put("Percentage_under", 0.4);
                     VMGValues.put("Placement_id", "6178");
 
                 }

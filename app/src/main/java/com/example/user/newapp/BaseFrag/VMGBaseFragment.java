@@ -73,6 +73,8 @@ public abstract class VMGBaseFragment extends Fragment {
         }
     }
 
+
+
     /**
      * @param custom
      */
