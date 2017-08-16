@@ -25,6 +25,7 @@ import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.ConfigVMG.VMGBuilder;
 
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
+import com.example.user.newapp.VMGCustom.VMGCustomView;
 
 /**
  * Created by Seyfullah Semen
@@ -33,7 +34,7 @@ import com.example.user.newapp.Interfaces.VMGMraidEvents;
 public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     private static final String TAG = "BlankFragment";
     // create the variables
-    private WebView webView;
+    private VMGCustomView webView;
     private boolean isViewable;
     private boolean isPageFinished = true;
     private boolean isLaidOut = true;
@@ -72,7 +73,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         Log.d(TAG, "We zijn er "); // this is for debugging reasons
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
         rela = (RelativeLayout) v.findViewById(R.id.rela);
-        webView = (WebView) v.findViewById(R.id.webView);
+        webView = (VMGCustomView) v.findViewById(R.id.webView);
 
 
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {

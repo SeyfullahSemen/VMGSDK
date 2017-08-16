@@ -36,17 +36,18 @@
                 android:textColor="@android:color/black"
                 android:background="@android:color/white"
                 />
-            <WebView
+
+
+            <com.example.user.newapp.VMGCustom.VMGCustomView
                 android:id="@+id/webView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"></WebView>
-
+                android:layout_alignParentEnd="true"
+                />
             <TextView
                 android:id="@+id/txtAbout"
 

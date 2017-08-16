@@ -23,6 +23,7 @@ import android.widget.ListView;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
+import com.example.user.newapp.VMGCustom.VMGCustomView;
 import com.example.user.newapp.adapters.RecycleAdapter;
 
 import java.util.ArrayList;
@@ -34,7 +35,8 @@ import java.util.List;
  */
 public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents {
     protected RecyclerView mRecyclerView;
-    private WebView webbs;
+    private VMGCustomView webbs;
+
 
 
     public RecyclerFragment() {
@@ -48,7 +50,7 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_recycler, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler);
-        webbs = (WebView) v.findViewById(R.id.webbs); // get the id of the webview
+        webbs = (VMGCustomView) v.findViewById(R.id.webbs); // get the id of the webview
         super.startVMG(webbs);
         fireReadyEvent(); // fire the ready event
         super.addJavascript(webbs, "mraid.isViewable();");

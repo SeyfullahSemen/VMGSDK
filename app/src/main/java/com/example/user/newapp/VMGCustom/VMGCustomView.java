@@ -1,22 +1,24 @@
 package com.example.user.newapp.VMGCustom;
 
 import android.content.Context;
-import android.content.res.TypedArray;
+
 import android.graphics.Canvas;
+
+
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.media.audiofx.BassBoost;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 
+
+import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 
-/**
- * TODO: document your custom view class.
- */
-public class VMGCustomView extends LinearLayout {
+import com.example.user.newapp.R;
+
+
+public class VMGCustomView extends WebView {
 
 
     public VMGCustomView(Context context) {
@@ -28,7 +30,10 @@ public class VMGCustomView extends LinearLayout {
         super(context, attrs);
 
 
+        WebView webView = (WebView) findViewById(R.id.our_web);
+        setBackgroundColor(Color.TRANSPARENT); // set the background to transparent
 
+        animate();
     }
 
     public VMGCustomView(Context context, AttributeSet attrs, int defStyle) {
@@ -39,9 +44,7 @@ public class VMGCustomView extends LinearLayout {
     private void init(Context context, AttributeSet attrs, int defStyle) {
 
 
-
     }
-
 
 
     @Override

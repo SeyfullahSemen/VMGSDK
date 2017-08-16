@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
+import com.example.user.newapp.VMGCustom.VMGCustomView;
 
 
 /**
@@ -22,7 +23,7 @@ import com.example.user.newapp.Interfaces.VMGMraidEvents;
  */
 public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents {
     private ListView listView;
-    private WebView webber;
+    private VMGCustomView webber;
 
     private boolean isViewable;
     private boolean isPageFinished = true;
@@ -40,7 +41,7 @@ public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents 
         View v = inflater.inflate(R.layout.fragment_list_view, container, false);
         listView = (ListView) v.findViewById(R.id.listView);
 
-        webber = (WebView) v.findViewById(R.id.webber); // get the id of the webview
+        webber = (VMGCustomView) v.findViewById(R.id.webber); // get the id of the webview
       super.startVMG(webber);
 
         fireReadyEvent(); // fire the ready event

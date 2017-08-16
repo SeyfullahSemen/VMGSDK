@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.user.newapp.RecyclerFragment">
 
-    <WebView
+
+    <com.example.user.newapp.VMGCustom.VMGCustomView
         android:id="@+id/webbs"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></WebView>
+        android:layout_height="wrap_content"></com.example.user.newapp.VMGCustom.VMGCustomView>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

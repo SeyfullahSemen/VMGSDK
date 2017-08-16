@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private FrameLayout frags_container;
-    private TestFragment fragment = new TestFragment();
+    private HomeFragment fragment = new HomeFragment();
 
     private NavigationView navigation_view;
     private DrawerLayout.DrawerListener drawerListener;
@@ -165,17 +165,17 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) { // pak de ID van de gekozen Item uit de menu
 
-            case R.id.about:
-                openNewFragment(new AboutVMGFragment());
-                break;
+//            case R.id.about:
+//                openNewFragment(new AboutVMGFragment());
+//                break;
 
             case R.id.home:
                 openNewFragment(new HomeFragment());
                 break;
-
-            case R.id.scroller_id:
-                openNewFragment(new BlankFragment());
-                break;
+//
+//            case R.id.scroller_id:
+//                openNewFragment(new BlankFragment());
+//                break;
 
             default:
                 return super.onOptionsItemSelected(item);

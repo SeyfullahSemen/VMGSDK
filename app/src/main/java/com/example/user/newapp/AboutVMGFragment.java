@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
+import com.example.user.newapp.VMGCustom.VMGCustomView;
 
 
 /**
@@ -32,7 +33,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     private static final String TAG = "About fragment";
     private ImageView img_logo_about;
     private TextView text_about;
-    private WebView webView;
+    private VMGCustomView view;
     private boolean isViewable;
     private NestedScrollView about__scroll;
     private LinearLayout layout_about;
@@ -49,17 +50,17 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
         View v = inflater.inflate(R.layout.fragment_about_vmg, container, false);
         img_logo_about = (ImageView) v.findViewById(R.id.img_logo_about);
         text_about = (TextView) v.findViewById(R.id.text_about);
-        webView = (WebView) v.findViewById(R.id.web_about);
+        view = (VMGCustomView) v.findViewById(R.id.web_about);
         about__scroll = (NestedScrollView) v.findViewById(R.id.scroll__about);
         layout_about = (LinearLayout) v.findViewById(R.id.layout_about);
 
 
-        super.startVMG(webView);
+        super.startVMG(view);
 
         about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                AboutVMGFragment.super.VMGScrollEvent(scrollY, scrollX, layout_about, webView);
+                AboutVMGFragment.super.VMGScrollEvent(scrollY, scrollX, layout_about, view);
 
             }
         });
@@ -98,7 +99,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void fireReadyEvent() {
         Log.i(TAG, " fired the ready event");
-        super.addJavascript(webView, "mraid.fireReadyEvent()");
+        super.addJavascript(view, "mraid.fireReadyEvent()");
 
     }
 
@@ -110,7 +111,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void isViewable() {
         Log.i(TAG, " VIEWABLE");
-        super.addJavascript(webView, "mraid.isViewable()");
+        super.addJavascript(view, "mraid.isViewable()");
 
     }
 
@@ -132,7 +133,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void fireViewableChangeEvent() {
         Log.i("INFORMATION", "fireViewableChangeEvent");
-        super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+        super.addJavascript(view, "mraid.fireViewableChangeEvent(" + isViewable + ");");
 
     }
 

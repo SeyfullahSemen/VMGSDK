@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.RelativeLayout;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.VMGCustom.VMGCustomView;
@@ -18,34 +19,28 @@ import com.example.user.newapp.VMGCustom.VMGCustomView;
  * A simple {@link Fragment} subclass.
  */
 public class TestFragment extends VMGBaseFragment {
-    private WebView webView2;
-    private NestedScrollView nestedTest;
+
+    private NestedScrollView scroller;
+    private RelativeLayout rela_test;
     private VMGCustomView view;
 
 
-
-
-
-    public TestFragment (){
-    super();
+    public TestFragment() {
+        super();
     }
 
 
-
-     @Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_test, container, false);
-        webView2 = (WebView) v.findViewById(R.id.webview2);
 
-super.startVMG(webView2);
+        scroller = (NestedScrollView) v.findViewById(R.id.scroller);
+        rela_test = (RelativeLayout) v.findViewById(R.id.rela_test);
+        view = (VMGCustomView) v.findViewById(R.id.VMGCustomView);
 
-
-
-
-
-
+        super.startVMG(view);
 
         return v;
     }
