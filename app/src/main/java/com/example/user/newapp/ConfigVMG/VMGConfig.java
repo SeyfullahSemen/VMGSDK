@@ -39,9 +39,12 @@ public class VMGConfig {
     private boolean active = false ;
     private long modDate = 1502920800;
     private String launch = "";
-    private String placementId = "";
+
     private static String url = "http://staging.vmg.host/adServ/config/id/6194";
+    public static String baseUrl = "http://staging.vmg.host";
+    public  static String placementId = "6194";
     private static final String TAG = "VMGConfig";
+
     // make a static instance of the Singleton
     private static VMGConfig VMGInstance = null;
 
@@ -157,11 +160,14 @@ public class VMGConfig {
         return val;
     }
 
-
+    /**
+     * 
+     * @param context
+     */
     private static void getObject(final Context context) {
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                url, null, new Response.Listener<JSONObject>() {
+                VMGUrlBuilder.getConfigUrl(), null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {

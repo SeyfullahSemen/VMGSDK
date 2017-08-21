@@ -30,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.user.newapp.ConfigVMG.VMGBuilder;
 import com.example.user.newapp.ConfigVMG.VMGConfig;
+import com.example.user.newapp.ConfigVMG.VMGUrlBuilder;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
 import com.example.user.newapp.MainActivity;
 import com.example.user.newapp.R;
@@ -111,8 +112,8 @@ public abstract class VMGBaseFragment extends Fragment {
      * @param custom
      */
     private void openWeb(VMGCustomView custom) {
-
-        custom.loadUrl("http://staging.vmg.host/adServ/placement/id/6194");
+        custom.loadUrl(VMGUrlBuilder.getPlacementUrl());
+//        custom.loadUrl("http://staging.vmg.host/adServ/placement/id/6194");
 
 
     }
