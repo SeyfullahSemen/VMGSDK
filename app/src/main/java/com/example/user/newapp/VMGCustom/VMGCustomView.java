@@ -1,5 +1,12 @@
 package com.example.user.newapp.VMGCustom;
-
+/**
+ * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
+ * <p>
+ *     this is our custom webview here we define our own webview
+ *     and implement the things that our webview needs to have
+ * </p>
+ *
+ */
 import android.content.Context;
 
 import android.graphics.Canvas;
@@ -37,7 +44,7 @@ public class VMGCustomView extends WebView {
 
     private void init(Context context, AttributeSet attrs, int defStyle) {
         WebView webView = (WebView) findViewById(R.id.our_web);
-        setBackgroundColor(Color.WHITE); // set the background to transparent
+        setBackgroundColor(Color.TRANSPARENT); // set the background to transparent
 
         setTranslationZ(16);
         setElevation(10);

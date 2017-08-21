@@ -6,6 +6,7 @@ package com.example.user.newapp;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -55,20 +56,28 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
         layout_about = (LinearLayout) v.findViewById(R.id.layout_about);
 
 
-        super.startVMG(view);
 
-//        about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                AboutVMGFragment.super.VMGScrollEvent(scrollY, scrollX, layout_about, view);
-//
-//            }
-//        });
+
+        about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                AboutVMGFragment.super.VMGScrollEvent(scrollY, scrollX, layout_about, view);
+
+            }
+        });
 
 
         fireReadyEvent();
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        VMGConfig.geVMGInstance(getActivity());
+        super.startVMG(this.view);
+
     }
 
     @Override
@@ -99,7 +108,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void fireReadyEvent() {
         Log.i(TAG, " fired the ready event");
-        super.addJavascript(view, "mraid.fireReadyEvent()");
+        super.useJavascript(view, "mraid.fireReadyEvent()");
 
     }
 
@@ -111,7 +120,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void isViewable() {
         Log.i(TAG, " VIEWABLE");
-        super.addJavascript(view, "mraid.isViewable()");
+        super.useJavascript(view, "mraid.isViewable()");
 
     }
 
@@ -133,7 +142,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void fireViewableChangeEvent() {
         Log.i("INFORMATION", "fireViewableChangeEvent");
-        super.addJavascript(view, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+        super.useJavascript(view, "mraid.fireViewableChangeEvent(" + isViewable + ");");
 
     }
 

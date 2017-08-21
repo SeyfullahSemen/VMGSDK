@@ -1,6 +1,14 @@
 package com.example.user.newapp.Interfaces;
 
 /**
+ * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
+ * <p>
+ *    the mraid events that you can add to your app
+ * </p>
+ *
+ */
+
+/**
  * Created by Seyfullah Semen on 2-8-2017.
  */
 

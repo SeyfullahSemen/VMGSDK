@@ -156,36 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
     }//end of onCreateOptionsMenu
 
-    /**
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) { // pak de ID van de gekozen Item uit de menu
-
-//            case R.id.about:
-//                openNewFragment(new AboutVMGFragment());
-//                break;
-
-            case R.id.home:
-                openNewFragment(new HomeFragment());
-                break;
-//
-//            case R.id.scroller_id:
-//                openNewFragment(new BlankFragment());
-//                break;
-
-            default:
-                return super.onOptionsItemSelected(item);
-
-
-        }
-
-        return false;
-
-    }
 
     /**
      * this is the method for going to the next page with the help of our navigation drawer

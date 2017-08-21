@@ -1,31 +1,25 @@
+
 package com.example.user.newapp;
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  */
 
-
 import android.annotation.SuppressLint;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
-
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.ConfigVMG.VMGBuilder;
-
 import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
 import com.example.user.newapp.VMGCustom.VMGCustomView;
@@ -33,7 +27,6 @@ import com.example.user.newapp.VMGCustom.VMGCustomView;
 /**
  * Created by Seyfullah Semen
  */
-
 public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     private static final String TAG = "BlankFragment";
     // create the variables
@@ -45,18 +38,13 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     VMGBuilder builder;
     private RelativeLayout rela;
 
-
-
     // this is a default constructor this is required in a fragment
     public BlankFragment() {
-
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     /**
@@ -68,7 +56,6 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
      * @param savedInstanceState
      * @return
      */
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,31 +65,23 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
         rela = (RelativeLayout) v.findViewById(R.id.rela);
         webView = (VMGCustomView) v.findViewById(R.id.webView);
-
-
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 BlankFragment.super.VMGScrollEvent(scrollY, scrollX, rela, webView);
-
-
             }
         });
-
         getScreenSize();
-        super.addJavascript(webView, "mraid.isViewable();");
-        super.addJavascript(webView, "mraid.getState();");// get the state of our mraid
+        super.useJavascript(webView, "mraid.isViewable();");
+        super.useJavascript(webView, "mraid.getState();");// get the state of our mraid
         return v; // return the view
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG,""+VMGConfig.geVMGInstance(getActivity()).getValues());
-
+       VMGConfig.geVMGInstance(getActivity());
         super.startVMG(webView); // this will start everything that you need to load inside the view
-
-
     }
 
     /**
@@ -111,52 +90,43 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
      */
     @Override
     public void fireReadyEvent() {
-        super.addJavascript(webView, "mraid.fireReadyEvent();");
+        super.useJavascript(webView, "mraid.fireReadyEvent();");
         Log.i(TAG, "READYYYY  TO GOOO");
-
-
     }
 
     @Override
     public void getScreenSize() {
-        super.addJavascript(webView, "mraid.getScreenSize();");
+        super.useJavascript(webView, "mraid.getScreenSize();");
         Log.i(TAG, "Screen size is working");
     }
 
     @Override
     public void isViewable() {
-        super.addJavascript(webView, "mraid.isViewable();");
+        super.useJavascript(webView, "mraid.isViewable();");
         Log.i(TAG, " Viewable works");
-
     }
 
     @Override
     public void getDefaultPosition() {
-        super.addJavascript(webView, "mraid.getDefaultPosition();");
+        super.useJavascript(webView, "mraid.getDefaultPosition();");
         Log.i(TAG, " Default position is working");
     }
 
     @Override
     public void getState() {
-        super.addJavascript(webView, "mraid.getState();");
+        super.useJavascript(webView, "mraid.getState();");
         Log.i(TAG, " State is working");
     }
 
     @Override
     public void removeEventListener() {
-        super.addJavascript(webView, "mraid.removeEventListener();");
+        super.useJavascript(webView, "mraid.removeEventListener();");
         Log.i(TAG, " Removing");
     }
 
     @Override
     public void fireViewableChangeEvent() {
         Log.i(TAG, "fireViewableChangeEvent");
-        super.addJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-
-
+        super.useJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
     }
-
-
 }
-
-

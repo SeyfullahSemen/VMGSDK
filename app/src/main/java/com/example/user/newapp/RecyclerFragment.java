@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
+import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
 import com.example.user.newapp.VMGCustom.VMGCustomView;
 import com.example.user.newapp.adapters.RecycleAdapter;
@@ -51,9 +52,9 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
         View v = inflater.inflate(R.layout.fragment_recycler, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler);
         webbs = (VMGCustomView) v.findViewById(R.id.webbs); // get the id of the webview
-        super.startVMG(webbs);
+
         fireReadyEvent(); // fire the ready event
-        super.addJavascript(webbs, "mraid.isViewable();");
+
 
 
         return v;
@@ -62,6 +63,8 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Set ListView basic adapter
+        VMGConfig.geVMGInstance(getActivity());
+        super.startVMG(webbs);
         setRecyclerViewAdapter(mRecyclerView);
 
 
@@ -81,13 +84,13 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
 
     @Override
     public void fireReadyEvent() {
-        super.addJavascript(webbs, "mraid.fireReadyEvent();");
+        super.useJavascript(webbs, "mraid.fireReadyEvent();");
         Log.i("info", "READYYYY NIFFFOOOO");
     }
 
     @Override
     public void getScreenSize() {
-        super.addJavascript(webbs, "mraid.getScreenSize();");
+        super.useJavascript(webbs, "mraid.getScreenSize();");
         Log.i("Info about Screen Size ", "Screen size is working");
     }
 

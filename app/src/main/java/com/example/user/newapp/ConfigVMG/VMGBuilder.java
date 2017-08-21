@@ -2,6 +2,7 @@ package com.example.user.newapp.ConfigVMG;
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  * <p>
+ *
  */
 
 

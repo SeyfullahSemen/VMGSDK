@@ -54,15 +54,15 @@ public abstract class VMGBaseFragment extends Fragment {
      */
 
     private static final String TAG = "VMGBaseFragment";
-    private VMGBuilder builder;
+
+
+
+
     private boolean isViewable;
-    private String mraidJs;
-    private Context context;
-    private String url = "http://staging.vmg.host/adServ/config/id/6194";
+
 
     // this is an empty constructor
     public VMGBaseFragment() {
-
 
 
     }
@@ -72,7 +72,7 @@ public abstract class VMGBaseFragment extends Fragment {
      * @param custom
      * @param javascript
      */
-    public void addJavascript(VMGCustomView custom, String javascript) {
+    public void useJavascript(VMGCustomView custom, String javascript) {
         if (!javascript.isEmpty()) {
             custom.evaluateJavascript(javascript, new ValueCallback<String>() {
                 @Override
@@ -84,39 +84,17 @@ public abstract class VMGBaseFragment extends Fragment {
             System.out.println("Loading " + javascript);
             custom.loadUrl("javascript:" + javascript);
         }
-    }
+    }// end of useJavaScript();
 
-
-//    /**
-//     * @param custom
-//     */
-//    private void addMraid(VMGCustomView custom) {
-//        if (TextUtils.isEmpty(mraidJs)) {
-//            byte[] mraidArray = Base64.decode(EncodedBase.mraidFile, Base64.DEFAULT);
-//            mraidJs = new String(mraidArray);
-//
-//        }
-//        System.out.println("adding mraid is oke and ready to go " + mraidJs.length());
-//        custom.loadData("<html></html>", "text/html", "UTF-8");
-//        custom.evaluateJavascript(mraidJs, new ValueCallback<String>() {
-//            @Override
-//            public void onReceiveValue(String s) {
-//                Log.i("Info", "Mraiding" + mraidJs);
-//            }
-//        });
-//        openWeb(custom);
-//
-//    }
 
     /**
      * @param custom
      */
     private void openWeb(VMGCustomView custom) {
         custom.loadUrl(VMGUrlBuilder.getPlacementUrl());
-//        custom.loadUrl("http://staging.vmg.host/adServ/placement/id/6194");
 
 
-    }
+    }// end of openWeb();
 
     /**
      * this method can be used when the user has a nestedscrollview or a scrollview
@@ -135,29 +113,28 @@ public abstract class VMGBaseFragment extends Fragment {
         double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
         int width = custom.getWidth(); // get the width of the webview
         int heightWeb = custom.getHeight(); // get the height of the webview
-        boolean debug = (boolean )VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("debug");
-        Log.i(TAG," "+debug);
+
 
         Log.i("content Height", "" + heightOfContent);
         Log.i("widthWeb ", "" + width);
         Log.i("heightWeb ", "" + heightWeb);
-//        int all = heightOfContent + location[1];
+
         if (scrollY - custom.getY() > (heightOfContent * (double) VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("topOffset"))) {
             isViewable = false;
-            addJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+            useJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable + "  ");
-            addJavascript(custom, "mraid.isViewable();");
+            useJavascript(custom, "mraid.isViewable();");
         } else if (scrollY + layoutH < custom.getY() + (heightOfContent * (double) VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("bottomOffset"))) {
             isViewable = false;
-            addJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+            useJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
-            addJavascript(custom, "mraid.isViewable();");
+            useJavascript(custom, "mraid.isViewable();");
         } else {
 
             isViewable = true;
-            addJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+            useJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
-            addJavascript(custom, "mraid.isViewable();");
+            useJavascript(custom, "mraid.isViewable();");
 
         }
 
@@ -185,9 +162,7 @@ public abstract class VMGBaseFragment extends Fragment {
         openWeb(custom);
 
 
-
     }// end of startVMG();
-
 
 
     @Override
