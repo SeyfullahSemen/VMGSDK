@@ -6,6 +6,7 @@ package com.example.user.newapp;
 
 import android.annotation.SuppressLint;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 
@@ -25,6 +26,7 @@ import android.widget.RelativeLayout;
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.ConfigVMG.VMGBuilder;
 
+import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
 import com.example.user.newapp.VMGCustom.VMGCustomView;
 
@@ -40,15 +42,16 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     private boolean isPageFinished = true;
     private boolean isLaidOut = true;
     private NestedScrollView scroll;
+    VMGBuilder builder;
     private RelativeLayout rela;
-    private VMGBuilder vmg;
+
 
 
     // this is a default constructor this is required in a fragment
     public BlankFragment() {
 
-        Log.i(TAG, "CONST");
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,9 +98,9 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG,""+VMGConfig.geVMGInstance(getActivity()).getValues());
 
         super.startVMG(webView); // this will start everything that you need to load inside the view
-
 
 
     }
@@ -152,8 +155,6 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
 
 
     }
-
-
 
 
 }

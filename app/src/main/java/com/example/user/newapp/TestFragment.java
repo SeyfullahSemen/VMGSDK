@@ -50,7 +50,7 @@ public class TestFragment extends VMGBaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       build = new VMGBuilder(getActivity());
+
 
     }
 }

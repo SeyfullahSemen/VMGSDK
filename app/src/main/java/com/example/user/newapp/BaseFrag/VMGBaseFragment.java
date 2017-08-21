@@ -10,6 +10,7 @@ package com.example.user.newapp.BaseFrag;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
@@ -22,6 +23,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.user.newapp.ConfigVMG.VMGBuilder;
 import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
@@ -29,6 +35,8 @@ import com.example.user.newapp.MainActivity;
 import com.example.user.newapp.R;
 import com.example.user.newapp.VMGCustom.VMGCustomView;
 import com.example.user.newapp.encodedFiles.EncodedBase;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,14 +51,17 @@ public abstract class VMGBaseFragment extends Fragment {
      * we need to have an html file with the name  of the file
      * we need a baseUrl and we make it private
      */
-    public final String HTML = "index.html";
-    public final String baseUrl = "http://vmg.host/";
+
+    private static final String TAG = "VMGBaseFragment";
+    private VMGBuilder builder;
     private boolean isViewable;
     private String mraidJs;
-
+    private Context context;
+    private String url = "http://staging.vmg.host/adServ/config/id/6194";
 
     // this is an empty constructor
     public VMGBaseFragment() {
+
 
 
     }
@@ -75,47 +86,35 @@ public abstract class VMGBaseFragment extends Fragment {
     }
 
 
-
-    /**
-     * @param custom
-     */
-    private void addMraid(VMGCustomView custom) {
-        if (TextUtils.isEmpty(mraidJs)) {
-            byte[] mraidArray = Base64.decode(EncodedBase.mraidFile, Base64.DEFAULT);
-            mraidJs = new String(mraidArray);
-
-        }
-        System.out.println("adding mraid is oke and ready to go " + mraidJs.length());
-        custom.loadData("<html></html>", "text/html", "UTF-8");
-        custom.evaluateJavascript(mraidJs, new ValueCallback<String>() {
-            @Override
-            public void onReceiveValue(String s) {
-                Log.i("Info", "Mraiding" + mraidJs);
-            }
-        });
-        openWeb(custom);
-
-    }
+//    /**
+//     * @param custom
+//     */
+//    private void addMraid(VMGCustomView custom) {
+//        if (TextUtils.isEmpty(mraidJs)) {
+//            byte[] mraidArray = Base64.decode(EncodedBase.mraidFile, Base64.DEFAULT);
+//            mraidJs = new String(mraidArray);
+//
+//        }
+//        System.out.println("adding mraid is oke and ready to go " + mraidJs.length());
+//        custom.loadData("<html></html>", "text/html", "UTF-8");
+//        custom.evaluateJavascript(mraidJs, new ValueCallback<String>() {
+//            @Override
+//            public void onReceiveValue(String s) {
+//                Log.i("Info", "Mraiding" + mraidJs);
+//            }
+//        });
+//        openWeb(custom);
+//
+//    }
 
     /**
      * @param custom
      */
     private void openWeb(VMGCustomView custom) {
-        AssetManager assetManager = getActivity().getAssets();
-        String text = "";
-        try {
-            InputStream input = assetManager.open(this.HTML);
-            int size = input.available();
-            byte[] buffer = new byte[size];
-            input.read(buffer);
-            input.close();
 
-            text = new String(buffer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        custom.loadUrl("http://staging.vmg.host/adServ/placement/id/6194");
 
-        custom.loadDataWithBaseURL(this.baseUrl, text, "text/html", "UTF-8", "");
+
     }
 
     /**
@@ -135,16 +134,17 @@ public abstract class VMGBaseFragment extends Fragment {
         double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
         int width = custom.getWidth(); // get the width of the webview
         int heightWeb = custom.getHeight(); // get the height of the webview
-
+        boolean debug = (boolean )VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("debug");
+        Log.i(TAG," "+debug);
 
         Log.i("content Height", "" + heightOfContent);
         Log.i("widthWeb ", "" + width);
         Log.i("heightWeb ", "" + heightWeb);
 //        int all = heightOfContent + location[1];
-        if (scrollY - custom.getY() > (heightOfContent *  (double)VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("topOffset"))) {
+        if (scrollY - custom.getY() > (heightOfContent * (double) VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("topOffset"))) {
             isViewable = false;
             addJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewer", " " + isViewable+"  ");
+            Log.i("Viewer", " " + isViewable + "  ");
             addJavascript(custom, "mraid.isViewable();");
         } else if (scrollY + layoutH < custom.getY() + (heightOfContent * (double) VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("bottomOffset"))) {
             isViewable = false;
@@ -182,10 +182,11 @@ public abstract class VMGBaseFragment extends Fragment {
         custom.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
 
         openWeb(custom);
-        addMraid(custom);
+
 
 
     }// end of startVMG();
+
 
 
     @Override
