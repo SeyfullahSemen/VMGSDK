@@ -47,15 +47,9 @@ import java.io.InputStream;
  */
 
 public abstract class VMGBaseFragment extends Fragment {
-    /**
-     * here we define a couple of our needed information
-     * we need to have an html file with the name  of the file
-     * we need a baseUrl and we make it private
-     */
+
 
     private static final String TAG = "VMGBaseFragment";
-
-
 
 
     private boolean isViewable;
@@ -119,12 +113,12 @@ public abstract class VMGBaseFragment extends Fragment {
         Log.i("widthWeb ", "" + width);
         Log.i("heightWeb ", "" + heightWeb);
 
-        if (scrollY - custom.getY() > (heightOfContent * (double) VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("topOffset"))) {
+        if (scrollY - custom.getY() > (heightOfContent * (double) VMGConfig.getVMGInstance(getActivity()).retrieveSpecific("topOffset"))) {
             isViewable = false;
             useJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable + "  ");
             useJavascript(custom, "mraid.isViewable();");
-        } else if (scrollY + layoutH < custom.getY() + (heightOfContent * (double) VMGConfig.geVMGInstance(getActivity()).retrieveSpecific("bottomOffset"))) {
+        } else if (scrollY + layoutH < custom.getY() + (heightOfContent * (double) VMGConfig.getVMGInstance(getActivity()).retrieveSpecific("bottomOffset"))) {
             isViewable = false;
             useJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);

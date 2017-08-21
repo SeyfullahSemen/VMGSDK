@@ -4,9 +4,9 @@ package com.example.user.newapp;
  * <p>
  * Created by Seyfullah Semen
  */
-import android.graphics.Color;
+
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -16,10 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.ConfigVMG.VMGConfig;
@@ -39,7 +35,6 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
     private VMGCustomView webbs;
 
 
-
     public RecyclerFragment() {
         // Required empty public constructor
     }
@@ -56,14 +51,13 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
         fireReadyEvent(); // fire the ready event
 
 
-
         return v;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Set ListView basic adapter
-        VMGConfig.geVMGInstance(getActivity());
+        VMGConfig.getVMGInstance(getActivity());
         super.startVMG(webbs);
         setRecyclerViewAdapter(mRecyclerView);
 

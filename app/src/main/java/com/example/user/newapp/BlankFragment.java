@@ -4,10 +4,7 @@ package com.example.user.newapp;
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  */
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
@@ -15,11 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+
 import android.widget.RelativeLayout;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
-import com.example.user.newapp.ConfigVMG.VMGBuilder;
+
 import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.Interfaces.VMGMraidEvents;
 import com.example.user.newapp.VMGCustom.VMGCustomView;
@@ -32,10 +29,9 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     // create the variables
     private VMGCustomView webView;
     private boolean isViewable;
-    private boolean isPageFinished = true;
-    private boolean isLaidOut = true;
+
     private NestedScrollView scroll;
-    VMGBuilder builder;
+
     private RelativeLayout rela;
 
     // this is a default constructor this is required in a fragment
@@ -80,7 +76,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       VMGConfig.geVMGInstance(getActivity());
+        VMGConfig.getVMGInstance(getActivity());
         super.startVMG(webView); // this will start everything that you need to load inside the view
     }
 

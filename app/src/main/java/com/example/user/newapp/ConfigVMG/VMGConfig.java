@@ -1,30 +1,28 @@
 package com.example.user.newapp.ConfigVMG;
+
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
+
 import android.util.Log;
-import android.util.LruCache;
+
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
+
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
+
 import com.android.volley.toolbox.Volley;
-import com.example.user.newapp.ConfigVMG.VMGBuilder;
-import com.example.user.newapp.ConfigVMG.VMGUrlBuilder;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.Map;
 
 /**
@@ -33,7 +31,6 @@ import java.util.Map;
 public class VMGConfig {
 
 
-//    private static String url = "http://staging.vmg.host/adServ/config/id/6194";
     public static String baseUrl = "http://staging.vmg.host";
     public static String placementId = "6194";
     private static final String TAG = "VMGConfig";
@@ -44,7 +41,6 @@ public class VMGConfig {
     private static HashMap<String, Object> JSONVals = new HashMap<>();
     private static Context context;
     private RequestQueue requestQueue;
-    private static VMGBuilder build;
 
     private VMGConfig(Context context) {
         this.context = context;
@@ -56,7 +52,7 @@ public class VMGConfig {
      *
      * @return
      */
-    public static VMGConfig geVMGInstance(Context context) {
+    public static VMGConfig getVMGInstance(Context context) {
         if (VMGInstance == null) {
             Class ConfigClass = VMGConfig.class;
             synchronized (ConfigClass) {
@@ -208,6 +204,6 @@ public class VMGConfig {
             }
         });
         // Adding request to request queue
-        VMGConfig.geVMGInstance(context).addToRequestQueue(jsonObjReq);
+        VMGConfig.getVMGInstance(context).addToRequestQueue(jsonObjReq);
     }
 }

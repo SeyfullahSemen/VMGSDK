@@ -2,11 +2,11 @@ package com.example.user.newapp.VMGCustom;
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  * <p>
- *     this is our custom webview here we define our own webview
- *     and implement the things that our webview needs to have
+ * this is our custom webview here we define our own webview
+ * and implement the things that our webview needs to have
  * </p>
- *
  */
+
 import android.content.Context;
 
 import android.graphics.Canvas;

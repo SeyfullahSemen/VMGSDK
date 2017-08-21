@@ -1,15 +1,13 @@
 package com.example.user.newapp;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
+
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -27,8 +25,7 @@ public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents 
     private VMGCustomView webber;
 
     private boolean isViewable;
-    private boolean isPageFinished = true;
-    private boolean isLaidOut = true;
+
 
     public ListViewFragment() {
         // Required empty public constructor
@@ -57,7 +54,7 @@ public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Set ListView basic adapter
         setValues(listView);
-        VMGConfig.geVMGInstance(getActivity());
+        VMGConfig.getVMGInstance(getActivity());
         super.startVMG(webber);
 
     }

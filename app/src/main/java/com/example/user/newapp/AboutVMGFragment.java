@@ -4,18 +4,16 @@ package com.example.user.newapp;
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  */
 
-import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
+
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -56,8 +54,6 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
         layout_about = (LinearLayout) v.findViewById(R.id.layout_about);
 
 
-
-
         about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -75,7 +71,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        VMGConfig.geVMGInstance(getActivity());
+        VMGConfig.getVMGInstance(getActivity());
         super.startVMG(this.view);
 
     }
