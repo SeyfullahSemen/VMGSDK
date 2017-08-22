@@ -67,17 +67,17 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
                 BlankFragment.super.VMGScrollEvent(scrollY, scrollX, rela, webView);
             }
         });
-        getScreenSize();
-        super.useJavascript(webView, "mraid.isViewable();");
-        super.useJavascript(webView, "mraid.getState();");// get the state of our mraid
+
         return v; // return the view
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        VMGConfig.getVMGInstance(getActivity());
+        // just add these 2 lines of code to load your ad
+
         super.startVMG(webView); // this will start everything that you need to load inside the view
+    ///////////////////////////////////////////////////////////////////////////////////////
     }
 
     /**

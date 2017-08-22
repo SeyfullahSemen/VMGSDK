@@ -147,43 +147,101 @@ public class VMGConfig {
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
                 try {
-                    JSONObject config = response.getJSONObject("config");
-                    boolean slideInOnStart = config.getBoolean("slideInOnStart");
-                    boolean slideInOnClose = config.getBoolean("slideInOnClose");
-                    boolean fadeInOnStart = config.getBoolean("fadeInOnStart");
-                    boolean fadeOutOnClose = config.getBoolean("fadeOutOnClose");
-                    JSONObject meta = config.getJSONObject("meta");
-                    boolean debug = meta.getBoolean("debug");
-                    boolean active = meta.getBoolean("active");
-                    long modDate = meta.getLong("modDate");
-                    JSONObject viewable = config.getJSONObject("viewable");
-                    double topOffset = viewable.getDouble("topOffset");
-                    double bottomOffset = viewable.getDouble("bottomOffset");
-                    JSONObject trackers = config.getJSONObject("trackers");
-                    String launcher = trackers.getString("launch");
-                    String jsonResponse = "";
-                    jsonResponse += "slideInOnStart: " + slideInOnStart + "\n";
-                    jsonResponse += "slideInOnClose:  " + slideInOnClose + "\n";
-                    jsonResponse += "fadeInOnstart:  " + fadeInOnStart + "\n";
-                    jsonResponse += "fadeOutOnClose: " + fadeOutOnClose + "\n\n";
-                    jsonResponse += "debug: " + debug + "\n\n";
-                    jsonResponse += "active: " + active + "\n\n";
-                    jsonResponse += "modDate: " + modDate + "\n\n";
-                    jsonResponse += "topOffset: " + topOffset + "\n\n";
-                    jsonResponse += "bottomOffset: " + bottomOffset + "\n\n";
-                    jsonResponse += "launcher: " + launcher + "\n\n";
-                    Log.i(TAG, " " + config.getBoolean("slideInOnStart"));
 
-                    JSONVals.put("slideInOnStart", slideInOnStart);
-                    JSONVals.put("slideInOnClose", slideInOnClose);
-                    JSONVals.put("fadeInOnStart", fadeInOnStart);
-                    JSONVals.put("fadeOutOnClose", fadeOutOnClose);
-                    JSONVals.put("debug", debug);
-                    JSONVals.put("active", active);
-                    JSONVals.put("modDate", modDate);
-                    JSONVals.put("topOffset", topOffset);
-                    JSONVals.put("bottomOffset", bottomOffset);
-                    JSONVals.put("launcher", launcher);
+                    ///////////////////{Retrieve the JSONObject values }/////////////////
+                    boolean slideInOnStart ;
+                    boolean slideInOnClose;
+                    boolean fadeInOnStart ;
+                    boolean fadeOutOnClose;
+
+                    boolean debug;
+                    boolean active;
+                    long modDate;
+
+                    double topOffset;
+                    double bottomOffset;
+
+                    String launcher;
+                    JSONObject config = response.getJSONObject("config");
+                    if (config.has("slideInOnStart")){
+                        slideInOnStart = config.getBoolean("slideInOnStart");
+                        JSONVals.put("slideInOnStart", slideInOnStart);
+                    }if(config.has("slideInOnClose")) {
+                        slideInOnClose = config.getBoolean("slideInOnClose");
+                        JSONVals.put("slideInOnClose", slideInOnClose);
+                    }if(config.has("fadeInOnStart")) {
+                        fadeInOnStart = config.getBoolean("fadeInOnStart");
+                        JSONVals.put("fadeInOnStart", fadeInOnStart);
+                    }
+                    if (config.has("fadeOutOnClose")) {
+                        fadeOutOnClose = config.getBoolean("fadeOutOnClose");
+                        JSONVals.put("fadeOutOnClose", fadeOutOnClose);
+                    }
+                    JSONObject meta = config.getJSONObject("meta");
+                    if (meta.has("debug")) {
+                        debug = meta.getBoolean("debug");
+                        JSONVals.put("debug", debug);
+                    }if (meta.has("active")) {
+                        active = meta.getBoolean("active");
+                        JSONVals.put("active", active);
+                    }if (meta.has("modDate")) {
+                        modDate = meta.getLong("modDate");
+                        JSONVals.put("modDate", modDate);
+                    }
+                    JSONObject viewable = config.getJSONObject("viewable");
+                    if (viewable.has("topOffset")) {
+                        topOffset = viewable.getDouble("topOffset");
+                        JSONVals.put("topOffset", topOffset);
+                    }if (viewable.has("bottomOffset")) {
+                        bottomOffset = viewable.getDouble("bottomOffset");
+                        JSONVals.put("bottomOffset", bottomOffset);
+                    }
+                    JSONObject trackers = config.getJSONObject("trackers");
+                    if (trackers.has("launch")) {
+                        launcher = trackers.getString("launch");
+                        JSONVals.put("launcher", launcher);
+                    }
+//                    ///////////////////{Retrieve the JSONObject values }/////////////////
+//                    JSONObject config = response.getJSONObject("config");
+//                    boolean slideInOnStart = config.getBoolean("slideInOnStart");
+//                    boolean slideInOnClose = config.getBoolean("slideInOnClose");
+//                    boolean fadeInOnStart = config.getBoolean("fadeInOnStart");
+//                    boolean fadeOutOnClose = config.getBoolean("fadeOutOnClose");
+//                    JSONObject meta = config.getJSONObject("meta");
+//                    boolean debug = meta.getBoolean("debug");
+//                    boolean active = meta.getBoolean("active");
+//                    long modDate = meta.getLong("modDate");
+//                    JSONObject viewable = config.getJSONObject("viewable");
+//                    double topOffset = viewable.getDouble("topOffset");
+//                    double bottomOffset = viewable.getDouble("bottomOffset");
+//                    JSONObject trackers = config.getJSONObject("trackers");
+//                    String launcher = trackers.getString("launch");
+//                    ///////////////////{Retrieve the JSONObject values }/////////////////
+//
+//                    String jsonResponse = "";
+//                    jsonResponse += "slideInOnStart: " + slideInOnStart + "\n";
+//                    jsonResponse += "slideInOnClose:  " + slideInOnClose + "\n";
+//                    jsonResponse += "fadeInOnstart:  " + fadeInOnStart + "\n";
+//                    jsonResponse += "fadeOutOnClose: " + fadeOutOnClose + "\n\n";
+//                    jsonResponse += "debug: " + debug + "\n\n";
+//                    jsonResponse += "active: " + active + "\n\n";
+//                    jsonResponse += "modDate: " + modDate + "\n\n";
+//                    jsonResponse += "topOffset: " + topOffset + "\n\n";
+//                    jsonResponse += "bottomOffset: " + bottomOffset + "\n\n";
+//                    jsonResponse += "launcher: " + launcher + "\n\n";
+//                    Log.i(TAG, " " + config.getBoolean("slideInOnStart"));
+//                    ////////////////{Place the values inside the HashMap that contains the JSON values}//////////////////////
+//                    JSONVals.put("slideInOnStart", slideInOnStart);
+//                    JSONVals.put("slideInOnClose", slideInOnClose);
+//                    JSONVals.put("fadeInOnStart", fadeInOnStart);
+//                    JSONVals.put("fadeOutOnClose", fadeOutOnClose);
+//                    JSONVals.put("debug", debug);
+//                    JSONVals.put("active", active);
+//                    JSONVals.put("modDate", modDate);
+//                    JSONVals.put("topOffset", topOffset);
+//                    JSONVals.put("bottomOffset", bottomOffset);
+//                    JSONVals.put("launcher", launcher);
+//                    ////////////////{Place the values inside the HashMap that contains the JSON values}//////////////////////
                     for (Map.Entry<String, Object> entry : JSONVals.entrySet()) {
                         Log.i(TAG, "" + entry.getKey() + " " + entry.getValue());
                     }

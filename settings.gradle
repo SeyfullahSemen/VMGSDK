@@ -1,1 +1,1 @@
-include ':app', ':vmgdemo'
+include ':app', ':vmgdemo', ':app-debug'

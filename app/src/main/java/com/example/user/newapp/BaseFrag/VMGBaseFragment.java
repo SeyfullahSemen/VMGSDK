@@ -103,22 +103,18 @@ public abstract class VMGBaseFragment extends Fragment {
 
         int heightOfContent = custom.getContentHeight(); // get the heigth of the webview
 
-
         double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
-        int width = custom.getWidth(); // get the width of the webview
-        int heightWeb = custom.getHeight(); // get the height of the webview
+
+        double topOffset = (double) VMGConfig.getVMGInstance(getActivity()).retrieveSpecific("topOffset");
+        double bottomOffset = (double) VMGConfig.getVMGInstance(getActivity()).retrieveSpecific("bottomOffset");
 
 
-        Log.i("content Height", "" + heightOfContent);
-        Log.i("widthWeb ", "" + width);
-        Log.i("heightWeb ", "" + heightWeb);
-
-        if (scrollY - custom.getY() > (heightOfContent * (double) VMGConfig.getVMGInstance(getActivity()).retrieveSpecific("topOffset"))) {
+        if (scrollY - custom.getY() > (heightOfContent * topOffset)) {
             isViewable = false;
             useJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable + "  ");
             useJavascript(custom, "mraid.isViewable();");
-        } else if (scrollY + layoutH < custom.getY() + (heightOfContent * (double) VMGConfig.getVMGInstance(getActivity()).retrieveSpecific("bottomOffset"))) {
+        } else if (scrollY + layoutH < custom.getY() + (heightOfContent * bottomOffset)) {
             isViewable = false;
             useJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
@@ -152,7 +148,7 @@ public abstract class VMGBaseFragment extends Fragment {
         // set debugging on for debugging on google chrome
 
         custom.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
-
+        VMGConfig.getVMGInstance(getActivity());
         openWeb(custom);
 
 

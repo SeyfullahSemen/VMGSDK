@@ -7,7 +7,7 @@ package com.example.user.newapp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
 
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
@@ -25,10 +25,10 @@ import com.example.user.newapp.VMGCustom.VMGCustomView;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {} subclass.
  * Created by Seyfullah Semen
  */
-public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents {
+public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents {// You need to extend from the VMGBaseFragment
     private static final String TAG = "About fragment";
     private ImageView img_logo_about;
     private TextView text_about;
@@ -63,7 +63,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
         });
 
 
-        fireReadyEvent();
+
 
         return v;
     }
@@ -71,9 +71,10 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // You just need to add these two lines of code to load the add
         VMGConfig.getVMGInstance(getActivity());
         super.startVMG(this.view);
-
+//////////////////////////////////////////////////////////////////
     }
 
     @Override
