@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- de android:hardwareAccelerated zorgt ervoor dat er HTML5 videos kunnen worden afgespeeld -->
+
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
