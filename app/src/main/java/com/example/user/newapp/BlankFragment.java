@@ -17,7 +17,8 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
-import com.example.user.newapp.BaseFrag.VMGBaseFragment;
+import com.example.user.newapp.BaseUtils.VMGBase;
+
 
 /**
  * Created by Seyfullah Semen
@@ -27,7 +28,7 @@ public class BlankFragment extends Fragment {
     // create the variables
     private WebView webView;
     private boolean isViewable;
-    VMGBaseFragment frag  ;
+    VMGBase frag  ;
 
 
     private NestedScrollView scroll;
@@ -61,7 +62,7 @@ public class BlankFragment extends Fragment {
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
         rela = (RelativeLayout) v.findViewById(R.id.rela);
         webView = (WebView) v.findViewById(R.id.webView);
-        frag = new VMGBaseFragment(getActivity());
+        frag = new VMGBase(getActivity());
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {

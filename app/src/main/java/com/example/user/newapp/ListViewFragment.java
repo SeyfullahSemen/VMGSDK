@@ -11,7 +11,8 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.user.newapp.BaseFrag.VMGBaseFragment;
+import com.example.user.newapp.BaseUtils.VMGBase;
+
 import com.example.user.newapp.ConfigVMG.VMGConfig;
 
 
@@ -21,7 +22,7 @@ import com.example.user.newapp.ConfigVMG.VMGConfig;
 public class ListViewFragment extends Fragment  {
     private ListView listView;
     private WebView webber;
-    VMGBaseFragment frag ;
+    VMGBase frag ;
 
     private boolean isViewable;
 
@@ -39,7 +40,7 @@ public class ListViewFragment extends Fragment  {
         listView = (ListView) v.findViewById(R.id.listView);
 
         webber = (WebView) v.findViewById(R.id.webber); // get the id of the custom webview
-        frag = new VMGBaseFragment(getActivity());
+        frag = new VMGBase(getActivity());
 
 
 

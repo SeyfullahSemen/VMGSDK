@@ -1,4 +1,4 @@
-package com.example.user.newapp.BaseFrag;
+package com.example.user.newapp.BaseUtils;
 
 import java.util.Arrays;
 import java.util.List;

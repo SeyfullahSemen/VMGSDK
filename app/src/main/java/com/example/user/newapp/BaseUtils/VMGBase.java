@@ -5,18 +5,12 @@
  * can use whenever he makes a new fragment or layout he just needs to add a couple of simple
  * methods
  */
-package com.example.user.newapp.BaseFrag;
+package com.example.user.newapp.BaseUtils;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Rect;
-import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -29,13 +23,11 @@ import com.example.user.newapp.ConfigVMG.VMGUrlBuilder;
 
 import java.util.Map;
 
-import static android.R.attr.screenSize;
-
 /**
  * Created by Seyfullah Semen  on 4-8-2017.
  */
 
-public class VMGBaseFragment extends RelativeLayout {
+public class VMGBase extends RelativeLayout {
 
 
     private static final String TAG = "VMGBaseFragment";
@@ -51,7 +43,7 @@ public class VMGBaseFragment extends RelativeLayout {
 
     private VMGResizeProperties resizeProperties;
 
-    private int  addWidth = 340;
+    private int addWidth = 340;
     private int addHeight = 255;
     private Context context;
 
@@ -60,30 +52,30 @@ public class VMGBaseFragment extends RelativeLayout {
 
 
     // this is an empty constructor
-    public VMGBaseFragment(Context context) {
-    super (context);
-    this.context = context;
+    public VMGBase(Context context) {
+        super(context);
+        this.context = context;
         resizeProperties = new VMGResizeProperties();
 
 
-
     }
 
-    public void setAddWidth(int addWidth){
+    public void setAddWidth(int addWidth) {
         this.addWidth = addWidth;
     }
 
-    public void setAddHeight(int addHeight){
+    public void setAddHeight(int addHeight) {
         this.addHeight = addHeight;
     }
 
-    public int getAddWidth(){
+    public int getAddWidth() {
         return this.addWidth;
     }
 
-    public int getAddHeight(){
+    public int getAddHeight() {
         return this.addHeight;
     }
+
     /**
      * @param custom
      * @param javascript
@@ -121,7 +113,7 @@ public class VMGBaseFragment extends RelativeLayout {
      * @param view
      * @param custom
      */
-    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view, WebView custom,Context context) {
+    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view, WebView custom, Context context) {
         int[] location = {0, 0}; // save the locations x and y of the sroll
 
         int heightOfContent = custom.getContentHeight(); // get the heigth of the webview
@@ -200,12 +192,13 @@ public class VMGBaseFragment extends RelativeLayout {
     }
 
 
-    private void resize(){
-        Log.i(TAG," "+this.resizeProperties.width+" "+this.resizeProperties.height);
+    private void resize() {
+        Log.i(TAG, " " + this.resizeProperties.width + " " + this.resizeProperties.height);
     }
+
     private void setMaxSize(WebView custom) {
 
-        useJavascript(custom,"mraid.setMaxSize('"+getAddWidth()+"','"+getAddHeight()+"');");
+        useJavascript(custom, "mraid.setMaxSize('" + getAddWidth() + "','" + getAddHeight() + "');");
     }
 
 

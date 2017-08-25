@@ -12,11 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.webkit.WebView;
 import android.widget.TextView;
 
-import com.example.user.newapp.BaseFrag.VMGBaseFragment;
-import com.example.user.newapp.Interfaces.VMGMraidEvents;
+import com.example.user.newapp.BaseUtils.VMGBaseFragment;
 import com.example.user.newapp.R;
 
 import java.util.List;

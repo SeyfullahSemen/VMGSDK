@@ -19,7 +19,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.user.newapp.BaseFrag.VMGBaseFragment;
+import com.example.user.newapp.BaseUtils.VMGBase;
+
 import com.example.user.newapp.ConfigVMG.VMGConfig;
 
 
@@ -35,7 +36,7 @@ public class AboutVMGFragment extends Fragment {// You need to extend from the V
     private boolean isViewable;
     private NestedScrollView about__scroll;
     private LinearLayout layout_about;
-    VMGBaseFragment frag ;
+    VMGBase frag ;
 
     public AboutVMGFragment() {
         // Required empty public constructor
@@ -52,7 +53,7 @@ public class AboutVMGFragment extends Fragment {// You need to extend from the V
         view = (WebView) v.findViewById(R.id.web_about);
         about__scroll = (NestedScrollView) v.findViewById(R.id.scroll__about);
         layout_about = (LinearLayout) v.findViewById(R.id.layout_about);
-        frag = new VMGBaseFragment(getActivity());
+        frag = new VMGBase(getActivity());
 
         about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override

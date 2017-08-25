@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
-import com.example.user.newapp.BaseFrag.VMGBaseFragment;
-import com.example.user.newapp.ConfigVMG.VMGBuilder;
+import com.example.user.newapp.BaseUtils.VMGBaseFragment;
 
 
 /**

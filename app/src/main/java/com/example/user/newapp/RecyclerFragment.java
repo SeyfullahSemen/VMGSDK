@@ -17,7 +17,8 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 
-import com.example.user.newapp.BaseFrag.VMGBaseFragment;
+import com.example.user.newapp.BaseUtils.VMGBase;
+
 import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.adapters.RecycleAdapter;
 
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 public class RecyclerFragment extends Fragment  {
     protected RecyclerView mRecyclerView;
     private WebView webbs;
-    VMGBaseFragment frag ;
+    VMGBase frag ;
 
     public RecyclerFragment() {
         // Required empty public constructor
@@ -45,7 +46,7 @@ public class RecyclerFragment extends Fragment  {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler);
         webbs = (WebView) v.findViewById(R.id.webbs); // get the id of the webview
 
-        frag = new VMGBaseFragment(getActivity());
+        frag = new VMGBase(getActivity());
 
 
         return v;
