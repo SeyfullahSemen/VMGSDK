@@ -18,12 +18,13 @@ import com.example.user.newapp.ConfigVMG.VMGBuilder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TestFragment extends VMGBaseFragment {
+public class TestFragment extends Fragment {
 
     private NestedScrollView scroller;
     private RelativeLayout rela_test;
     private WebView view;
    private  VMGBuilder build;
+    VMGBaseFragment frag = new VMGBaseFragment(getActivity());
 
 
     public TestFragment() {
@@ -41,7 +42,7 @@ public class TestFragment extends VMGBaseFragment {
         rela_test = (RelativeLayout) v.findViewById(R.id.rela_test);
         view = (WebView) v.findViewById(R.id.VMGCustomView);
 
-        super.startVMG(view);
+        frag.startVMG(getActivity(),view);
 
         return v;
     }

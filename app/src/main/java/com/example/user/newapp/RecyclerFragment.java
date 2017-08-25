@@ -27,10 +27,10 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecyclerFragment extends VMGBaseFragment  {
+public class RecyclerFragment extends Fragment  {
     protected RecyclerView mRecyclerView;
     private WebView webbs;
-
+    VMGBaseFragment frag ;
 
     public RecyclerFragment() {
         // Required empty public constructor
@@ -45,7 +45,7 @@ public class RecyclerFragment extends VMGBaseFragment  {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler);
         webbs = (WebView) v.findViewById(R.id.webbs); // get the id of the webview
 
-
+        frag = new VMGBaseFragment(getActivity());
 
 
         return v;
@@ -55,7 +55,7 @@ public class RecyclerFragment extends VMGBaseFragment  {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Set ListView basic adapter
         VMGConfig.getVMGInstance(getActivity());
-        super.startVMG(webbs);
+        frag.startVMG(getActivity(),webbs);
         setRecyclerViewAdapter(mRecyclerView);
 
 

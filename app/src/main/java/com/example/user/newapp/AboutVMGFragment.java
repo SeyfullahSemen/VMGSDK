@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ import com.example.user.newapp.ConfigVMG.VMGConfig;
  * A simple {} subclass.
  * Created by Seyfullah Semen
  */
-public class AboutVMGFragment extends VMGBaseFragment  {// You need to extend from the VMGBaseFragment
+public class AboutVMGFragment extends Fragment {// You need to extend from the VMGBaseFragment
     private static final String TAG = "About fragment";
     private ImageView img_logo_about;
     private TextView text_about;
@@ -34,6 +35,7 @@ public class AboutVMGFragment extends VMGBaseFragment  {// You need to extend fr
     private boolean isViewable;
     private NestedScrollView about__scroll;
     private LinearLayout layout_about;
+    VMGBaseFragment frag ;
 
     public AboutVMGFragment() {
         // Required empty public constructor
@@ -50,12 +52,12 @@ public class AboutVMGFragment extends VMGBaseFragment  {// You need to extend fr
         view = (WebView) v.findViewById(R.id.web_about);
         about__scroll = (NestedScrollView) v.findViewById(R.id.scroll__about);
         layout_about = (LinearLayout) v.findViewById(R.id.layout_about);
-
+        frag = new VMGBaseFragment(getActivity());
 
         about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                AboutVMGFragment.super.VMGScrollEvent(scrollY, scrollX, layout_about, view);
+                frag.VMGScrollEvent(scrollY, scrollX, layout_about, view,getActivity());
 
             }
         });
@@ -71,7 +73,7 @@ public class AboutVMGFragment extends VMGBaseFragment  {// You need to extend fr
         super.onViewCreated(view, savedInstanceState);
         // You just need to add these two lines of code to load the add
         VMGConfig.getVMGInstance(getActivity());
-        super.startVMG(this.view);
+        frag.startVMG(getActivity(),this.view);
 //////////////////////////////////////////////////////////////////
     }
 

@@ -18,9 +18,10 @@ import com.example.user.newapp.ConfigVMG.VMGConfig;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListViewFragment extends VMGBaseFragment  {
+public class ListViewFragment extends Fragment  {
     private ListView listView;
     private WebView webber;
+    VMGBaseFragment frag ;
 
     private boolean isViewable;
 
@@ -38,7 +39,7 @@ public class ListViewFragment extends VMGBaseFragment  {
         listView = (ListView) v.findViewById(R.id.listView);
 
         webber = (WebView) v.findViewById(R.id.webber); // get the id of the custom webview
-
+        frag = new VMGBaseFragment(getActivity());
 
 
 
@@ -52,7 +53,7 @@ public class ListViewFragment extends VMGBaseFragment  {
         // Set ListView basic adapter
         setValues(listView);
         VMGConfig.getVMGInstance(getActivity());
-        super.startVMG(webber);
+        frag.startVMG(getActivity(),webber);
 
     }
 

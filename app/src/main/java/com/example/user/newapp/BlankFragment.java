@@ -7,6 +7,7 @@ package com.example.user.newapp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,11 +22,13 @@ import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 /**
  * Created by Seyfullah Semen
  */
-public class BlankFragment extends VMGBaseFragment  {
+public class BlankFragment extends Fragment {
     private static final String TAG = "BlankFragment";
     // create the variables
     private WebView webView;
     private boolean isViewable;
+    VMGBaseFragment frag  ;
+
 
     private NestedScrollView scroll;
 
@@ -58,10 +61,11 @@ public class BlankFragment extends VMGBaseFragment  {
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
         rela = (RelativeLayout) v.findViewById(R.id.rela);
         webView = (WebView) v.findViewById(R.id.webView);
+        frag = new VMGBaseFragment(getActivity());
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                BlankFragment.super.VMGScrollEvent(scrollY, scrollX, rela, webView);
+                frag.VMGScrollEvent(scrollY, scrollX, rela, webView,getActivity());
             }
         });
 
@@ -73,7 +77,7 @@ public class BlankFragment extends VMGBaseFragment  {
         super.onViewCreated(view, savedInstanceState);
         // just add these 2 lines of code to load your ad
 
-        super.startVMG(webView); // this will start everything that you need to load inside the view
+        frag.startVMG(getActivity(),webView); // this will start everything that you need to load inside the view
     ///////////////////////////////////////////////////////////////////////////////////////
     }
 

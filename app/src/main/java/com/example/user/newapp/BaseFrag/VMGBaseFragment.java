@@ -7,23 +7,35 @@
  */
 package com.example.user.newapp.BaseFrag;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Rect;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 
 
 import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.ConfigVMG.VMGUrlBuilder;
 
+import java.util.Map;
+
+import static android.R.attr.screenSize;
+
 /**
  * Created by Seyfullah Semen  on 4-8-2017.
  */
 
-public abstract class VMGBaseFragment extends Fragment {
+public class VMGBaseFragment extends RelativeLayout {
 
 
     private static final String TAG = "VMGBaseFragment";
@@ -35,20 +47,43 @@ public abstract class VMGBaseFragment extends Fragment {
     private final static int EXPANDED = 2;
     private final static int RESIZED = 3;
     private final static int HIDDEN = 4;
+    private boolean isResizeReady;
 
+    private VMGResizeProperties resizeProperties;
 
-    ;
+    private int  addWidth = 340;
+    private int addHeight = 255;
+    private Context context;
+
 
     private int state;
 
 
     // this is an empty constructor
-    public VMGBaseFragment() {
+    public VMGBaseFragment(Context context) {
+    super (context);
+    this.context = context;
+        resizeProperties = new VMGResizeProperties();
+
 
 
     }
 
+    public void setAddWidth(int addWidth){
+        this.addWidth = addWidth;
+    }
 
+    public void setAddHeight(int addHeight){
+        this.addHeight = addHeight;
+    }
+
+    public int getAddWidth(){
+        return this.addWidth;
+    }
+
+    public int getAddHeight(){
+        return this.addHeight;
+    }
     /**
      * @param custom
      * @param javascript
@@ -86,15 +121,15 @@ public abstract class VMGBaseFragment extends Fragment {
      * @param view
      * @param custom
      */
-    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view, WebView custom) {
+    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view, WebView custom,Context context) {
         int[] location = {0, 0}; // save the locations x and y of the sroll
 
         int heightOfContent = custom.getContentHeight(); // get the heigth of the webview
 
         double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
 
-        double topOffset = (double) VMGConfig.getVMGInstance(getActivity()).retrieveSpecific("topOffset");
-        double bottomOffset = (double) VMGConfig.getVMGInstance(getActivity()).retrieveSpecific("bottomOffset");
+        double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
+        double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
 
 
         if (scrollY - custom.getY() > (heightOfContent * topOffset)) {
@@ -127,30 +162,50 @@ public abstract class VMGBaseFragment extends Fragment {
      *
      * @param custom
      */
-    public void startVMG(WebView custom) {
-        state = LOADING;
+    public void startVMG(Context context, WebView custom) {
+
         WebSettings settings = custom.getSettings();
 
 
+        custom.setWebViewClient(new VMGWebviewClient());
+        settings.setJavaScriptEnabled(true); // set javascript enabled
+        // set debugging on for debugging on google chrome
 
-            custom.setWebViewClient(new VMGWebviewClient());
-            settings.setJavaScriptEnabled(true); // set javascript enabled
-            // set debugging on for debugging on google chrome
-
-            custom.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
-            VMGConfig.getVMGInstance(getActivity());
-            openWeb(custom);
+        custom.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
+        VMGConfig.getVMGInstance(context);
+        openWeb(custom);
 
 
     }// end of startVMG();
 
 
+    @SuppressLint("LongLogTag")
+    @SuppressWarnings("unused")
+    private void setResizeProperties(Map<String, String> properties) {
+        int width = Integer.parseInt(properties.get("width"));
+        int height = Integer.parseInt(properties.get("height"));
+        int offsetX = Integer.parseInt(properties.get("offsetX"));
+        int offsetY = Integer.parseInt(properties.get("offsetY"));
+        String customClosePosition = properties.get("customClosePosition");
+        boolean allowOffscreen = Boolean.parseBoolean(properties.get("allowOffscreen"));
+        Log.d(TAG + "-JS callback", "setResizeProperties "
+                + width + " " + height + " "
+                + offsetX + " " + offsetY + " "
+                + customClosePosition + " " + allowOffscreen);
+        resizeProperties.width = width;
+        resizeProperties.height = height;
+        resizeProperties.offsetX = offsetX;
+        resizeProperties.offsetY = offsetY;
 
+    }
+
+
+    private void resize(){
+        Log.i(TAG," "+this.resizeProperties.width+" "+this.resizeProperties.height);
+    }
     private void setMaxSize(WebView custom) {
 
-
-
-        useJavascript(custom, "mraid.setMaxSize('" + 500 + "'),('" + 600+ "');");
+        useJavascript(custom,"mraid.setMaxSize('"+getAddWidth()+"','"+getAddHeight()+"');");
     }
 
 
@@ -158,10 +213,6 @@ public abstract class VMGBaseFragment extends Fragment {
         return state;
     }
 
-
-    private void removeEventListener() {
-
-    }
 
     private void fireViewableChangeEvent(WebView custom) {
         isViewable = true;
@@ -177,26 +228,12 @@ public abstract class VMGBaseFragment extends Fragment {
         useJavascript(custom, "mraid.fireStateChangeEvent('" + states[state] + "');");
     }
 
-    private void setState() {
 
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    private class VMGWebviewClient extends WebViewClient{
+    private class VMGWebviewClient extends WebViewClient {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            if (state == LOADING){
+            if (state == LOADING) {
                 state = DEFAULT;
                 fireStateChangeEvent(view);
                 setMaxSize(view);
