@@ -10,29 +10,27 @@ import android.support.annotation.Nullable;
 
 
 import android.support.v4.widget.NestedScrollView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.ConfigVMG.VMGConfig;
-import com.example.user.newapp.Interfaces.VMGMraidEvents;
-import com.example.user.newapp.VMGCustom.VMGCustomView;
 
 
 /**
  * A simple {} subclass.
  * Created by Seyfullah Semen
  */
-public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents {// You need to extend from the VMGBaseFragment
+public class AboutVMGFragment extends VMGBaseFragment  {// You need to extend from the VMGBaseFragment
     private static final String TAG = "About fragment";
     private ImageView img_logo_about;
     private TextView text_about;
-    private VMGCustomView view;
+    private WebView view;
     private boolean isViewable;
     private NestedScrollView about__scroll;
     private LinearLayout layout_about;
@@ -49,7 +47,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
         View v = inflater.inflate(R.layout.fragment_about_vmg, container, false);
         img_logo_about = (ImageView) v.findViewById(R.id.img_logo_about);
         text_about = (TextView) v.findViewById(R.id.text_about);
-        view = (VMGCustomView) v.findViewById(R.id.web_about);
+        view = (WebView) v.findViewById(R.id.web_about);
         about__scroll = (NestedScrollView) v.findViewById(R.id.scroll__about);
         layout_about = (LinearLayout) v.findViewById(R.id.layout_about);
 
@@ -102,46 +100,7 @@ public class AboutVMGFragment extends VMGBaseFragment implements VMGMraidEvents 
         super.onDestroy();
     }
 
-    @Override
-    public void fireReadyEvent() {
-        Log.i(TAG, " fired the ready event");
-        super.useJavascript(view, "mraid.fireReadyEvent()");
 
-    }
-
-    @Override
-    public void getScreenSize() {
-
-    }
-
-    @Override
-    public void isViewable() {
-        Log.i(TAG, " VIEWABLE");
-        super.useJavascript(view, "mraid.isViewable()");
-
-    }
-
-    @Override
-    public void getDefaultPosition() {
-
-    }
-
-    @Override
-    public void getState() {
-
-    }
-
-    @Override
-    public void removeEventListener() {
-
-    }
-
-    @Override
-    public void fireViewableChangeEvent() {
-        Log.i("INFORMATION", "fireViewableChangeEvent");
-        super.useJavascript(view, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-
-    }
 
 
 }

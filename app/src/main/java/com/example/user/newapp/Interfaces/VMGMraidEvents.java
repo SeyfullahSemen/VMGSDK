@@ -22,11 +22,12 @@ public interface VMGMraidEvents {
 
     void getDefaultPosition();
 
-    void getState();
+    int getState();
 
     void removeEventListener();
 
     void fireViewableChangeEvent();
+    void fireStateChangeEvent();
 
 
 

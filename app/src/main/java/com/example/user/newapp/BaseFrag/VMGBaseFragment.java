@@ -7,40 +7,17 @@
  */
 package com.example.user.newapp.BaseFrag;
 
-import android.content.Context;
-import android.content.res.AssetManager;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
-import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.user.newapp.ConfigVMG.VMGBuilder;
 import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.ConfigVMG.VMGUrlBuilder;
-import com.example.user.newapp.Interfaces.VMGMraidEvents;
-import com.example.user.newapp.MainActivity;
-import com.example.user.newapp.R;
-import com.example.user.newapp.VMGCustom.VMGCustomView;
-import com.example.user.newapp.encodedFiles.EncodedBase;
-
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by Seyfullah Semen  on 4-8-2017.
@@ -53,6 +30,16 @@ public abstract class VMGBaseFragment extends Fragment {
 
 
     private boolean isViewable;
+    private final static int LOADING = 0;
+    private final static int DEFAULT = 1;
+    private final static int EXPANDED = 2;
+    private final static int RESIZED = 3;
+    private final static int HIDDEN = 4;
+
+
+    ;
+
+    private int state;
 
 
     // this is an empty constructor
@@ -66,7 +53,7 @@ public abstract class VMGBaseFragment extends Fragment {
      * @param custom
      * @param javascript
      */
-    public void useJavascript(VMGCustomView custom, String javascript) {
+    private void useJavascript(WebView custom, String javascript) {
         if (!javascript.isEmpty()) {
             custom.evaluateJavascript(javascript, new ValueCallback<String>() {
                 @Override
@@ -84,7 +71,8 @@ public abstract class VMGBaseFragment extends Fragment {
     /**
      * @param custom
      */
-    private void openWeb(VMGCustomView custom) {
+    private void openWeb(WebView custom) {
+
         custom.loadUrl(VMGUrlBuilder.getPlacementUrl());
 
 
@@ -98,7 +86,7 @@ public abstract class VMGBaseFragment extends Fragment {
      * @param view
      * @param custom
      */
-    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view, VMGCustomView custom) {
+    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view, WebView custom) {
         int[] location = {0, 0}; // save the locations x and y of the sroll
 
         int heightOfContent = custom.getContentHeight(); // get the heigth of the webview
@@ -139,20 +127,59 @@ public abstract class VMGBaseFragment extends Fragment {
      *
      * @param custom
      */
-    public void startVMG(VMGCustomView custom) {
-
+    public void startVMG(WebView custom) {
+        state = LOADING;
         WebSettings settings = custom.getSettings();
 
 
-        settings.setJavaScriptEnabled(true); // set javascript enabled
-        // set debugging on for debugging on google chrome
 
-        custom.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
-        VMGConfig.getVMGInstance(getActivity());
-        openWeb(custom);
+            custom.setWebViewClient(new VMGWebviewClient());
+            settings.setJavaScriptEnabled(true); // set javascript enabled
+            // set debugging on for debugging on google chrome
+
+            custom.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
+            VMGConfig.getVMGInstance(getActivity());
+            openWeb(custom);
 
 
     }// end of startVMG();
+
+
+
+    private void setMaxSize(WebView custom) {
+
+
+
+        useJavascript(custom, "mraid.setMaxSize('" + 500 + "'),('" + 600+ "');");
+    }
+
+
+    private int getState() {
+        return state;
+    }
+
+
+    private void removeEventListener() {
+
+    }
+
+    private void fireViewableChangeEvent(WebView custom) {
+        isViewable = true;
+        useJavascript(custom, "mraid.fireViewableChangeEvent('" + isViewable + "');");
+    }
+
+    private void fireReadyChangeEvent(WebView custom) {
+        useJavascript(custom, "mraid.fireReadyEvent();");
+    }
+
+    private void fireStateChangeEvent(WebView custom) {
+        String[] states = {"loading", "default", "expanded", "resized", "hidden"};
+        useJavascript(custom, "mraid.fireStateChangeEvent('" + states[state] + "');");
+    }
+
+    private void setState() {
+
+    }
 
 
     @Override
@@ -165,6 +192,22 @@ public abstract class VMGBaseFragment extends Fragment {
         super.onPause();
     }
 
+    private class VMGWebviewClient extends WebViewClient{
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            if (state == LOADING){
+                state = DEFAULT;
+                fireStateChangeEvent(view);
+                setMaxSize(view);
+                fireReadyChangeEvent(view);
+
+                fireViewableChangeEvent(view);
+
+            }
+
+        }
+    }
 
 }
 

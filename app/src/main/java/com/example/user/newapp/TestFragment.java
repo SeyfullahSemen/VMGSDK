@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.ConfigVMG.VMGBuilder;
-import com.example.user.newapp.VMGCustom.VMGCustomView;
 
 
 /**
@@ -23,12 +22,12 @@ public class TestFragment extends VMGBaseFragment {
 
     private NestedScrollView scroller;
     private RelativeLayout rela_test;
-    private VMGCustomView view;
+    private WebView view;
    private  VMGBuilder build;
 
 
     public TestFragment() {
-        super();
+
     }
 
 
@@ -40,7 +39,7 @@ public class TestFragment extends VMGBaseFragment {
 
         scroller = (NestedScrollView) v.findViewById(R.id.scroller);
         rela_test = (RelativeLayout) v.findViewById(R.id.rela_test);
-        view = (VMGCustomView) v.findViewById(R.id.VMGCustomView);
+        view = (WebView) v.findViewById(R.id.VMGCustomView);
 
         super.startVMG(view);
 

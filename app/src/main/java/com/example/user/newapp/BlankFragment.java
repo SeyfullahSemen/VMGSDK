@@ -13,21 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 
-import com.example.user.newapp.ConfigVMG.VMGConfig;
-import com.example.user.newapp.Interfaces.VMGMraidEvents;
-import com.example.user.newapp.VMGCustom.VMGCustomView;
-
 /**
  * Created by Seyfullah Semen
  */
-public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
+public class BlankFragment extends VMGBaseFragment  {
     private static final String TAG = "BlankFragment";
     // create the variables
-    private VMGCustomView webView;
+    private WebView webView;
     private boolean isViewable;
 
     private NestedScrollView scroll;
@@ -60,7 +57,7 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
         Log.d(TAG, "We zijn er "); // this is for debugging reasons
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
         rela = (RelativeLayout) v.findViewById(R.id.rela);
-        webView = (VMGCustomView) v.findViewById(R.id.webView);
+        webView = (WebView) v.findViewById(R.id.webView);
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -80,49 +77,5 @@ public class BlankFragment extends VMGBaseFragment implements VMGMraidEvents {
     ///////////////////////////////////////////////////////////////////////////////////////
     }
 
-    /**
-     * the methods below is for checking if java can communicate with Javascript
-     * we accomplish this with simple getters to check everything
-     */
-    @Override
-    public void fireReadyEvent() {
-        super.useJavascript(webView, "mraid.fireReadyEvent();");
-        Log.i(TAG, "READYYYY  TO GOOO");
-    }
 
-    @Override
-    public void getScreenSize() {
-        super.useJavascript(webView, "mraid.getScreenSize();");
-        Log.i(TAG, "Screen size is working");
-    }
-
-    @Override
-    public void isViewable() {
-        super.useJavascript(webView, "mraid.isViewable();");
-        Log.i(TAG, " Viewable works");
-    }
-
-    @Override
-    public void getDefaultPosition() {
-        super.useJavascript(webView, "mraid.getDefaultPosition();");
-        Log.i(TAG, " Default position is working");
-    }
-
-    @Override
-    public void getState() {
-        super.useJavascript(webView, "mraid.getState();");
-        Log.i(TAG, " State is working");
-    }
-
-    @Override
-    public void removeEventListener() {
-        super.useJavascript(webView, "mraid.removeEventListener();");
-        Log.i(TAG, " Removing");
-    }
-
-    @Override
-    public void fireViewableChangeEvent() {
-        Log.i(TAG, "fireViewableChangeEvent");
-        super.useJavascript(webView, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-    }
 }

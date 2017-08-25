@@ -10,12 +10,10 @@
     android:id="@+id/scroller"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.example.user.newapp.VMGCustom.VMGCustomView
-        android:id="@+id/VMGCustomView"
-        android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-       />
-
+  <WebView
+      android:id="@+id/VMGCustomView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"></WebView>
 
 
 </android.support.v4.widget.NestedScrollView>

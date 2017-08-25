@@ -3,26 +3,24 @@ package com.example.user.newapp;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.ConfigVMG.VMGConfig;
-import com.example.user.newapp.Interfaces.VMGMraidEvents;
-import com.example.user.newapp.VMGCustom.VMGCustomView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents {
+public class ListViewFragment extends VMGBaseFragment  {
     private ListView listView;
-    private VMGCustomView webber;
+    private WebView webber;
 
     private boolean isViewable;
 
@@ -39,11 +37,10 @@ public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents 
         View v = inflater.inflate(R.layout.fragment_list_view, container, false);
         listView = (ListView) v.findViewById(R.id.listView);
 
-        webber = (VMGCustomView) v.findViewById(R.id.webber); // get the id of the custom webview
+        webber = (WebView) v.findViewById(R.id.webber); // get the id of the custom webview
 
 
-        fireReadyEvent(); // fire the ready event
-        getScreenSize();
+
 
 
         return v;
@@ -78,52 +75,7 @@ public class ListViewFragment extends VMGBaseFragment implements VMGMraidEvents 
      * the methods below is for checking if java can communicate with Javascript
      * we accomplish this with simple getters to check everything
      */
-    @Override
-    public void fireReadyEvent() {
-        super.useJavascript(webber, "mraid.fireReadyEvent();");
-        Log.i("info", "READYYYY TO GOO");
 
-
-    }
-
-    @Override
-    public void getScreenSize() {
-        super.useJavascript(webber, "mraid.getScreenSize();");
-        Log.i("Info about Screen Size ", "Screen size is working");
-    }
-
-    @Override
-    public void isViewable() {
-        super.useJavascript(webber, "mraid.isViewable();");
-        Log.i("info about viewable ", " Viewable works");
-
-    }
-
-    @Override
-    public void getDefaultPosition() {
-        super.useJavascript(webber, "mraid.getDefaultPosition();");
-        Log.i("Info default Position ", " Default position is working");
-    }
-
-    @Override
-    public void getState() {
-        super.useJavascript(webber, "mraid.getState();");
-        Log.i("info State ", " State is working");
-    }
-
-    @Override
-    public void removeEventListener() {
-        super.useJavascript(webber, "mraid.removeEventListener();");
-        Log.i("info Remove", " Removing");
-    }
-
-    @Override
-    public void fireViewableChangeEvent() {
-        Log.i("INFORMATION", "fireViewableChangeEvent");
-        super.useJavascript(webber, "mraid.fireViewableChangeEvent(" + isViewable + ");");
-
-
-    }
 
 
 }

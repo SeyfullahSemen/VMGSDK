@@ -11,28 +11,25 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 
 import com.example.user.newapp.BaseFrag.VMGBaseFragment;
 import com.example.user.newapp.ConfigVMG.VMGConfig;
-import com.example.user.newapp.Interfaces.VMGMraidEvents;
-import com.example.user.newapp.VMGCustom.VMGCustomView;
 import com.example.user.newapp.adapters.RecycleAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents {
+public class RecyclerFragment extends VMGBaseFragment  {
     protected RecyclerView mRecyclerView;
-    private VMGCustomView webbs;
+    private WebView webbs;
 
 
     public RecyclerFragment() {
@@ -46,9 +43,9 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_recycler, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler);
-        webbs = (VMGCustomView) v.findViewById(R.id.webbs); // get the id of the webview
+        webbs = (WebView) v.findViewById(R.id.webbs); // get the id of the webview
 
-        fireReadyEvent(); // fire the ready event
+
 
 
         return v;
@@ -76,42 +73,6 @@ public class RecyclerFragment extends VMGBaseFragment implements VMGMraidEvents 
     }
 
 
-    @Override
-    public void fireReadyEvent() {
-        super.useJavascript(webbs, "mraid.fireReadyEvent();");
-        Log.i("info", "READYYYY NIFFFOOOO");
-    }
-
-    @Override
-    public void getScreenSize() {
-        super.useJavascript(webbs, "mraid.getScreenSize();");
-        Log.i("Info about Screen Size ", "Screen size is working");
-    }
-
-    @Override
-    public void isViewable() {
-
-    }
-
-    @Override
-    public void getDefaultPosition() {
-
-    }
-
-    @Override
-    public void getState() {
-
-    }
-
-    @Override
-    public void removeEventListener() {
-
-    }
-
-    @Override
-    public void fireViewableChangeEvent() {
-
-    }
 
 
 }
