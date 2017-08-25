@@ -1,21 +1,28 @@
-package com.vmg.vmgsdklib.ConfigVMG;
+package com.vmg.ConfigVMG;
+
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import android.content.Context;
+
 import android.util.Log;
+
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
+
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
+
 import com.android.volley.toolbox.Volley;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 /**
@@ -69,8 +76,7 @@ public class VMGConfig {
 
     public RequestQueue getRequestQueue() {
         if (requestQueue == null) {
-            // getApplicationContext() is key, it keeps you from leaking the
-            // Activity or BroadcastReceiver if someone passes one in.
+
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
         return requestQueue;
@@ -131,6 +137,7 @@ public class VMGConfig {
     }
 
     /**
+     *
      * @param context
      */
     private static void getVMGObject(final Context context) {
@@ -141,7 +148,7 @@ public class VMGConfig {
                 Log.d(TAG, response.toString());
                 try {
 
-
+                     //////////////{Variables}/////////////////////
                     boolean slideInOnStart;
                     boolean slideInOnClose;
                     boolean fadeInOnStart;
@@ -153,8 +160,9 @@ public class VMGConfig {
 
                     double topOffset;
                     double bottomOffset;
-
                     String launcher;
+                    //////////////{Variables}/////////////////////
+                    ////////////////{Get the values out of the JSON}
                     JSONObject config = response.getJSONObject("config");
                     if (config.has("slideInOnStart")) {
                         slideInOnStart = config.getBoolean("slideInOnStart");
@@ -199,16 +207,20 @@ public class VMGConfig {
                         launcher = trackers.getString("launch");
                         JSONVals.put("launcher", launcher);
                     }
-
+                    ////////////////{Get the values out of the JSON}
+                    ///////////////{Loop door de values }
                     for (Map.Entry<String, Object> entry : JSONVals.entrySet()) {
                         Log.i(TAG, "" + entry.getKey() + " " + entry.getValue());
                     }
+                    ///////////////{Loop door de values }
+                    //////////////{Catch any errors}
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(context,
                             "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
+                //////////////{Catch any errors}
             }
         }, new Response.ErrorListener() {
             @Override
@@ -216,10 +228,10 @@ public class VMGConfig {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 Toast.makeText(context,
                         error.getMessage(), Toast.LENGTH_SHORT).show();
-                // hide the progress dialog
+
             }
         });
-        // Adding request to request queue
+
         VMGConfig.getVMGInstance(context).addToRequestQueue(jsonObjReq);
     }
 }

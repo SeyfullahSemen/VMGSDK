@@ -1,4 +1,4 @@
-package com.vmg.vmgsdklib.ConfigVMG;
+package com.vmg.ConfigVMG;
 
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
@@ -24,6 +24,8 @@ public class VMGUrlBuilder {
        String  placementUrl = "" + VMGConfig.baseUrl + "/adServ/placement/id\\" + VMGConfig.placementId + "";
         return placementUrl;
     }// end of getPlacementUrl();
+
+
 
 
 }

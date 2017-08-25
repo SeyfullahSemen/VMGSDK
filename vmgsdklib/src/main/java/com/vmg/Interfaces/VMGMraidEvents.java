@@ -1,4 +1,4 @@
-package com.vmg.vmgsdklib.Interfaces;
+package com.vmg.Interfaces;
 
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
@@ -22,11 +22,12 @@ public interface VMGMraidEvents {
 
     void getDefaultPosition();
 
-    void getState();
+    int getState();
 
     void removeEventListener();
 
     void fireViewableChangeEvent();
+    void fireStateChangeEvent();
 
 
 

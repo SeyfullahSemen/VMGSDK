@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-import com.example.user.newapp.BaseUtils.VMGBaseFragment;
+
 import com.example.user.newapp.R;
 
 import java.util.List;

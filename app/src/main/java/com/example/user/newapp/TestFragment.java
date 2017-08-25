@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
-import com.example.user.newapp.BaseUtils.VMGBaseFragment;
+import com.example.user.newapp.BaseUtils.VMGBase;
+
 
 
 /**
@@ -22,8 +23,8 @@ public class TestFragment extends Fragment {
     private NestedScrollView scroller;
     private RelativeLayout rela_test;
     private WebView view;
-   private  VMGBuilder build;
-    VMGBaseFragment frag = new VMGBaseFragment(getActivity());
+
+    private VMGBase frag ;
 
 
     public TestFragment() {
@@ -40,6 +41,7 @@ public class TestFragment extends Fragment {
         scroller = (NestedScrollView) v.findViewById(R.id.scroller);
         rela_test = (RelativeLayout) v.findViewById(R.id.rela_test);
         view = (WebView) v.findViewById(R.id.VMGCustomView);
+        new VMGBase(getActivity());
 
         frag.startVMG(getActivity(),view);
 
