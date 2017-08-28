@@ -46,7 +46,7 @@ public class RecyclerFragment extends Fragment  {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler);
         webbs = (WebView) v.findViewById(R.id.webbs); // get the id of the webview
 
-        frag = new VMGBase(getActivity());
+        frag = new VMGBase(getActivity(),webbs);
 
 
         return v;
@@ -56,7 +56,7 @@ public class RecyclerFragment extends Fragment  {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Set ListView basic adapter
         VMGConfig.getVMGInstance(getActivity());
-        frag.startVMG(getActivity(),webbs);
+        frag.startVMG(getActivity());
         setRecyclerViewAdapter(mRecyclerView);
 
 

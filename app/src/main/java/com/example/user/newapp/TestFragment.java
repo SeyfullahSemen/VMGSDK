@@ -41,9 +41,9 @@ public class TestFragment extends Fragment {
         scroller = (NestedScrollView) v.findViewById(R.id.scroller);
         rela_test = (RelativeLayout) v.findViewById(R.id.rela_test);
         view = (WebView) v.findViewById(R.id.VMGCustomView);
-        new VMGBase(getActivity());
+        new VMGBase(getActivity(),view);
 
-        frag.startVMG(getActivity(),view);
+        frag.startVMG(getActivity());
 
         return v;
     }

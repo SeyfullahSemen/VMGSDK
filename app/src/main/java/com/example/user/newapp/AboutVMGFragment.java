@@ -53,12 +53,12 @@ public class AboutVMGFragment extends Fragment {// You need to extend from the V
         view = (WebView) v.findViewById(R.id.web_about);
         about__scroll = (NestedScrollView) v.findViewById(R.id.scroll__about);
         layout_about = (LinearLayout) v.findViewById(R.id.layout_about);
-        frag = new VMGBase(getActivity());
+        frag = new VMGBase(getActivity(),view);
 
         about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                frag.VMGScrollEvent(scrollY, scrollX, layout_about, view,getActivity());
+                frag.VMGScrollEvent(scrollY, scrollX, layout_about,getActivity());
 
             }
         });
@@ -74,7 +74,7 @@ public class AboutVMGFragment extends Fragment {// You need to extend from the V
         super.onViewCreated(view, savedInstanceState);
         // You just need to add these two lines of code to load the add
         VMGConfig.getVMGInstance(getActivity());
-        frag.startVMG(getActivity(),this.view);
+        frag.startVMG(getActivity());
 //////////////////////////////////////////////////////////////////
     }
 

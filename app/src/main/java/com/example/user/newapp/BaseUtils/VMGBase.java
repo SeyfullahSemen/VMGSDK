@@ -67,14 +67,14 @@ public class VMGBase extends RelativeLayout {
 
 
     // this is an empty constructor
-    public VMGBase(Context context) {
+    public VMGBase(Context context,WebView webView) {
         super(context);
         this.context = context;
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         handler = new Handler(Looper.getMainLooper());
-        webView = currentWeb;
+        this.webView = webView;
     }
 
     public void setAddWidth(int addWidth) {
@@ -97,7 +97,9 @@ public class VMGBase extends RelativeLayout {
         return resizeProperties.height;
     }
 
-
+private void useJavascript(String javascript){
+    useJavascript(webView,javascript);
+}
     /**
      * @param custom
      * @param javascript
@@ -118,11 +120,11 @@ public class VMGBase extends RelativeLayout {
 
 
     /**
-     * @param custom
+     *
      */
-    private void openWeb(WebView custom) {
+    private void openWeb() {
 
-        custom.loadUrl(VMGUrlBuilder.getPlacementUrl());
+        webView.loadUrl(VMGUrlBuilder.getPlacementUrl());
 
 
     }// end of openWeb();
@@ -133,12 +135,11 @@ public class VMGBase extends RelativeLayout {
      * @param scrollY
      * @param scrollX
      * @param view
-     * @param custom
      */
-    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view, WebView custom, Context context) {
+    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view,  Context context) {
         int[] location = {0, 0}; // save the locations x and y of the sroll
 
-        int heightOfContent = custom.getContentHeight(); // get the heigth of the webview
+        int heightOfContent = webView.getContentHeight(); // get the heigth of the webview
 
         double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
 
@@ -146,22 +147,22 @@ public class VMGBase extends RelativeLayout {
         double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
 
 
-        if (scrollY - custom.getY() > (heightOfContent * topOffset)) {
+        if (scrollY - webView.getY() > (heightOfContent * topOffset)) {
             isViewable = false;
-            useJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+            useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable + "  ");
-            useJavascript(custom, "mraid.isViewable();");
-        } else if (scrollY + layoutH < custom.getY() + (heightOfContent * bottomOffset)) {
+            useJavascript("mraid.isViewable();");
+        } else if (scrollY + layoutH < webView.getY() + (heightOfContent * bottomOffset)) {
             isViewable = false;
-            useJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+            useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
-            useJavascript(custom, "mraid.isViewable();");
+            useJavascript("mraid.isViewable();");
         } else {
 
             isViewable = true;
-            useJavascript(custom, "mraid.fireViewableChangeEvent(" + isViewable + ");");
+            useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
-            useJavascript(custom, "mraid.isViewable();");
+            useJavascript("mraid.isViewable();");
 
         }
 
@@ -174,29 +175,29 @@ public class VMGBase extends RelativeLayout {
      * this is where the webview gets filled with the mraid file and it opens the webview
      * so the user just needs to add this method to get the full functionallity
      *
-     * @param custom
+     * @param context
      */
-    public void startVMG(Context context, WebView custom) {
+    public void startVMG(Context context) {
 
-        WebSettings settings = custom.getSettings();
+        WebSettings settings = webView.getSettings();
 
 
-        custom.setWebViewClient(new VMGWebviewClient());
+        webView.setWebViewClient(new VMGWebviewClient());
         settings.setJavaScriptEnabled(true); // set javascript enabled
         // set debugging on for debugging on google chrome
 
-        custom.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
+        webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
         VMGConfig.getVMGInstance(context);
-        openWeb(custom);
+        openWeb();
 
 
     }// end of startVMG();
 
     /**
      *
-     * @param custom
+     *
      */
-    private void resize(WebView custom) {
+    private void resize() {
         Log.d(TAG, "resize");
 
         // We need the cooperation of the app in order to do a resize.
@@ -214,7 +215,7 @@ public class VMGBase extends RelativeLayout {
         if (resizedView == null) {
             resizedView = new RelativeLayout(context);
             removeAllViews();
-            resizedView.addView(custom);
+            resizedView.addView(webView);
 
             FrameLayout rootView = (FrameLayout) getRootView().findViewById(android.R.id.content);
             rootView.addView(resizedView);
@@ -223,7 +224,7 @@ public class VMGBase extends RelativeLayout {
         setResizedViewSize();
 
 
-        fireStateChangeEvent(custom);
+        fireStateChangeEvent();
 
 
     }// end of resize();
@@ -244,14 +245,14 @@ public class VMGBase extends RelativeLayout {
 
     /**
      *
-     * @param custom
+     *
      */
-    private void setMaxSize(final WebView custom) {
+    private void setMaxSize() {
 
         handler.post(new Runnable() {
             @Override
             public void run() {
-                useJavascript(custom, "mraid.setMaxSize('" + getAddWidth() + "','" + getAddHeight() + "');");
+                useJavascript("mraid.setMaxSize('" + getAddWidth() + "','" + getAddHeight() + "');");
             }
         });
     }// end of setMaxSize();
@@ -266,28 +267,28 @@ public class VMGBase extends RelativeLayout {
 
     /**
      *
-     * @param custom
+     *
      */
-    private void fireViewableChangeEvent(WebView custom) {
+    private void fireViewableChangeEvent() {
         isViewable = true;
-        useJavascript(custom, "mraid.fireViewableChangeEvent('" + isViewable + "');");
+        useJavascript("mraid.fireViewableChangeEvent('" + isViewable + "');");
     }// end of fireViewableChangeEvent();
 
     /**
      *
-     * @param custom
+     *
      */
-    private void fireReadyChangeEvent(WebView custom) {
-        useJavascript(custom, "mraid.fireReadyEvent();");
+    private void fireReadyChangeEvent() {
+        useJavascript("mraid.fireReadyEvent();");
     }// end of fireReadyChangeEvent();
 
     /**
      *
-     * @param custom
+     *
      */
-    private void fireStateChangeEvent(WebView custom) {
+    private void fireStateChangeEvent() {
         String[] states = {"loading", "default", "expanded", "resized", "hidden"};
-        useJavascript(custom, "mraid.fireStateChangeEvent('" + states[state] + "');");
+        useJavascript("mraid.fireStateChangeEvent('" + states[state] + "');");
     }// end of fireStateChangeEvent();
 
     /**
@@ -299,11 +300,11 @@ public class VMGBase extends RelativeLayout {
             super.onPageFinished(view, url);
             if (state == LOADING) {
                 state = DEFAULT;
-                fireStateChangeEvent(view);
-                setMaxSize(view);
-                fireReadyChangeEvent(view);
+                fireStateChangeEvent();
+                setMaxSize();
+                fireReadyChangeEvent();
 
-                fireViewableChangeEvent(view);
+                fireViewableChangeEvent();
 
             }
 

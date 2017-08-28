@@ -40,7 +40,7 @@ public class ListViewFragment extends Fragment  {
         listView = (ListView) v.findViewById(R.id.listView);
 
         webber = (WebView) v.findViewById(R.id.webber); // get the id of the custom webview
-        frag = new VMGBase(getActivity());
+        frag = new VMGBase(getActivity(),webber);
 
 
 
@@ -55,7 +55,7 @@ public class ListViewFragment extends Fragment  {
         // Set ListView basic adapter
         setValues(listView);
 
-        frag.startVMG(getActivity(),webber);
+        frag.startVMG(getActivity());
 
     }
 
