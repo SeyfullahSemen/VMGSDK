@@ -54,7 +54,7 @@ public class ListViewFragment extends Fragment  {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Set ListView basic adapter
         setValues(listView);
-        VMGConfig.getVMGInstance(getActivity());
+
         frag.startVMG(getActivity(),webber);
 
     }

@@ -8,18 +8,26 @@
 package com.example.user.newapp.BaseUtils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v4.widget.DrawerLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 
 import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.ConfigVMG.VMGUrlBuilder;
+import com.example.user.newapp.Interfaces.VMGMraidEvents;
 
 import java.util.Map;
 
@@ -34,17 +42,23 @@ public class VMGBase extends RelativeLayout {
 
 
     private boolean isViewable;
+    private RelativeLayout resizedView;
     private final static int LOADING = 0;
     private final static int DEFAULT = 1;
     private final static int EXPANDED = 2;
     private final static int RESIZED = 3;
     private final static int HIDDEN = 4;
-    private boolean isResizeReady;
+
 
     private VMGResizeProperties resizeProperties;
+    private VMGMraidEvents events;
 
-    private int addWidth = 340;
-    private int addHeight = 255;
+    private WebView webView;
+    private WebView currentWeb;
+
+    private int defaultAddWidth = 340;
+    private int defaultAddHeight = 255;
+    private DisplayMetrics displayMetrics;
     private Context context;
 
 
@@ -56,25 +70,32 @@ public class VMGBase extends RelativeLayout {
         super(context);
         this.context = context;
         resizeProperties = new VMGResizeProperties();
+        displayMetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-
+        webView = currentWeb;
     }
 
     public void setAddWidth(int addWidth) {
-        this.addWidth = addWidth;
+        this.defaultAddWidth = addWidth;
+        resizeProperties.width = this.defaultAddWidth;
     }
 
     public void setAddHeight(int addHeight) {
-        this.addHeight = addHeight;
+        this.defaultAddHeight = addHeight;
+        resizeProperties.height = this.defaultAddHeight;
     }
 
     public int getAddWidth() {
-        return this.addWidth;
+        resizeProperties.width = this.defaultAddWidth;
+        return resizeProperties.width;
     }
 
     public int getAddHeight() {
-        return this.addHeight;
+        resizeProperties.height = this.defaultAddHeight;
+        return resizeProperties.height;
     }
+
 
     /**
      * @param custom
@@ -170,58 +191,102 @@ public class VMGBase extends RelativeLayout {
 
     }// end of startVMG();
 
+    /**
+     *
+     * @param custom
+     */
+    private void resize(WebView custom) {
+        Log.d(TAG, "resize");
 
-    @SuppressLint("LongLogTag")
-    @SuppressWarnings("unused")
-    private void setResizeProperties(Map<String, String> properties) {
-        int width = Integer.parseInt(properties.get("width"));
-        int height = Integer.parseInt(properties.get("height"));
-        int offsetX = Integer.parseInt(properties.get("offsetX"));
-        int offsetY = Integer.parseInt(properties.get("offsetY"));
-        String customClosePosition = properties.get("customClosePosition");
-        boolean allowOffscreen = Boolean.parseBoolean(properties.get("allowOffscreen"));
-        Log.d(TAG + "-JS callback", "setResizeProperties "
-                + width + " " + height + " "
-                + offsetX + " " + offsetY + " "
-                + customClosePosition + " " + allowOffscreen);
-        resizeProperties.width = width;
-        resizeProperties.height = height;
-        resizeProperties.offsetX = offsetX;
-        resizeProperties.offsetY = offsetY;
+        // We need the cooperation of the app in order to do a resize.
+        if (events == null) {
+            return;
+        }
+        boolean isReadyToResize = events.resizeAd(this,
+                resizeProperties.width, resizeProperties.height, resizeProperties.offsetX, resizeProperties.offsetY);
+        if (!isReadyToResize) {
+            return;
+        }
 
-    }
+        state = RESIZED;
+
+        if (resizedView == null) {
+            resizedView = new RelativeLayout(context);
+            removeAllViews();
+            resizedView.addView(custom);
+
+            FrameLayout rootView = (FrameLayout) getRootView().findViewById(android.R.id.content);
+            rootView.addView(resizedView);
+        }
+
+        setResizedViewSize();
 
 
-    private void resize() {
-        Log.i(TAG, " " + this.resizeProperties.width + " " + this.resizeProperties.height);
-    }
+        fireStateChangeEvent(custom);
 
+
+    }// end of resize();
+
+    /**
+     *
+     */
+    private void setResizedViewSize() {
+        Log.d(TAG, "setResizedViewSize");
+        int width = resizeProperties.width;
+        int height = resizeProperties.height;
+        Log.d(TAG, "setResizedViewSize " + width + "x" + height);
+        int widthToDip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, displayMetrics);
+        int heightToDip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, displayMetrics);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(widthToDip, heightToDip);
+        resizedView.setLayoutParams(params);
+    }// end of setResizedViewSize();
+
+    /**
+     *
+     * @param custom
+     */
     private void setMaxSize(WebView custom) {
 
         useJavascript(custom, "mraid.setMaxSize('" + getAddWidth() + "','" + getAddHeight() + "');");
-    }
+    }// end of setMaxSize();
 
-
+    /**
+     *
+     * @return
+     */
     private int getState() {
         return state;
     }
 
-
+    /**
+     *
+     * @param custom
+     */
     private void fireViewableChangeEvent(WebView custom) {
         isViewable = true;
         useJavascript(custom, "mraid.fireViewableChangeEvent('" + isViewable + "');");
-    }
+    }// end of fireViewableChangeEvent();
 
+    /**
+     *
+     * @param custom
+     */
     private void fireReadyChangeEvent(WebView custom) {
         useJavascript(custom, "mraid.fireReadyEvent();");
-    }
+    }// end of fireReadyChangeEvent();
 
+    /**
+     *
+     * @param custom
+     */
     private void fireStateChangeEvent(WebView custom) {
         String[] states = {"loading", "default", "expanded", "resized", "hidden"};
         useJavascript(custom, "mraid.fireStateChangeEvent('" + states[state] + "');");
-    }
+    }// end of fireStateChangeEvent();
 
-
+    /**
+     *
+     */
     private class VMGWebviewClient extends WebViewClient {
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -237,7 +302,7 @@ public class VMGBase extends RelativeLayout {
             }
 
         }
-    }
+    }// end of VMGWebViewClient();
 
 }
 

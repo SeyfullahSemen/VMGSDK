@@ -8,26 +8,16 @@ package com.vmg.Interfaces;
  *
  */
 
+
+import com.vmg.BaseUtils.VMGBase;
+
 /**
  * Created by Seyfullah Semen on 2-8-2017.
  */
 
 public interface VMGMraidEvents {
 
-    void fireReadyEvent();
-
-    void getScreenSize();
-
-    void isViewable();
-
-    void getDefaultPosition();
-
-    int getState();
-
-    void removeEventListener();
-
-    void fireViewableChangeEvent();
-    void fireStateChangeEvent();
+    boolean resizeAd(VMGBase base, int width, int height, int offsetX, int offsetY);
 
 
 

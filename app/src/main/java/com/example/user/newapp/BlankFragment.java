@@ -63,6 +63,7 @@ public class BlankFragment extends Fragment {
         rela = (RelativeLayout) v.findViewById(R.id.rela);
         webView = (WebView) v.findViewById(R.id.webView);
         frag = new VMGBase(getActivity());
+
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
