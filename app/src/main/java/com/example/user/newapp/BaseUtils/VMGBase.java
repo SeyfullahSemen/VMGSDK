@@ -83,11 +83,13 @@ public class VMGBase extends RelativeLayout {
     public void setAddWidth(int addWidth) {
         this.defaultAddWidth = addWidth;
         resizeProperties.width = this.defaultAddWidth;
+
     }
 
     public void setAddHeight(int addHeight) {
         this.defaultAddHeight = addHeight;
         resizeProperties.height = this.defaultAddHeight;
+
     }
 
     public int getAddWidth() {
@@ -240,7 +242,8 @@ public class VMGBase extends RelativeLayout {
      */
     private void fireStateChangeEvent() {
         String[] states = {"loading", "default", "expanded", "resized", "hidden"};
-        useJavascript("mraid.fireStateChangeEvent('" + states[state] + "');");
+        useJavascript("mraid.setState('" + states[state] + "');");
+        Log.d(TAG,""+getState());
     }// end of fireStateChangeEvent();
 
     /**

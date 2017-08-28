@@ -8,24 +8,19 @@
 package com.vmg.BaseUtils;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
-
 
 
 /**
@@ -36,7 +31,7 @@ import com.vmg.ConfigVMG.VMGUrlBuilder;
 public class VMGBase extends RelativeLayout {
 
 
-    private static final String TAG = "VMGBase";
+    private static final String TAG = "VMGBaseFragment";
 
 
     private boolean isViewable;
@@ -53,7 +48,6 @@ public class VMGBase extends RelativeLayout {
     private Handler handler;
 
     private WebView webView;
-
 
     private int defaultAddWidth = 340;
     private int defaultAddHeight = 255;
@@ -74,41 +68,31 @@ public class VMGBase extends RelativeLayout {
         this.webView = webView;
     }
 
-    /**
-     * this will  be used when an advertiser wants their add bigger or smaller
-     * than the default values we  gave
-     *
-     * @param addWidth
-     */
     public void setAddWidth(int addWidth) {
         this.defaultAddWidth = addWidth;
         resizeProperties.width = this.defaultAddWidth;
-    }// end of setAddWidth();
 
-    /**
-     * this will be used when an advertiser wants their add bigger in height or smaller
-     * than the default values we gave
-     *
-     * @param addHeight
-     */
+    }
+
     public void setAddHeight(int addHeight) {
         this.defaultAddHeight = addHeight;
         resizeProperties.height = this.defaultAddHeight;
-    }//end of setAddHeight();
+
+    }
 
     public int getAddWidth() {
         resizeProperties.width = this.defaultAddWidth;
         return resizeProperties.width;
-    }// end of getAddWidth();
+    }
 
     public int getAddHeight() {
         resizeProperties.height = this.defaultAddHeight;
         return resizeProperties.height;
-    }// end of getAddHeight();
+    }
 
     private void useJavascript(String javascript) {
         useJavascript(webView, javascript);
-    }// end of useJavascript();
+    }
 
     /**
      * @param custom
@@ -131,7 +115,7 @@ public class VMGBase extends RelativeLayout {
 
 
     /**
-     * this will load the url in the given webview
+     *
      */
     private void openWeb() {
 
@@ -185,30 +169,28 @@ public class VMGBase extends RelativeLayout {
     /**
      * this is where the webview gets filled with the mraid file and it opens the webview
      * so the user just needs to add this method to get the full functionallity
-     *
-     * @param context
      */
     @SuppressLint("NewApi")
-    public void startVMG(Context context) {
+    public void startVMG() {
 
         WebSettings settings = webView.getSettings();
 
 
-        webView.setWebViewClient(new VMGWebviewClient());
         settings.setJavaScriptEnabled(true); // set javascript enabled
         // set debugging on for debugging on google chrome
 
         webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
+
         VMGConfig.getVMGInstance(context);
         openWeb();
-
+        webView.setWebViewClient(new VMGWebviewClient());
 
     }// end of startVMG();
 
 
     /**
-     * this will set the max size of the add
-     * and I use the handler because this method will change the ui
+     *
+     *
      */
     private void setMaxSize() {
 
@@ -221,16 +203,15 @@ public class VMGBase extends RelativeLayout {
     }// end of setMaxSize();
 
     /**
-     * returns the state that the add is in
-     *
-     * @return state
+     * @return
      */
     private int getState() {
         return state;
-    }//end of getState()
+    }
 
     /**
-     * change the viewability of the add
+     *
+     *
      */
     private void fireViewableChangeEvent() {
         isViewable = true;
@@ -238,24 +219,25 @@ public class VMGBase extends RelativeLayout {
     }// end of fireViewableChangeEvent();
 
     /**
-     * this method will fire the ready event
+     *
+     *
      */
     private void fireReadyChangeEvent() {
         useJavascript("mraid.fireReadyEvent();");
     }// end of fireReadyChangeEvent();
 
     /**
-     * this method will change the state of the add
+     *
+     *
      */
     private void fireStateChangeEvent() {
         String[] states = {"loading", "default", "expanded", "resized", "hidden"};
-        useJavascript("mraid.fireStateChangeEvent('" + states[state] + "');");
+        useJavascript("mraid.setState('" + states[state] + "');");
+        Log.d(TAG,""+getState());
     }// end of fireStateChangeEvent();
 
     /**
-     * this is our very own webviewcliient
-     * this method checks whether the add is loaded and if so the state will change to default
-     * after that it fires the firestatechangeevent() etc.
+     *
      */
     private class VMGWebviewClient extends WebViewClient {
         @Override
@@ -269,10 +251,14 @@ public class VMGBase extends RelativeLayout {
 
                 fireViewableChangeEvent();
 
+
             }
             super.onPageFinished(view, url);
         }
+
+
     }// end of VMGWebViewClient();
+
 
 }
 
