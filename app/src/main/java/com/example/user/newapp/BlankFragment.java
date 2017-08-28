@@ -79,7 +79,7 @@ public class BlankFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // just add these 2 lines of code to load your ad
 
-        frag.startVMG(getActivity()); // this will start everything that you need to load inside the view
+        frag.startVMG(); // this will start everything that you need to load inside the view
     ///////////////////////////////////////////////////////////////////////////////////////
     }
 

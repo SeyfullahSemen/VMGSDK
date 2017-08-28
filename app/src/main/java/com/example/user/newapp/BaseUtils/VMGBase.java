@@ -175,9 +175,9 @@ private void useJavascript(String javascript){
      * this is where the webview gets filled with the mraid file and it opens the webview
      * so the user just needs to add this method to get the full functionallity
      *
-     * @param context
+     *
      */
-    public void startVMG(Context context) {
+    public void startVMG() {
 
         WebSettings settings = webView.getSettings();
 

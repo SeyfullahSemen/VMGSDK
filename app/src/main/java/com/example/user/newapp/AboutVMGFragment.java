@@ -74,7 +74,7 @@ public class AboutVMGFragment extends Fragment {// You need to extend from the V
         super.onViewCreated(view, savedInstanceState);
         // You just need to add these two lines of code to load the add
         VMGConfig.getVMGInstance(getActivity());
-        frag.startVMG(getActivity());
+        frag.startVMG();
 //////////////////////////////////////////////////////////////////
     }
 

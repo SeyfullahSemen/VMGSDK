@@ -19,10 +19,10 @@ import com.example.user.newapp.ConfigVMG.VMGConfig;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListViewFragment extends Fragment  {
+public class ListViewFragment extends Fragment {
     private ListView listView;
     private WebView webber;
-    VMGBase frag ;
+    VMGBase frag;
 
     private boolean isViewable;
 
@@ -40,10 +40,7 @@ public class ListViewFragment extends Fragment  {
         listView = (ListView) v.findViewById(R.id.listView);
 
         webber = (WebView) v.findViewById(R.id.webber); // get the id of the custom webview
-        frag = new VMGBase(getActivity(),webber);
-
-
-
+        frag = new VMGBase(getActivity(), webber);
 
 
         return v;
@@ -55,7 +52,7 @@ public class ListViewFragment extends Fragment  {
         // Set ListView basic adapter
         setValues(listView);
 
-        frag.startVMG(getActivity());
+        frag.startVMG();
 
     }
 
@@ -78,7 +75,6 @@ public class ListViewFragment extends Fragment  {
      * the methods below is for checking if java can communicate with Javascript
      * we accomplish this with simple getters to check everything
      */
-
 
 
 }

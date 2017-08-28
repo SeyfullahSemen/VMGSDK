@@ -43,7 +43,7 @@ public class TestFragment extends Fragment {
         view = (WebView) v.findViewById(R.id.VMGCustomView);
         new VMGBase(getActivity(),view);
 
-        frag.startVMG(getActivity());
+        frag.startVMG();
 
         return v;
     }

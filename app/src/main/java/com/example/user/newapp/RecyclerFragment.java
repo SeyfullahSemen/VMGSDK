@@ -55,8 +55,8 @@ public class RecyclerFragment extends Fragment  {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Set ListView basic adapter
-        VMGConfig.getVMGInstance(getActivity());
-        frag.startVMG(getActivity());
+
+        frag.startVMG();
         setRecyclerViewAdapter(mRecyclerView);
 
 
