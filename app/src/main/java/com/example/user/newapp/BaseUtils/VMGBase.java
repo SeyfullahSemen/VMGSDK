@@ -52,6 +52,7 @@ public class VMGBase extends RelativeLayout {
 
     private VMGResizeProperties resizeProperties;
     private VMGMraidEvents events;
+    private Handler handler;
 
     private WebView webView;
     private WebView currentWeb;
@@ -72,7 +73,7 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
+        handler = new Handler(Looper.getMainLooper());
         webView = currentWeb;
     }
 
@@ -245,9 +246,14 @@ public class VMGBase extends RelativeLayout {
      *
      * @param custom
      */
-    private void setMaxSize(WebView custom) {
+    private void setMaxSize(final WebView custom) {
 
-        useJavascript(custom, "mraid.setMaxSize('" + getAddWidth() + "','" + getAddHeight() + "');");
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                useJavascript(custom, "mraid.setMaxSize('" + getAddWidth() + "','" + getAddHeight() + "');");
+            }
+        });
     }// end of setMaxSize();
 
     /**
