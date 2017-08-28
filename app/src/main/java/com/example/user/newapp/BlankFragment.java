@@ -67,7 +67,7 @@ public class BlankFragment extends Fragment {
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                frag.VMGScrollEvent(scrollY, scrollX, rela,getActivity());
+                frag.VMGScrollEvent(scrollY, scrollX, rela);
             }
         });
 

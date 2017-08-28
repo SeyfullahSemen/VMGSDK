@@ -24,7 +24,7 @@ public final class VMGResizeProperties {
             int height,
             int offsetX,
             int offsetY
-            ) {
+    ) {
         this.width = width;
         this.height = height;
         this.offsetX = offsetX;

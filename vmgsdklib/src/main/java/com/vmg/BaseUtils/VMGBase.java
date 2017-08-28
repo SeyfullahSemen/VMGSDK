@@ -25,17 +25,18 @@ import android.widget.RelativeLayout;
 
 import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
-import com.vmg.Interfaces.VMGMraidEvents;
+
 
 
 /**
  * Created by Seyfullah Semen  on 4-8-2017.
  */
 
+@SuppressLint("ViewConstructor")
 public class VMGBase extends RelativeLayout {
 
 
-    private static final String TAG = "VMGBaseFragment";
+    private static final String TAG = "VMGBase";
 
 
     private boolean isViewable;
@@ -48,15 +49,15 @@ public class VMGBase extends RelativeLayout {
 
 
     private VMGResizeProperties resizeProperties;
-    private VMGMraidEvents events;
+
     private Handler handler;
 
     private WebView webView;
-    private WebView currentWeb;
+
 
     private int defaultAddWidth = 340;
     private int defaultAddHeight = 255;
-    private DisplayMetrics displayMetrics;
+
     private Context context;
 
 
@@ -68,35 +69,47 @@ public class VMGBase extends RelativeLayout {
         super(context);
         this.context = context;
         resizeProperties = new VMGResizeProperties();
-        displayMetrics = new DisplayMetrics();
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
         handler = new Handler(Looper.getMainLooper());
         this.webView = webView;
     }
 
+    /**
+     * this will  be used when an advertiser wants their add bigger or smaller
+     * than the default values we  gave
+     *
+     * @param addWidth
+     */
     public void setAddWidth(int addWidth) {
         this.defaultAddWidth = addWidth;
         resizeProperties.width = this.defaultAddWidth;
-    }
+    }// end of setAddWidth();
 
+    /**
+     * this will be used when an advertiser wants their add bigger in height or smaller
+     * than the default values we gave
+     *
+     * @param addHeight
+     */
     public void setAddHeight(int addHeight) {
         this.defaultAddHeight = addHeight;
         resizeProperties.height = this.defaultAddHeight;
-    }
+    }//end of setAddHeight();
 
     public int getAddWidth() {
         resizeProperties.width = this.defaultAddWidth;
         return resizeProperties.width;
-    }
+    }// end of getAddWidth();
 
     public int getAddHeight() {
         resizeProperties.height = this.defaultAddHeight;
         return resizeProperties.height;
-    }
+    }// end of getAddHeight();
 
-private void useJavascript(String javascript){
-    useJavascript(webView,javascript);
-}
+    private void useJavascript(String javascript) {
+        useJavascript(webView, javascript);
+    }// end of useJavascript();
+
     /**
      * @param custom
      * @param javascript
@@ -118,7 +131,7 @@ private void useJavascript(String javascript){
 
 
     /**
-     *
+     * this will load the url in the given webview
      */
     private void openWeb() {
 
@@ -134,7 +147,7 @@ private void useJavascript(String javascript){
      * @param scrollX
      * @param view
      */
-    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view,  Context context) {
+    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view) {
         int[] location = {0, 0}; // save the locations x and y of the sroll
 
         int heightOfContent = webView.getContentHeight(); // get the heigth of the webview
@@ -192,59 +205,10 @@ private void useJavascript(String javascript){
 
     }// end of startVMG();
 
-    /**
-     *
-     *
-     */
-    private void resize() {
-        Log.d(TAG, "resize");
-
-        // We need the cooperation of the app in order to do a resize.
-        if (events == null) {
-            return;
-        }
-        boolean isReadyToResize = events.resizeAd(this,
-                resizeProperties.width, resizeProperties.height, resizeProperties.offsetX, resizeProperties.offsetY);
-        if (!isReadyToResize) {
-            return;
-        }
-
-        state = RESIZED;
-
-        if (resizedView == null) {
-            resizedView = new RelativeLayout(context);
-            removeAllViews();
-            resizedView.addView(webView);
-
-            FrameLayout rootView = (FrameLayout) getRootView().findViewById(android.R.id.content);
-            rootView.addView(resizedView);
-        }
-
-        setResizedViewSize();
-
-
-        fireStateChangeEvent();
-
-
-    }// end of resize();
 
     /**
-     *
-     */
-    private void setResizedViewSize() {
-        Log.d(TAG, "setResizedViewSize");
-        int width = resizeProperties.width;
-        int height = resizeProperties.height;
-        Log.d(TAG, "setResizedViewSize " + width + "x" + height);
-        int widthToDip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, displayMetrics);
-        int heightToDip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, displayMetrics);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(widthToDip, heightToDip);
-        resizedView.setLayoutParams(params);
-    }// end of setResizedViewSize();
-
-    /**
-     *
-     *
+     * this will set the max size of the add
+     * and I use the handler because this method will change the ui
      */
     private void setMaxSize() {
 
@@ -257,16 +221,16 @@ private void useJavascript(String javascript){
     }// end of setMaxSize();
 
     /**
+     * returns the state that the add is in
      *
-     * @return
+     * @return state
      */
     private int getState() {
         return state;
-    }
+    }//end of getState()
 
     /**
-     *
-     *
+     * change the viewability of the add
      */
     private void fireViewableChangeEvent() {
         isViewable = true;
@@ -274,16 +238,14 @@ private void useJavascript(String javascript){
     }// end of fireViewableChangeEvent();
 
     /**
-     *
-     *
+     * this method will fire the ready event
      */
     private void fireReadyChangeEvent() {
         useJavascript("mraid.fireReadyEvent();");
     }// end of fireReadyChangeEvent();
 
     /**
-     *
-     *
+     * this method will change the state of the add
      */
     private void fireStateChangeEvent() {
         String[] states = {"loading", "default", "expanded", "resized", "hidden"};
@@ -291,12 +253,14 @@ private void useJavascript(String javascript){
     }// end of fireStateChangeEvent();
 
     /**
-     *
+     * this is our very own webviewcliient
+     * this method checks whether the add is loaded and if so the state will change to default
+     * after that it fires the firestatechangeevent() etc.
      */
     private class VMGWebviewClient extends WebViewClient {
         @Override
         public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
+
             if (state == LOADING) {
                 state = DEFAULT;
                 fireStateChangeEvent();
@@ -306,7 +270,7 @@ private void useJavascript(String javascript){
                 fireViewableChangeEvent();
 
             }
-
+            super.onPageFinished(view, url);
         }
     }// end of VMGWebViewClient();
 

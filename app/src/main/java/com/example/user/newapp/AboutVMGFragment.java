@@ -58,7 +58,7 @@ public class AboutVMGFragment extends Fragment {// You need to extend from the V
         about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                frag.VMGScrollEvent(scrollY, scrollX, layout_about,getActivity());
+                frag.VMGScrollEvent(scrollY, scrollX, layout_about);
 
             }
         });

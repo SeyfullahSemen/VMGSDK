@@ -10,6 +10,7 @@ package com.example.user.newapp.BaseUtils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +18,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -35,6 +39,7 @@ import java.util.Map;
  * Created by Seyfullah Semen  on 4-8-2017.
  */
 
+@SuppressLint("ViewConstructor")
 public class VMGBase extends RelativeLayout {
 
 
@@ -51,15 +56,14 @@ public class VMGBase extends RelativeLayout {
 
 
     private VMGResizeProperties resizeProperties;
-    private VMGMraidEvents events;
+
     private Handler handler;
 
     private WebView webView;
-    private WebView currentWeb;
 
     private int defaultAddWidth = 340;
     private int defaultAddHeight = 255;
-    private DisplayMetrics displayMetrics;
+
     private Context context;
 
 
@@ -67,12 +71,11 @@ public class VMGBase extends RelativeLayout {
 
 
     // this is an empty constructor
-    public VMGBase(Context context,WebView webView) {
+    public VMGBase(Context context, WebView webView) {
         super(context);
         this.context = context;
         resizeProperties = new VMGResizeProperties();
-        displayMetrics = new DisplayMetrics();
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
         handler = new Handler(Looper.getMainLooper());
         this.webView = webView;
     }
@@ -97,9 +100,10 @@ public class VMGBase extends RelativeLayout {
         return resizeProperties.height;
     }
 
-private void useJavascript(String javascript){
-    useJavascript(webView,javascript);
-}
+    private void useJavascript(String javascript) {
+        useJavascript(webView, javascript);
+    }
+
     /**
      * @param custom
      * @param javascript
@@ -136,7 +140,7 @@ private void useJavascript(String javascript){
      * @param scrollX
      * @param view
      */
-    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view,  Context context) {
+    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view) {
         int[] location = {0, 0}; // save the locations x and y of the sroll
 
         int heightOfContent = webView.getContentHeight(); // get the heigth of the webview
@@ -174,74 +178,23 @@ private void useJavascript(String javascript){
     /**
      * this is where the webview gets filled with the mraid file and it opens the webview
      * so the user just needs to add this method to get the full functionallity
-     *
-     *
      */
     public void startVMG() {
 
         WebSettings settings = webView.getSettings();
 
 
-        webView.setWebViewClient(new VMGWebviewClient());
         settings.setJavaScriptEnabled(true); // set javascript enabled
         // set debugging on for debugging on google chrome
 
         webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
+
         VMGConfig.getVMGInstance(context);
         openWeb();
-
+        webView.setWebViewClient(new VMGWebviewClient());
 
     }// end of startVMG();
 
-    /**
-     *
-     *
-     */
-    private void resize() {
-        Log.d(TAG, "resize");
-
-        // We need the cooperation of the app in order to do a resize.
-        if (events == null) {
-            return;
-        }
-        boolean isReadyToResize = events.resizeAd(this,
-                resizeProperties.width, resizeProperties.height, resizeProperties.offsetX, resizeProperties.offsetY);
-        if (!isReadyToResize) {
-            return;
-        }
-
-        state = RESIZED;
-
-        if (resizedView == null) {
-            resizedView = new RelativeLayout(context);
-            removeAllViews();
-            resizedView.addView(webView);
-
-            FrameLayout rootView = (FrameLayout) getRootView().findViewById(android.R.id.content);
-            rootView.addView(resizedView);
-        }
-
-        setResizedViewSize();
-
-
-        fireStateChangeEvent();
-
-
-    }// end of resize();
-
-    /**
-     *
-     */
-    private void setResizedViewSize() {
-        Log.d(TAG, "setResizedViewSize");
-        int width = resizeProperties.width;
-        int height = resizeProperties.height;
-        Log.d(TAG, "setResizedViewSize " + width + "x" + height);
-        int widthToDip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, displayMetrics);
-        int heightToDip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, displayMetrics);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(widthToDip, heightToDip);
-        resizedView.setLayoutParams(params);
-    }// end of setResizedViewSize();
 
     /**
      *
@@ -258,7 +211,6 @@ private void useJavascript(String javascript){
     }// end of setMaxSize();
 
     /**
-     *
      * @return
      */
     private int getState() {
@@ -297,7 +249,7 @@ private void useJavascript(String javascript){
     private class VMGWebviewClient extends WebViewClient {
         @Override
         public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
+
             if (state == LOADING) {
                 state = DEFAULT;
                 fireStateChangeEvent();
@@ -306,10 +258,14 @@ private void useJavascript(String javascript){
 
                 fireViewableChangeEvent();
 
-            }
 
+            }
+            super.onPageFinished(view, url);
         }
+
+
     }// end of VMGWebViewClient();
+
 
 }
 
