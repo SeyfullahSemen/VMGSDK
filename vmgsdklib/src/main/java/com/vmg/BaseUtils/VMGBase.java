@@ -122,7 +122,7 @@ public class VMGBase extends RelativeLayout {
             custom.evaluateJavascript(javascript, new ValueCallback<String>() {
                 @Override
                 public void onReceiveValue(String s) {
-                    Log.i("Info: ", "Evaluation done " + s);
+                    Log.i("Mraiding event : ", "Done " + s);
                 }
             });
         } else {
@@ -208,7 +208,7 @@ public class VMGBase extends RelativeLayout {
 
     /**
      *
-     *  
+     *
      */
     private void setMaxSize() {
 
