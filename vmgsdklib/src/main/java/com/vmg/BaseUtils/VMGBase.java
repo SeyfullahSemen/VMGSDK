@@ -8,11 +8,17 @@
 package com.vmg.BaseUtils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -21,6 +27,8 @@ import android.widget.RelativeLayout;
 
 import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
+
+import static android.R.attr.screenSize;
 
 
 /**
@@ -35,15 +43,17 @@ public class VMGBase extends RelativeLayout {
 
 
     private boolean isViewable;
-    private RelativeLayout resizedView;
+
     private final static int LOADING = 0;
     private final static int DEFAULT = 1;
     private final static int EXPANDED = 2;
     private final static int RESIZED = 3;
     private final static int HIDDEN = 4;
+    private final int orientationLocking;
 
 
     private VMGResizeProperties resizeProperties;
+
 
     private Handler handler;
 
@@ -62,11 +72,18 @@ public class VMGBase extends RelativeLayout {
     public VMGBase(Context context, WebView webView) {
         super(context);
         this.context = context;
-        resizeProperties = new VMGResizeProperties();
-        getAddHeight();
-        getAddWidth();
-        handler = new Handler(Looper.getMainLooper());
         this.webView = webView;
+        resizeProperties = new VMGResizeProperties();
+        getAddWidth();
+        getAddHeight();
+        if (context instanceof Activity) {
+            orientationLocking = ((Activity) context).getRequestedOrientation();
+        } else {
+            orientationLocking = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+        }
+
+        handler = new Handler(Looper.getMainLooper());
+
     }
 
     public void setAddWidth(int addWidth) {
@@ -109,7 +126,7 @@ public class VMGBase extends RelativeLayout {
                 }
             });
         } else {
-            Log.d(TAG," "+javascript);
+            Log.d(TAG, " " + javascript);
             custom.loadUrl("javascript:" + javascript);
         }
     }// end of useJavaScript();
@@ -191,13 +208,16 @@ public class VMGBase extends RelativeLayout {
 
     /**
      *
-     *
+     *  
      */
     private void setMaxSize() {
 
+
         handler.post(new Runnable() {
+
             @Override
             public void run() {
+
                 useJavascript("mraid.setMaxSize('" + getAddWidth() + "','" + getAddHeight() + "');");
             }
         });
