@@ -108,7 +108,7 @@ public class VMGBase extends RelativeLayout {
                 }
             });
         } else {
-            System.out.println("Loading " + javascript);
+            Log.d(TAG," "+javascript);
             custom.loadUrl("javascript:" + javascript);
         }
     }// end of useJavaScript();
@@ -233,7 +233,7 @@ public class VMGBase extends RelativeLayout {
     private void fireStateChangeEvent() {
         String[] states = {"loading", "default", "expanded", "resized", "hidden"};
         useJavascript("mraid.setState('" + states[state] + "');");
-        Log.d(TAG,""+getState());
+        Log.d(TAG, "" + getState());
     }// end of fireStateChangeEvent();
 
     /**

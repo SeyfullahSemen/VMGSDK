@@ -74,10 +74,13 @@ public class VMGBase extends RelativeLayout {
     public VMGBase(Context context, WebView webView) {
         super(context);
         this.context = context;
+        this.webView = webView;
         resizeProperties = new VMGResizeProperties();
 
         handler = new Handler(Looper.getMainLooper());
-        this.webView = webView;
+        getAddWidth();
+        getAddHeight();
+
     }
 
     public void setAddWidth(int addWidth) {
@@ -119,7 +122,7 @@ public class VMGBase extends RelativeLayout {
                 }
             });
         } else {
-            System.out.println("Loading " + javascript);
+            Log.d(TAG," "+javascript);
             custom.loadUrl("javascript:" + javascript);
         }
     }// end of useJavaScript();

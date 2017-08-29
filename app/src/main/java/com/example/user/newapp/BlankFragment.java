@@ -62,8 +62,10 @@ public class BlankFragment extends Fragment {
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
         rela = (RelativeLayout) v.findViewById(R.id.rela);
         webView = (WebView) v.findViewById(R.id.webView);
+
         frag = new VMGBase(getActivity(), webView);
 
+        frag.startVMG(); // this will start everything that you need to load inside the view
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -79,7 +81,7 @@ public class BlankFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // just add these 2 lines of code to load your ad
 
-        frag.startVMG(); // this will start everything that you need to load inside the view
+
         ///////////////////////////////////////////////////////////////////////////////////////
     }
 
