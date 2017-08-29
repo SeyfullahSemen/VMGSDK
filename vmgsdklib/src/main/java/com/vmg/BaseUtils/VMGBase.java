@@ -63,7 +63,8 @@ public class VMGBase extends RelativeLayout {
         super(context);
         this.context = context;
         resizeProperties = new VMGResizeProperties();
-
+        getAddHeight();
+        getAddWidth();
         handler = new Handler(Looper.getMainLooper());
         this.webView = webView;
     }
