@@ -19,9 +19,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.user.newapp.BaseUtils.VMGBase;
-
-import com.example.user.newapp.ConfigVMG.VMGConfig;
+import com.vmg.BaseUtils.VMGBase;
+import com.vmg.ConfigVMG.VMGConfig;
 
 
 /**
@@ -73,7 +72,7 @@ public class AboutVMGFragment extends Fragment {// You need to extend from the V
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // You just need to add these two lines of code to load the add
-        VMGConfig.getVMGInstance(getActivity());
+
         frag.startVMG();
 //////////////////////////////////////////////////////////////////
     }

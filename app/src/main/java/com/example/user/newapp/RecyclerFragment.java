@@ -17,10 +17,9 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 
-import com.example.user.newapp.BaseUtils.VMGBase;
 
-import com.example.user.newapp.ConfigVMG.VMGConfig;
 import com.example.user.newapp.adapters.RecycleAdapter;
+import com.vmg.BaseUtils.VMGBase;
 
 import java.util.ArrayList;
 

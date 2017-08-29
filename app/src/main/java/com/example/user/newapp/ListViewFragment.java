@@ -11,9 +11,7 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.user.newapp.BaseUtils.VMGBase;
-
-import com.example.user.newapp.ConfigVMG.VMGConfig;
+import com.vmg.BaseUtils.VMGBase;
 
 
 /**

@@ -41,7 +41,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.example.user.newapp.ConfigVMG.VMGConfig;
+
 
 
 public class MainActivity extends AppCompatActivity {
