@@ -175,12 +175,12 @@ public class VMGBase extends RelativeLayout {
         double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
 
 
-        if (scrollY - webView.getY() > (heightOfContent * topOffset)) {
+        if (scrollY - webView.getY() > (getAddHeight() * topOffset)) {
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable + "  ");
             useJavascript("mraid.isViewable();");
-        } else if (scrollY + layoutH< getAddHeight() + (heightOfContent * bottomOffset)) {
+        } else if (scrollY + layoutH< webView.getY() + (getAddHeight() * bottomOffset)) {
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
@@ -297,6 +297,7 @@ public class VMGBase extends RelativeLayout {
             events.openBrowser(url);
         } catch (UnsupportedEncodingException ex) {
             System.err.println(ex.getMessage());
+            Log.d(TAG,"Cannot open ",ex.getCause());
         }
     }// emd of open()
 
@@ -434,7 +435,7 @@ public class VMGBase extends RelativeLayout {
      *
      */
     private void fireViewableChangeEvent() {
-        isViewable = true;
+
         useJavascript("mraid.fireViewableChangeEvent('" + isViewable + "');");
     }// end of fireViewableChangeEvent();
 
