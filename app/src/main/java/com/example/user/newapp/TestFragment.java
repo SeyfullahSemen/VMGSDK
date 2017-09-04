@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.vmg.BaseUtils.VMGBase;
+import com.vmg.Events.VMGEvents;
 
 
 /**
@@ -24,6 +25,7 @@ public class TestFragment extends Fragment {
     private WebView view;
 
     private VMGBase frag ;
+
 
 
     public TestFragment() {

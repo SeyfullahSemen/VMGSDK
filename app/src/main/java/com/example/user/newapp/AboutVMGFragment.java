@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.vmg.BaseUtils.VMGBase;
 import com.vmg.ConfigVMG.VMGConfig;
+import com.vmg.Events.VMGEvents;
 
 
 /**
@@ -36,6 +37,7 @@ public class AboutVMGFragment extends Fragment {// You need to extend from the V
     private NestedScrollView about__scroll;
     private LinearLayout layout_about;
     VMGBase frag ;
+
 
     public AboutVMGFragment() {
         // Required empty public constructor

@@ -11,7 +11,10 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,6 +34,7 @@ import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
 import com.vmg.Events.VMGEvents;
 import com.vmg.Events.ViewEvents;
+import com.vmg.MobileInfo.UserInfoMobile;
 import com.vmg.VMGParser.Parser;
 
 import java.io.UnsupportedEncodingException;
@@ -45,7 +49,7 @@ import java.util.Map;
  */
 
 @SuppressLint("ViewConstructor")
-public class VMGBase extends RelativeLayout {
+public class VMGBase extends RelativeLayout implements VMGEvents {
 
 
     private static final String TAG = "VMGBaseFragment";
@@ -90,6 +94,8 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
 
 
+        displayMetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         if (context instanceof Activity) {
             orientationLocking = ((Activity) context).getRequestedOrientation();
         } else {
@@ -97,6 +103,8 @@ public class VMGBase extends RelativeLayout {
         }
         vmgClient = new VMGWebviewClient();
 
+        String information = UserInfoMobile.getWifiInformation(context);// get the information of the wifi connection
+        Log.i(TAG, " " + information);
         handler = new Handler(Looper.getMainLooper());
 
     }
@@ -167,7 +175,7 @@ public class VMGBase extends RelativeLayout {
     public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view) {
         int[] location = {0, 0}; // save the locations x and y of the sroll
 
-        int heightOfContent = webView.getContentHeight(); // get the heigth of the webview
+//        int heightOfContent = webView.getContentHeight(); // get the heigth of the webview
 
         double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
 
@@ -180,7 +188,7 @@ public class VMGBase extends RelativeLayout {
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable + "  ");
             useJavascript("mraid.isViewable();");
-        } else if (scrollY + layoutH< webView.getY() + (getAddHeight() * bottomOffset)) {
+        } else if (scrollY + layoutH < webView.getY() + (getAddHeight() * bottomOffset)) {
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             Log.i("Viewer", " " + isViewable);
@@ -215,7 +223,7 @@ public class VMGBase extends RelativeLayout {
         webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
 
 
-        webView.setWebViewClient(vmgClient);
+        webView.setWebViewClient(new VMGWebviewClient());
         VMGConfig.getVMGInstance(context);
         openWeb();
 
@@ -223,9 +231,8 @@ public class VMGBase extends RelativeLayout {
 
 
     /**
-     * @param commandUrl
-     * this method  is responsible for parsing the command that come in from our mraid
-     * it parses the String that we gave as parameter
+     * @param commandUrl this method  is responsible for parsing the command that come in from our mraid
+     *                   it parses the String that we gave as parameter
      */
     private void parseUrl(String commandUrl) {
         Log.d(TAG, "parseCommandUrl " + commandUrl); // this is for debugging reasons
@@ -285,25 +292,24 @@ public class VMGBase extends RelativeLayout {
     }// end of parseURL();
 
     /**
-     *
-     * @param url
-     * this method will make sure that we can open our new browser when clicked on the add
-     * it needs a url this url will be decoded
+     * @param url this method will make sure that we can open our new browser when clicked on the add
+     *            it needs a url this url will be decoded
      */
     private void open(String url) {
         try {
             url = URLDecoder.decode(url, "UTF-8");
             Log.d(TAG, " " + url);
-            events.openBrowser(url);
-        } catch (UnsupportedEncodingException ex) {
+            openBrowser(url);
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
-            Log.d(TAG,"Cannot open ",ex.getCause());
+            Log.d(TAG, "Cannot open " + ex.getMessage());
         }
     }// emd of open()
 
     /**
      * this will make sure that the right add size will be set when the add
      * is loaded
+     *
      * @param properties
      */
     private void setResizeProperties(Map<String, String> properties) {
@@ -326,16 +332,20 @@ public class VMGBase extends RelativeLayout {
         resizeProperties.allowOffscreen = allowOffscreen;
     }// end of setResizeProperties();
 
-
+    /**
+     * this is the resize method which makes it possible to resize the size of the add
+     * automattically this method also talks to the Parser class which parser the command
+     */
     private void resize() {
         Log.d(TAG, "resize");
 
-
+        // We need the cooperation of the app in order to do a resize.
         if (listener == null) {
             return;
         }
         boolean isReadyToResize = listener.mraidViewResize(this,
                 resizeProperties.width, resizeProperties.height, resizeProperties.offsetX, resizeProperties.offsetY);
+
         if (!isReadyToResize) {
             return;
         }
@@ -350,9 +360,8 @@ public class VMGBase extends RelativeLayout {
             FrameLayout rootView = (FrameLayout) getRootView().findViewById(android.R.id.content);
             rootView.addView(resizedView);
         }
-//        setCloseRegionPosition(resizedView);
         setResizedSize();
-        //setResizedViewPosition();
+
 
         handler.post(new Runnable() {
             @Override
@@ -362,6 +371,9 @@ public class VMGBase extends RelativeLayout {
         });
     }// end of resize();
 
+    /**
+     * this is a method which will set the add back to the resized size
+     */
     private void setResizedSize() {
         Log.d(TAG, "setResizedViewSize");
         int wDip = resizeProperties.width;
@@ -369,20 +381,25 @@ public class VMGBase extends RelativeLayout {
 
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, wDip, displayMetrics);
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, hDip, displayMetrics);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, height);
-        resizedView.setLayoutParams(params);
+        FrameLayout.LayoutParams parameters = new FrameLayout.LayoutParams(width, height);
+        resizedView.setLayoutParams(parameters);
     }// end of setResizedSize();
 
+
+    /**
+     * this method will close our add and will give a notification to mraid that it is closed
+     */
     private void close() {
         Log.d(TAG, "closing the add");
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (state == LOADING || (state == DEFAULT) || state == HIDDEN) {
-                    // do nothing
+                if (state == LOADING || state == DEFAULT || state == HIDDEN) {
+                    Log.d(TAG, "close is completed" + " state = " + getState());
                     return;
                 } else if (state == RESIZED) {
                     closeResized();
+                    Log.d(TAG, " Closing from resized");
                 }
             }
         });
@@ -417,6 +434,7 @@ public class VMGBase extends RelativeLayout {
      *
      */
     private void setMaxSize() {
+        Log.d(TAG, "setMaxSize");
 
 
         useJavascript("mraid.setMaxSize('" + getAddWidth() + "','" + getAddHeight() + "');");
@@ -431,8 +449,8 @@ public class VMGBase extends RelativeLayout {
     }
 
     /**
-     *
-     *
+     * this will be fired when the add changes its viewable state  this is to check
+     * whether the state is viewable or not
      */
     private void fireViewableChangeEvent() {
 
@@ -440,16 +458,14 @@ public class VMGBase extends RelativeLayout {
     }// end of fireViewableChangeEvent();
 
     /**
-     *
-     *
+     * this will fire the state to ready
      */
     private void fireReadyChangeEvent() {
         useJavascript("mraid.fireReadyEvent();");
     }// end of fireReadyChangeEvent();
 
     /**
-     *
-     *
+     * this will be called when the states need to change
      */
     private void fireStateChangeEvent() {
         String[] states = {"loading", "default", "expanded", "resized", "hidden"};
@@ -457,9 +473,22 @@ public class VMGBase extends RelativeLayout {
         Log.d(TAG, "" + getState());
     }// end of fireStateChangeEvent();
 
+    /**
+     * this will open up a new browser when the user clicks on the add
+     * it wil start a whole new browser when clicked on it
+     *
+     * @param url
+     */
+    @Override
+    public void openBrowser(String url) {
+        getContext().startActivity(
+                new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+    }// end of open browser
+
 
     /**
-     *
+     * this is our own webviewclient  wihich takes care when the add is loaded
+     * and when the user clicks on our add and needs to parse the urls that start with mraid://
      */
     private class VMGWebviewClient extends WebViewClient {
         @Override
@@ -484,6 +513,7 @@ public class VMGBase extends RelativeLayout {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (url.startsWith("mraid://")) {
                 parseUrl(url);
+
                 return true;
             } else {
                 open(url);
@@ -499,6 +529,8 @@ public class VMGBase extends RelativeLayout {
             Log.d(TAG, "shouldOverrideUrlLoading: " + URL);
             if (URL.startsWith("mraid://")) {
                 parseUrl(URL);
+
+
                 return true;
             } else {
                 open(URL);
