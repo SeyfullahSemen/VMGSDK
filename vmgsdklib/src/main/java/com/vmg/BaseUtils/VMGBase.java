@@ -49,7 +49,7 @@ import java.util.Map;
  */
 
 @SuppressLint("ViewConstructor")
-public class VMGBase extends RelativeLayout implements VMGEvents {
+public class VMGBase extends RelativeLayout  {
 
 
     private static final String TAG = "VMGBaseFragment";
@@ -479,7 +479,6 @@ public class VMGBase extends RelativeLayout implements VMGEvents {
      *
      * @param url
      */
-    @Override
     public void openBrowser(String url) {
         getContext().startActivity(
                 new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
