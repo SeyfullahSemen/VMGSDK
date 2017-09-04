@@ -13,7 +13,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -32,12 +31,10 @@ import android.widget.RelativeLayout;
 
 import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
-import com.vmg.Events.VMGEvents;
 import com.vmg.Events.ViewEvents;
 import com.vmg.MobileInfo.UserInfoMobile;
 import com.vmg.VMGParser.Parser;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.util.Arrays;

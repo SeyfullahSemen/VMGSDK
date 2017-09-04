@@ -20,7 +20,6 @@ import android.webkit.WebView;
 
 import com.example.user.newapp.adapters.RecycleAdapter;
 import com.vmg.BaseUtils.VMGBase;
-import com.vmg.Events.VMGEvents;
 
 import java.util.ArrayList;
 

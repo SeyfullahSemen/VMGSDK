@@ -20,8 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vmg.BaseUtils.VMGBase;
-import com.vmg.ConfigVMG.VMGConfig;
-import com.vmg.Events.VMGEvents;
 
 
 /**
