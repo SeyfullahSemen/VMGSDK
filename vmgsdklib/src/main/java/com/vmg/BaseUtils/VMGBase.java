@@ -78,6 +78,7 @@ public class VMGBase extends RelativeLayout {
     private int defaultAddHeight = 255;
 
     private Context context;
+    private UserInfoMobile mobileInfo;
 
 
     private int state;
@@ -99,9 +100,9 @@ public class VMGBase extends RelativeLayout {
             orientationLocking = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
         vmgClient = new VMGWebviewClient();
+        mobileInfo = new UserInfoMobile(context);
 
-
-        Log.i(TAG, " " + UserInfoMobile.getUserInfoMobile(context).toString() + " ");
+        Log.i(TAG, " " + mobileInfo.mobileInfo()+ " ");
 
         handler = new Handler(Looper.getMainLooper());
 
