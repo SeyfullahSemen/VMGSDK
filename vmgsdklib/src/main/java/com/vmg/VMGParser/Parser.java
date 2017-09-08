@@ -22,7 +22,7 @@ public class Parser {
         String s = commandUrl.substring(8);
 
         String command;
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
 
 
         int idx = s.indexOf('?');

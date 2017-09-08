@@ -3,7 +3,7 @@ package com.vmg.Events;
 import com.vmg.BaseUtils.VMGBase;
 
 /**
- * Created by User on 30-8-2017.
+ * Created by Seyfullah Semen on 30-8-2017.
  */
 
 public interface ViewEvents {

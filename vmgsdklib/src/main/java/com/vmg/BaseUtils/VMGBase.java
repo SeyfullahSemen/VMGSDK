@@ -46,7 +46,7 @@ import java.util.Map;
  */
 
 @SuppressLint("ViewConstructor")
-public class VMGBase extends RelativeLayout  {
+public class VMGBase extends RelativeLayout {
 
 
     private static final String TAG = "VMGBaseFragment";
@@ -66,7 +66,7 @@ public class VMGBase extends RelativeLayout  {
 
     private VMGResizeProperties resizeProperties;
     private ViewEvents listener;
-    private VMGEvents events;
+
     private VMGWebviewClient vmgClient;
     private RelativeLayout resizedView;
     private DisplayMetrics displayMetrics;
@@ -100,37 +100,61 @@ public class VMGBase extends RelativeLayout  {
         }
         vmgClient = new VMGWebviewClient();
 
-        String information = UserInfoMobile.getWifiInformation(context);// get the information of the wifi connection
-        Log.i(TAG, " " + information);
+
+        Log.i(TAG, " " + UserInfoMobile.getUserInfoMobile(context).toString() + " ");
+
         handler = new Handler(Looper.getMainLooper());
 
     }
 
+    /**
+     * sets the add width
+     *
+     * @param addWidth
+     */
     public void setAddWidth(int addWidth) {
         this.defaultAddWidth = addWidth;
         resizeProperties.width = this.defaultAddWidth;
 
-    }
+    }// end of setAddWidth();
 
+    /**
+     * sets the add height
+     *
+     * @param addHeight
+     */
     public void setAddHeight(int addHeight) {
         this.defaultAddHeight = addHeight;
         resizeProperties.height = this.defaultAddHeight;
 
-    }
+    }// end of setAddHeight();
 
+    /**
+     * gets the add width that is entered
+     *
+     * @return
+     */
     public int getAddWidth() {
         resizeProperties.width = this.defaultAddWidth;
         return resizeProperties.width;
-    }
+    }// end of getAddWidth();
 
+    /**
+     * gets the add height that is entered
+     *
+     * @return
+     */
     public int getAddHeight() {
         resizeProperties.height = this.defaultAddHeight;
         return resizeProperties.height;
-    }
+    }// end of getAddHeight();
 
+    /**
+     * @param javascript
+     */
     private void useJavascript(String javascript) {
         useJavascript(webView, javascript);
-    }
+    }// end of useJavascript();
 
     /**
      * @param custom
@@ -153,7 +177,7 @@ public class VMGBase extends RelativeLayout  {
 
 
     /**
-     *
+     * this opens the add with the right placementUrl()
      */
     private void openWeb() {
 
@@ -402,6 +426,9 @@ public class VMGBase extends RelativeLayout  {
         });
     }// end of close();
 
+    /**
+     * this will take care of closing the resized view
+     */
     private void closeResized() {
         state = DEFAULT;
         isClosing = true;
@@ -418,6 +445,9 @@ public class VMGBase extends RelativeLayout  {
         });
     }// end of closeResized();
 
+    /**
+     * this gets rid of the view that has been resized
+     */
     private void removeResizeView() {
         resizedView.removeAllViews();
         FrameLayout rootView = (FrameLayout) ((Activity) context).findViewById(android.R.id.content);
