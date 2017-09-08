@@ -1,21 +1,22 @@
 package com.vmg.MobileInfo;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
+
 import android.content.Context;
-import android.content.pm.PackageInfo;
+
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 
-import android.support.v4.os.BuildCompat;
-import android.text.TextUtils;
+
+import android.text.format.Formatter;
 import android.util.Log;
 
 import com.vmg.vmgsdklib.BuildConfig;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 
 /**
  * this will be a singleton class in which we can determine the state and the version etc
@@ -45,36 +46,59 @@ public final class UserInfoMobile {
     }
 
     /**
-     * this method will check the network state and check if the permission is
-     * granted in the app if that is the case than we can get the information of the network state
+     * this method checks whether the internet is turned on in the android manifest.xml
+     * if that is the state than we can check the ip address of the user else we just return a null value
      *
-     * @return
+     * @return the mobile ip address of the user
      */
-    @TargetApi(Build.VERSION_CODES.N)
-    @SuppressLint("WifiManagerPotentialLeak")
-
-    private boolean getWifiInformation() {
+    private String getMobileIpAddress() {
         String wifiPermission = "android.permission.ACCESS_NETWORK_STATE";
         int wifi = context.checkCallingOrSelfPermission(wifiPermission);
         if (wifi == PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission network state is enabled");
-            String networkState = null;
-            ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
-            if (networkInfo.isConnected()) {
-                final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                final WifiInfo connectionInfo = wifiManager.getConnectionInfo();
-                if (connectionInfo != null && !TextUtils.isEmpty(connectionInfo.getSSID())) {
-                    networkState = connectionInfo.getSSID() + " Ip adress :  " + connectionInfo.getIpAddress();
+            try {
+                for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
+                     en.hasMoreElements(); ) {
+                    NetworkInterface networkinterface = en.nextElement();
+                    for (Enumeration<InetAddress> enumIpAddr = networkinterface.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                        InetAddress inetAddress = enumIpAddr.nextElement();
+                        if (!inetAddress.isLoopbackAddress()) {
+                            return inetAddress.getHostAddress().toString();
+                        }
+                    }
                 }
-                Log.i(TAG, "  " + networkState);
+            } catch (Exception ex) {
+                Log.e("Current IP", ex.toString());
             }
-            return true;
-        } else {
-            return false;
         }
 
-    }// end of getWifiInformation(Context context)
+        return null;
+    }// end of getMobileIpAddress();
+
+    /**
+     * this method checks the Ip address of the WIFI if the wifi  network state is turned on in the androidManifest.xml
+     * If so than it gets the IP address of the WIFI
+     *
+     * @return wifi Ip Address
+     */
+    @SuppressLint("WifiManagerPotentialLeak")
+    @SuppressWarnings("deprecation")
+    private String getWifiIpAddress() {
+        String wifiPermission = "android.permission.ACCESS_NETWORK_STATE";
+        int wifi = context.checkCallingOrSelfPermission(wifiPermission);
+        if (wifi == PackageManager.PERMISSION_GRANTED) {
+            Log.i(TAG, "Permission network state is enabled");
+            WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+
+
+            String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+
+            return ip;
+        } else {
+            return null;
+        }
+
+    }// end of getWifiIpAddress()
 
     /**
      * @return the build version of the mobile used
@@ -87,16 +111,25 @@ public final class UserInfoMobile {
         return buildVersion;
     }// end of getAndroidVersion();
 
+    /**
+     * this will return the version of  the library
+     *
+     * @return SDK version
+     */
     private String getOurSdkVersion() {
 
         String version = "Version name: " + BuildConfig.VERSION_NAME + " version code: " + BuildConfig.VERSION_CODE;
         return version;
-    }
+    }// end of getOurSdkVersion();
 
+    /**
+     * @return the information of the mobile device of the user
+     */
     @Override
     public String toString() {
-        return "Network info:  " + getWifiInformation() + " \n\nandroid mobile version:  "
-                + getAndroidVersion() + "\n \nSDK version:  " + getOurSdkVersion();
-    }
+        return " \nandroid mobile version:  "
+                + getAndroidVersion() + "\n SDK version:  " + getOurSdkVersion() + "\n"
+                + (getWifiIpAddress().equals("0.0.0.0") ? " Mobile Ip: " + getMobileIpAddress() : " Wifi Ip: " + getWifiIpAddress());
+    }// end of toString()
 
 }
