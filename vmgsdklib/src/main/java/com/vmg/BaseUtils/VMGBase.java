@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -20,13 +21,16 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.vmg.ConfigVMG.VMGConfig;
@@ -84,29 +88,43 @@ public class VMGBase extends RelativeLayout {
     private int state;
 
 
-    // this is an empty constructor
+    /**
+     * instantiate the variables
+     * the things we need to instantiate is a couple of things to make our app
+     * work properly we need to give it a context and make a new instance
+     * I also instantiate the things we need to mak our app work in order to get no
+     * nullpointerException
+     *
+     * @param context
+     * @param webView
+     */
+    @SuppressLint("NewApi")
     public VMGBase(Context context, WebView webView) {
         super(context);
         this.context = context;
         this.webView = webView;
         resizeProperties = new VMGResizeProperties();
-
-
         displayMetrics = new DisplayMetrics();
+        resizedView = new RelativeLayout(context);
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         if (context instanceof Activity) {
             orientationLocking = ((Activity) context).getRequestedOrientation();
         } else {
             orientationLocking = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
+        LinearLayout.LayoutParams layoutWebview = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        layoutWebview.gravity = Gravity.CENTER;
+        this.webView.setLayoutParams(layoutWebview);
+        this.webView.setElevation(16);
+
         vmgClient = new VMGWebviewClient();
         mobileInfo = new UserInfoMobile(context);
 
-        Log.i(TAG, " " + mobileInfo.mobileInfo()+ " ");
+        Log.i(TAG, " " + mobileInfo.mobileInfo() + " ");
 
         handler = new Handler(Looper.getMainLooper());
 
-    }
+    }// end of VMGBase(Context context , WebView webview)
 
     /**
      * sets the add width
@@ -197,7 +215,6 @@ public class VMGBase extends RelativeLayout {
     public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view) {
         int[] location = {0, 0}; // save the locations x and y of the sroll
 
-//        int heightOfContent = webView.getContentHeight(); // get the heigth of the webview
 
         double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
 

@@ -7,14 +7,14 @@
     android:animateLayoutChanges="true"
     >
 
-    <!-- TODO: Update blank fragment layout -->
+
     <ImageView
         android:id="@+id/img_home"
-
         android:layout_width="154dp"
         android:layout_height="109dp"
-        android:elevation="2dp"
+        android:elevation="16dp"
         android:scaleType="centerCrop"
+        android:rotationX="20"
         android:src="@mipmap/ic_launcher_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -36,6 +36,7 @@
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="italic"
+        android:rotationX="20"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_home"
         tools:layout_constraintLeft_creator="1"

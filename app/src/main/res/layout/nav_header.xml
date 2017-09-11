@@ -5,7 +5,7 @@
     android:layout_height="192dp"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:background="#651FFF"
+    android:background="@color/colorPrimaryDark"
     android:gravity="bottom"
     android:weightSum="1"
     android:elevation="12dp"
@@ -14,11 +14,11 @@
 
     <ImageView
         android:id="@+id/menu_foto"
-
         android:layout_width="173dp"
         android:layout_height="69dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
+        android:rotationX="20"
 
         android:src="@mipmap/ic_launcher_logo" />
 
