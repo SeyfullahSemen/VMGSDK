@@ -542,16 +542,17 @@ public class VMGBase extends RelativeLayout {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
 
+            Animation slideAnimation =
+                    AnimationUtils.loadAnimation(context,
+                            R.anim.slide_in);
             if (state == LOADING) {
 
                 state = DEFAULT;
                 fireStateChangeEvent();
                 setMaxSize();
                 fireReadyChangeEvent();
-                view.animate();
-                view.startLayoutAnimation();
                 fireViewableChangeEvent();
-
+                view.setAnimation(slideAnimation);
 
             }
 

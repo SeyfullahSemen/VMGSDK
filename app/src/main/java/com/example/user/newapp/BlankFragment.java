@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
@@ -73,6 +75,7 @@ public class BlankFragment extends Fragment {
                 frag.VMGScrollEvent(scrollY, scrollX, rela);
             }
         });
+
 
         return v; // return the view
     }
