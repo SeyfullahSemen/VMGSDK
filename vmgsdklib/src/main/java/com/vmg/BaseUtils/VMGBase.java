@@ -24,6 +24,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -38,6 +39,7 @@ import com.vmg.ConfigVMG.VMGUrlBuilder;
 import com.vmg.Events.ViewEvents;
 import com.vmg.MobileInfo.UserInfoMobile;
 import com.vmg.VMGParser.Parser;
+import com.vmg.vmgsdklib.R;
 
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
@@ -112,11 +114,12 @@ public class VMGBase extends RelativeLayout {
         } else {
             orientationLocking = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
-        LinearLayout.LayoutParams layoutWebview = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        layoutWebview.gravity = Gravity.CENTER;
-        this.webView.setLayoutParams(layoutWebview);
-        this.webView.setElevation(16);
-
+        // this is for the width and height of the webview when the webview is given
+        LinearLayout.LayoutParams layoutWebview =
+                new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        layoutWebview.gravity = Gravity.CENTER; // sets the webview to the center
+        this.webView.setElevation(16); // this sets the elevation
+        this.webView.setLayoutParams(layoutWebview); // set the params
         vmgClient = new VMGWebviewClient();
         mobileInfo = new UserInfoMobile(context);
 
@@ -538,13 +541,15 @@ public class VMGBase extends RelativeLayout {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+
             if (state == LOADING) {
 
                 state = DEFAULT;
                 fireStateChangeEvent();
                 setMaxSize();
                 fireReadyChangeEvent();
-
+                view.animate();
+                view.startLayoutAnimation();
                 fireViewableChangeEvent();
 
 

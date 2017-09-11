@@ -12,16 +12,19 @@
 
 
     <android.support.design.widget.AppBarLayout
+        android:elevation="20dp"
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
+            android:translationZ="20dp"
+            android:elevation="20dp"
             android:id="@+id/toolbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:background="?attr/colorPrimary"/>
+            android:background="@color/colorPrimaryDark"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -47,6 +50,7 @@
 
         <!-- The navigation drawer -->
         <include
+            android:elevation = "20dp"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             layout="@layout/navigation_drawer"
