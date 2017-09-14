@@ -7,14 +7,12 @@ import com.vmg.BaseUtils.VMGBase;
  */
 
 public interface ViewEvents {
-
-
-     void mraidViewLoaded(VMGBase vmgView);
+    void mraidViewLoaded(VMGBase vmgView);
 
     void mraidViewExpand(VMGBase vmgView);
 
-     void mraidViewClose(VMGBase vmgView);
+    void mraidViewClose(VMGBase vmgView);
 
-     boolean mraidViewResize(VMGBase vmgView, int width, int height, int offsetX, int offsetY);
+    boolean mraidViewResize(VMGBase vmgView, int width, int height, int offsetX, int offsetY);
 
 }

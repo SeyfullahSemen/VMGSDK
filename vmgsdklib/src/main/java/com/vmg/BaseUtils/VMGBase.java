@@ -37,7 +37,7 @@ import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
 import com.vmg.Events.ViewEvents;
 import com.vmg.MobileInfo.UserInfoMobile;
-import com.vmg.VMGParser.Parser;
+import com.vmg.VMGParser.ParseMraidCommands;
 import com.vmg.vmgsdklib.R;
 
 import java.lang.reflect.Method;
@@ -137,7 +137,7 @@ public class VMGBase extends RelativeLayout {
      * @return
      */
     public int getAdWidth() {
-        return resizeProperties.width;
+        return addWidth;
     }
 
     /**
@@ -146,7 +146,7 @@ public class VMGBase extends RelativeLayout {
      * @return
      */
     public int getAdHeight() {
-        return addWidth;
+        return addHeight;
     }
 
     /**
@@ -247,8 +247,8 @@ public class VMGBase extends RelativeLayout {
      *                   it parses the String that we gave as parameter
      */
     private void parseUrl(String commandUrl) {
-        Parser parser = new Parser();
-        Map<String, String> commandMap = parser.parseCommandUrl(commandUrl);
+        ParseMraidCommands parser = new ParseMraidCommands();
+        Map<String, String> commandMap = parser.parseMraidUrl(commandUrl);
         String command = commandMap.get("command");
 
         final String[] NoParameter = {
@@ -321,7 +321,7 @@ public class VMGBase extends RelativeLayout {
 
     /**
      * this is the resize method which makes it possible to resize the size of the add
-     * automattically this method also talks to the Parser class which parser the command
+     * automattically this method also talks to the ParseMraidCommands class which parser the command
      */
     private void resize() {
         if (listener == null) {

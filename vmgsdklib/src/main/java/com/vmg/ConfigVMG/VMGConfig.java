@@ -4,39 +4,26 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import android.content.Context;
-
 import android.util.Log;
-
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-
 import com.android.volley.toolbox.Volley;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-
 import java.util.Map;
 
-/**
- * Created by Seyfullah Semen on 9-8-2017.
- */
 public class VMGConfig {
-
-
     public static String baseUrl = "http://staging.vmg.host";
     public static String placementId = "6194";
     private static final String TAG = "VMGConfig";
-    // make a static instance of the Singleton
     private static VMGConfig VMGInstance = null;
-    // hashmap for the key value pairs
     private static HashMap<String, Object> VMGValues = new HashMap<>();
     private static HashMap<String, Object> JSONVals = new HashMap<>();
     private static Context context;
@@ -50,7 +37,7 @@ public class VMGConfig {
     /**
      * create a lazy initialization, this version is thread safe
      *
-     * @return
+     * @return VMGInstance
      */
     public static VMGConfig getVMGInstance(Context context) {
         if (VMGInstance == null) {
@@ -76,7 +63,6 @@ public class VMGConfig {
 
     public RequestQueue getRequestQueue() {
         if (requestQueue == null) {
-
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
         return requestQueue;
@@ -129,7 +115,7 @@ public class VMGConfig {
     public Object retrieveSpecific(Object key) {
         Object val = null;
         if (!JSONVals.containsKey(key)) {
-            Log.i(TAG, " No value found");
+            return 0;
         } else {
             val = JSONVals.get(key);
         }
@@ -137,18 +123,16 @@ public class VMGConfig {
     }
 
     /**
-     *
      * @param context
      */
     private static void getVMGObject(final Context context) {
+
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 VMGUrlBuilder.getConfigUrl(), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
-                try {
 
-                     //////////////{Variables}/////////////////////
+                try {
                     boolean slideInOnStart;
                     boolean slideInOnClose;
                     boolean fadeInOnStart;
@@ -160,75 +144,71 @@ public class VMGConfig {
 
                     double topOffset;
                     double bottomOffset;
+
                     String launcher;
-                    //////////////{Variables}/////////////////////
-                    ////////////////{Get the values out of the JSON}
+
                     JSONObject config = response.getJSONObject("config");
                     if (config.has("slideInOnStart")) {
                         slideInOnStart = config.getBoolean("slideInOnStart");
                         JSONVals.put("slideInOnStart", slideInOnStart);
                     }
+
                     if (config.has("slideInOnClose")) {
                         slideInOnClose = config.getBoolean("slideInOnClose");
                         JSONVals.put("slideInOnClose", slideInOnClose);
                     }
+
                     if (config.has("fadeInOnStart")) {
                         fadeInOnStart = config.getBoolean("fadeInOnStart");
                         JSONVals.put("fadeInOnStart", fadeInOnStart);
                     }
+
                     if (config.has("fadeOutOnClose")) {
                         fadeOutOnClose = config.getBoolean("fadeOutOnClose");
                         JSONVals.put("fadeOutOnClose", fadeOutOnClose);
                     }
+
                     JSONObject meta = config.getJSONObject("meta");
                     if (meta.has("debug")) {
                         debug = meta.getBoolean("debug");
                         JSONVals.put("debug", debug);
                     }
+
                     if (meta.has("active")) {
                         active = meta.getBoolean("active");
                         JSONVals.put("active", active);
                     }
+
                     if (meta.has("modDate")) {
                         modDate = meta.getLong("modDate");
                         JSONVals.put("modDate", modDate);
                     }
+
                     JSONObject viewable = config.getJSONObject("viewable");
                     if (viewable.has("topOffset")) {
                         topOffset = viewable.getDouble("topOffset");
                         JSONVals.put("topOffset", topOffset);
                     }
+
                     if (viewable.has("bottomOffset")) {
                         bottomOffset = viewable.getDouble("bottomOffset");
                         JSONVals.put("bottomOffset", bottomOffset);
                     }
+
                     JSONObject trackers = config.getJSONObject("trackers");
                     if (trackers.has("launch")) {
                         launcher = trackers.getString("launch");
                         JSONVals.put("launcher", launcher);
                     }
-                    ////////////////{Get the values out of the JSON}
-                    ///////////////{Loop door de values }
-                    for (Map.Entry<String, Object> entry : JSONVals.entrySet()) {
-                        Log.i(TAG, "" + entry.getKey() + " " + entry.getValue());
-                    }
-                    ///////////////{Loop door de values }
-                    //////////////{Catch any errors}
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(context,
-                            "Error: " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
                 }
-                //////////////{Catch any errors}
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(context,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
 
