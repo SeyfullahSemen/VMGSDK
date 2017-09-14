@@ -13,7 +13,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -46,47 +45,29 @@ import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Map;
 
-
-/**
- * Created by Seyfullah Semen  on 4-8-2017.
- */
-
 @SuppressLint("ViewConstructor")
 public class VMGBase extends RelativeLayout {
 
-
     private static final String TAG = "VMGBaseFragment";
-
-
     private boolean isViewable;
     private boolean isClosing;
-
-
     private final static int LOADING = 0;
     private final static int DEFAULT = 1;
     private final static int EXPANDED = 2;
     private final static int RESIZED = 3;
     private final static int HIDDEN = 4;
     private final int orientationLocking;
-
-
     private VMGResizeProperties resizeProperties;
     private ViewEvents listener;
-
     private VMGWebviewClient vmgClient;
     private RelativeLayout resizedView;
     private DisplayMetrics displayMetrics;
     private Handler handler;
-
     private WebView webView;
-
-    private int defaultAddWidth = 340;
-    private int defaultAddHeight = 255;
-
+    private int addWidth = 340;
+    private int addHeight = 255;
     private Context context;
     private UserInfoMobile mobileInfo;
-
-
     private int state;
 
 
@@ -103,31 +84,32 @@ public class VMGBase extends RelativeLayout {
     @SuppressLint("NewApi")
     public VMGBase(Context context, WebView webView) {
         super(context);
+
         this.context = context;
         this.webView = webView;
+
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
         resizedView = new RelativeLayout(context);
+
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         if (context instanceof Activity) {
             orientationLocking = ((Activity) context).getRequestedOrientation();
         } else {
             orientationLocking = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
-        // this is for the width and height of the webview when the webview is given
+
         LinearLayout.LayoutParams layoutWebview =
                 new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         layoutWebview.gravity = Gravity.CENTER; // sets the webview to the center
         this.webView.setElevation(16); // this sets the elevation
         this.webView.setLayoutParams(layoutWebview); // set the params
+
         vmgClient = new VMGWebviewClient();
         mobileInfo = new UserInfoMobile(context);
-
-        Log.i(TAG, " " + mobileInfo.mobileInfo() + " ");
-
         handler = new Handler(Looper.getMainLooper());
 
-    }// end of VMGBase(Context context , WebView webview)
+    }
 
     /**
      * sets the add width
@@ -135,78 +117,61 @@ public class VMGBase extends RelativeLayout {
      * @param addWidth
      */
     public void setAddWidth(int addWidth) {
-        this.defaultAddWidth = addWidth;
-        resizeProperties.width = this.defaultAddWidth;
-
-    }// end of setAddWidth();
+        this.addWidth = addWidth;
+        resizeProperties.width = this.addWidth;
+    }
 
     /**
      * sets the add height
      *
      * @param addHeight
      */
-    public void setAddHeight(int addHeight) {
-        this.defaultAddHeight = addHeight;
-        resizeProperties.height = this.defaultAddHeight;
-
-    }// end of setAddHeight();
+    public void setAdHeight(int addHeight) {
+        this.addHeight = addHeight;
+        resizeProperties.height = this.addHeight;
+    }
 
     /**
      * gets the add width that is entered
      *
      * @return
      */
-    public int getAddWidth() {
-        resizeProperties.width = this.defaultAddWidth;
+    public int getAdWidth() {
         return resizeProperties.width;
-    }// end of getAddWidth();
+    }
 
     /**
      * gets the add height that is entered
      *
      * @return
      */
-    public int getAddHeight() {
-        resizeProperties.height = this.defaultAddHeight;
-        return resizeProperties.height;
-    }// end of getAddHeight();
+    public int getAdHeight() {
+        return addWidth;
+    }
 
     /**
      * @param javascript
      */
     private void useJavascript(String javascript) {
         useJavascript(webView, javascript);
-    }// end of useJavascript();
+    }
 
     /**
-     * @param custom
+     * @param webview
      * @param javascript
      */
     @SuppressLint("NewApi")
-    private void useJavascript(WebView custom, String javascript) {
+    private void useJavascript(WebView webview, String javascript) {
         if (!javascript.isEmpty()) {
-            custom.evaluateJavascript(javascript, new ValueCallback<String>() {
+            webview.evaluateJavascript(javascript, new ValueCallback<String>() {
                 @Override
                 public void onReceiveValue(String s) {
-                    Log.i("Mraiding event : ", "Done " + s);
                 }
             });
         } else {
-            Log.d(TAG, " " + javascript);
-            custom.loadUrl("javascript:" + javascript);
+            webview.loadUrl("javascript:" + javascript);
         }
-    }// end of useJavaScript();
-
-
-    /**
-     * this opens the add with the right placementUrl()
-     */
-    private void openWeb() {
-
-        webView.loadUrl(VMGUrlBuilder.getPlacementUrl());
-
-
-    }// end of openWeb();
+    }
 
     /**
      * this method can be used when the user has a nestedscrollview or a scrollview
@@ -217,37 +182,25 @@ public class VMGBase extends RelativeLayout {
      */
     public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view) {
         int[] location = {0, 0}; // save the locations x and y of the sroll
-
-
         double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
 
         double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
         double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
 
-
-        if (scrollY - webView.getY() > (getAddHeight() * topOffset)) {
+        if (scrollY - webView.getY() > (getAdHeight() * topOffset)) {
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewer", " " + isViewable + "  ");
             useJavascript("mraid.isViewable();");
-        } else if (scrollY + layoutH < webView.getY() + (getAddHeight() * bottomOffset)) {
+        } else if (scrollY + layoutH < webView.getY() + (getAdHeight() * bottomOffset)) {
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewer", " " + isViewable);
             useJavascript("mraid.isViewable();");
         } else {
-
             isViewable = true;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
-            Log.i("Viewer", " " + isViewable);
             useJavascript("mraid.isViewable();");
-
         }
-
-
-        Log.i("sdhg ", "" + scrollY + " " + scrollX + " " + location[0] + " " + location[1]);
-    }// end of VMGScrollEvent();
-
+    }
 
     /**
      * this is where the webview gets filled with the mraid file and it opens the webview
@@ -255,34 +208,48 @@ public class VMGBase extends RelativeLayout {
      */
     @SuppressLint("NewApi")
     public void startVMG() {
-
         WebSettings settings = webView.getSettings();
-
-
-        settings.setJavaScriptEnabled(true); // set javascript enabled
-        // set debugging on for debugging on google chrome
-
-        webView.setWebContentsDebuggingEnabled(true); // this is for debugging within google chrome
-
-
-        webView.setWebViewClient(new VMGWebviewClient());
+        settings.setJavaScriptEnabled(true);
+        webView.setWebContentsDebuggingEnabled(true);
+        webView.setWebViewClient(vmgClient);
         VMGConfig.getVMGInstance(context);
-        openWeb();
+        webView.loadUrl(VMGUrlBuilder.getPlacementUrl());
+    }
 
-    }// end of startVMG();
+    /**
+     * this will open up a new browser when the user clicks on the add
+     * it wil start a whole new browser when clicked on it
+     *
+     * @param url
+     */
+    public void openBrowser(String url) {
+        getContext().startActivity(
+                new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+    }
 
+    /**
+     * @param url this method will make sure that we can open our new browser when clicked on the add
+     *            it needs a url this url will be decoded
+     */
+    private void openUrl(String url) {
+        try {
+            url = URLDecoder.decode(url, "UTF-8");
+            Log.d(TAG, " " + url);
+            openBrowser(url);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            Log.d(TAG, "Cannot open " + ex.getMessage());
+        }
+    }
 
     /**
      * @param commandUrl this method  is responsible for parsing the command that come in from our mraid
      *                   it parses the String that we gave as parameter
      */
     private void parseUrl(String commandUrl) {
-        Log.d(TAG, "parseCommandUrl " + commandUrl); // this is for debugging reasons
-
-        Parser parser = new Parser(); // make a new instance of the class parser
-        Map<String, String> commandMap = parser.parseCommandUrl(commandUrl); // make a new Map and set it equal to the method parseCommandUrl
-
-        String command = commandMap.get("command"); // get the object command so we can parse the information that is inside this object
+        Parser parser = new Parser();
+        Map<String, String> commandMap = parser.parseCommandUrl(commandUrl);
+        String command = commandMap.get("command");
 
         final String[] NoParameter = {
                 "close",
@@ -302,11 +269,7 @@ public class VMGBase extends RelativeLayout {
                 "setOrientationProperties",
                 "setResizeProperties",
         };
-/////////////////////{End of the arrays}
-        /**
-         * this code block right here converts the String arrays to a list and checks whether the list contains
-         * the command if so then the right method will be called and executed
-         */
+
         try {
             if (Arrays.asList(NoParameter).contains(command)) {
                 Method method = getClass().getDeclaredMethod(command);
@@ -328,25 +291,10 @@ public class VMGBase extends RelativeLayout {
                 method.invoke(this, commandMap);
             }
         } catch (Exception e) {
-            Log.d(TAG, "Somthing wen wong " + e.getMessage());
-
+            Log.d(TAG, "Somthing went wrong: " + e.getMessage());
         }
-    }// end of parseURL();
+    }
 
-    /**
-     * @param url this method will make sure that we can open our new browser when clicked on the add
-     *            it needs a url this url will be decoded
-     */
-    private void open(String url) {
-        try {
-            url = URLDecoder.decode(url, "UTF-8");
-            Log.d(TAG, " " + url);
-            openBrowser(url);
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-            Log.d(TAG, "Cannot open " + ex.getMessage());
-        }
-    }// emd of open()
 
     /**
      * this will make sure that the right add size will be set when the add
@@ -359,34 +307,28 @@ public class VMGBase extends RelativeLayout {
         int height = Integer.parseInt(properties.get("height"));
         int offsetX = Integer.parseInt(properties.get("offsetX"));
         int offsetY = Integer.parseInt(properties.get("offsetY"));
+
         String customClosePosition = properties.get("customClosePosition");
         boolean allowOffscreen = Boolean.parseBoolean(properties.get("allowOffscreen"));
-        Log.d(TAG, " " + "setResizeProperties "
-                + width + " " + height + " "
-                + offsetX + " " + offsetY + " "
-                + customClosePosition + " " + allowOffscreen);
+
         resizeProperties.width = width;
         resizeProperties.height = height;
         resizeProperties.offsetX = offsetX;
         resizeProperties.offsetY = offsetY;
-        resizeProperties.customClosePosition =
-                VMGResizeProperties.customClosePositionFromString(customClosePosition);
+        resizeProperties.customClosePosition = VMGResizeProperties.customClosePositionFromString(customClosePosition);
         resizeProperties.allowOffscreen = allowOffscreen;
-    }// end of setResizeProperties();
+    }
 
     /**
      * this is the resize method which makes it possible to resize the size of the add
      * automattically this method also talks to the Parser class which parser the command
      */
     private void resize() {
-        Log.d(TAG, "resize");
-
-        // We need the cooperation of the app in order to do a resize.
         if (listener == null) {
             return;
         }
-        boolean isReadyToResize = listener.mraidViewResize(this,
-                resizeProperties.width, resizeProperties.height, resizeProperties.offsetX, resizeProperties.offsetY);
+
+        boolean isReadyToResize = listener.mraidViewResize(this, resizeProperties.width, resizeProperties.height, resizeProperties.offsetX, resizeProperties.offsetY);
 
         if (!isReadyToResize) {
             return;
@@ -402,8 +344,8 @@ public class VMGBase extends RelativeLayout {
             FrameLayout rootView = (FrameLayout) getRootView().findViewById(android.R.id.content);
             rootView.addView(resizedView);
         }
-        setResizedSize();
 
+        setResizedSize();
 
         handler.post(new Runnable() {
             @Override
@@ -411,33 +353,31 @@ public class VMGBase extends RelativeLayout {
                 fireStateChangeEvent();
             }
         });
-    }// end of resize();
+    }
 
     /**
      * this is a method which will set the add back to the resized size
      */
     private void setResizedSize() {
-        Log.d(TAG, "setResizedViewSize");
         int wDip = resizeProperties.width;
         int hDip = resizeProperties.height;
 
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, wDip, displayMetrics);
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, hDip, displayMetrics);
+
         FrameLayout.LayoutParams parameters = new FrameLayout.LayoutParams(width, height);
         resizedView.setLayoutParams(parameters);
-    }// end of setResizedSize();
+    }
 
 
     /**
      * this method will close our add and will give a notification to mraid that it is closed
      */
     private void close() {
-        Log.d(TAG, "closing the add");
         handler.post(new Runnable() {
             @Override
             public void run() {
                 if (state == LOADING || state == DEFAULT || state == HIDDEN) {
-                    Log.d(TAG, "close is completed" + " state = " + getState());
                     return;
                 } else if (state == RESIZED) {
                     closeResized();
@@ -445,7 +385,7 @@ public class VMGBase extends RelativeLayout {
                 }
             }
         });
-    }// end of close();
+    }
 
     /**
      * this will take care of closing the resized view
@@ -453,18 +393,22 @@ public class VMGBase extends RelativeLayout {
     private void closeResized() {
         state = DEFAULT;
         isClosing = true;
+
         removeResizeView();
         addView(webView);
+
         handler.post(new Runnable() {
             @Override
             public void run() {
+
                 fireStateChangeEvent();
+
                 if (listener != null) {
                     listener.mraidViewClose(VMGBase.this);
                 }
             }
         });
-    }// end of closeResized();
+    }
 
     /**
      * this gets rid of the view that has been resized
@@ -475,22 +419,14 @@ public class VMGBase extends RelativeLayout {
         rootView.removeView(resizedView);
         resizedView = null;
 
-    }// end of removeResizeView();
+    }
 
-    /**
-     *
-     *
-     */
     private void setMaxSize() {
-        Log.d(TAG, "setMaxSize");
-
-
-        useJavascript("mraid.setMaxSize('" + getAddWidth() + "','" + getAddHeight() + "');");
-
-    }// end of setMaxSize();
+        useJavascript("mraid.setMaxSize('" + getAdWidth() + "','" + getAdHeight() + "');");
+    }
 
     /**
-     * @return
+     * @return state of the ad
      */
     private int getState() {
         return state;
@@ -501,16 +437,15 @@ public class VMGBase extends RelativeLayout {
      * whether the state is viewable or not
      */
     private void fireViewableChangeEvent() {
-
         useJavascript("mraid.fireViewableChangeEvent('" + isViewable + "');");
-    }// end of fireViewableChangeEvent();
+    }
 
     /**
      * this will fire the state to ready
      */
     private void fireReadyChangeEvent() {
         useJavascript("mraid.fireReadyEvent();");
-    }// end of fireReadyChangeEvent();
+    }
 
     /**
      * this will be called when the states need to change
@@ -518,19 +453,7 @@ public class VMGBase extends RelativeLayout {
     private void fireStateChangeEvent() {
         String[] states = {"loading", "default", "expanded", "resized", "hidden"};
         useJavascript("mraid.setState('" + states[state] + "');");
-        Log.d(TAG, "" + getState());
-    }// end of fireStateChangeEvent();
-
-    /**
-     * this will open up a new browser when the user clicks on the add
-     * it wil start a whole new browser when clicked on it
-     *
-     * @param url
-     */
-    public void openBrowser(String url) {
-        getContext().startActivity(
-                new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-    }// end of open browser
+    }
 
 
     /**
@@ -545,8 +468,8 @@ public class VMGBase extends RelativeLayout {
             Animation slideAnimation =
                     AnimationUtils.loadAnimation(context,
                             R.anim.slide_in);
-            if (state == LOADING) {
 
+            if (state == LOADING) {
                 state = DEFAULT;
                 fireStateChangeEvent();
                 setMaxSize();
@@ -555,7 +478,6 @@ public class VMGBase extends RelativeLayout {
                 view.setAnimation(slideAnimation);
 
             }
-
         }
 
         @SuppressWarnings("deprecation")
@@ -563,13 +485,11 @@ public class VMGBase extends RelativeLayout {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (url.startsWith("mraid://")) {
                 parseUrl(url);
-
                 return true;
             } else {
-                open(url);
+                openUrl(url);
                 return true;
             }
-
         }
 
         @TargetApi(Build.VERSION_CODES.N)
@@ -579,19 +499,13 @@ public class VMGBase extends RelativeLayout {
             Log.d(TAG, "shouldOverrideUrlLoading: " + URL);
             if (URL.startsWith("mraid://")) {
                 parseUrl(URL);
-
-
                 return true;
             } else {
-                open(URL);
+                openUrl(URL);
                 return true;
             }
         }
-
-
-    }// end of VMGWebViewClient();
-
-
+    }
 }
 
 

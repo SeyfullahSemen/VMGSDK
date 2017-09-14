@@ -33,7 +33,7 @@
             />
 
         <Button
-            android:id="@+id/scroll_drawer"
+            android:id="@+id/scrollview_vmg"
             style="?android:attr/borderlessButtonStyle"
 
             android:theme="?android:selectableItemBackground"
@@ -110,7 +110,7 @@
 
 
         <Button
-            android:id="@+id/about_drawer"
+            android:id="@+id/about_vmg"
             android:theme="?android:selectableItemBackground"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"

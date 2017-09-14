@@ -27,24 +27,13 @@ import com.vmg.BaseUtils.VMGBase;
  */
 public class BlankFragment extends Fragment {
     private static final String TAG = "BlankFragment";
-    // create the variables
     private WebView webView;
     private boolean isViewable;
-    VMGBase frag;
-
-
-
+    private VMGBase frag;
     private NestedScrollView scroll;
-
     private RelativeLayout rela;
 
-    // this is a default constructor this is required in a fragment
     public BlankFragment() {
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     /**
@@ -59,7 +48,6 @@ public class BlankFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_blank, container, false);
         Log.d(TAG, "We zijn er "); // this is for debugging reasons
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
@@ -79,15 +67,4 @@ public class BlankFragment extends Fragment {
 
         return v; // return the view
     }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        // just add these 2 lines of code to load your ad
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-    }
-
-
 }
