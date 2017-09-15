@@ -12,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+import com.vmg.LoggerPack.VMGLogs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,11 +35,13 @@ public class VMGConfig {
         requestQueue = getRequestQueue();
     }
 
+    /**
+     * @param context
+     * @param appId
+     */
     public static void loadConfig(Context context, int appId) {
         getVMGInstance(context);
         getVMGObject(context, appId);
-
-
     }
 
     /**
@@ -137,7 +140,9 @@ public class VMGConfig {
                 VMGUrlBuilder.getConfigUrl(appId), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("config"," "+response);
+                Log.i("confikus", " " + response);
+                VMGLogs.StandardLog(" " + response);
+
                 try {
                     boolean slideInOnStart;
                     boolean slideInOnClose;
@@ -215,6 +220,7 @@ public class VMGConfig {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
+                VMGLogs.fatal(error.getMessage());
             }
         });
 
