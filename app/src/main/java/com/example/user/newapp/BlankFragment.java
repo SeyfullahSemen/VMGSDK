@@ -56,7 +56,7 @@ public class BlankFragment extends Fragment {
 
         frag = new VMGBase(getActivity(), webView);
 
-        frag.startVMG(); // this will start everything that you need to load inside the view
+        frag.startVMG(6194); // this will start everything that you need to load inside the view
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {

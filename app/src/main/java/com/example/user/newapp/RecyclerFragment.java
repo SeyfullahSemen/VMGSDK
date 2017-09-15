@@ -36,7 +36,7 @@ public class RecyclerFragment extends Fragment {
         webbs = (WebView) v.findViewById(R.id.webbs); // get the id of the webview
 
         frag = new VMGBase(getActivity(), webbs);
-        frag.startVMG();
+        frag.startVMG(6194);
 
         return v;
     }

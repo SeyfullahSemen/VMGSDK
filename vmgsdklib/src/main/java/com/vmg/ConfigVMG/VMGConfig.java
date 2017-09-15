@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class VMGConfig {
     public static String baseUrl = "http://staging.vmg.host";
-    public static String placementId = "6194";
+
     private static final String TAG = "VMGConfig";
     private static VMGConfig VMGInstance = null;
     private static HashMap<String, Object> VMGValues = new HashMap<>();
@@ -32,6 +32,13 @@ public class VMGConfig {
     private VMGConfig(Context context) {
         this.context = context;
         requestQueue = getRequestQueue();
+    }
+
+    public static void loadConfig(Context context, int appId) {
+        getVMGInstance(context);
+        getVMGObject(context, appId);
+
+
     }
 
     /**
@@ -45,7 +52,6 @@ public class VMGConfig {
             synchronized (ConfigClass) {
                 if (VMGInstance == null) {
                     VMGInstance = new VMGConfig(context);
-                    getVMGObject(context);
                     VMGValues.put("topOffset", 0.6);
                     VMGValues.put("bottomOffset", 0.4);
                     VMGValues.put("slideInOnStart", true);
@@ -125,13 +131,13 @@ public class VMGConfig {
     /**
      * @param context
      */
-    private static void getVMGObject(final Context context) {
+    private static void getVMGObject(final Context context, int appId) {
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                VMGUrlBuilder.getConfigUrl(), null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                VMGUrlBuilder.getConfigUrl(appId), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
+                Log.i("config"," "+response);
                 try {
                     boolean slideInOnStart;
                     boolean slideInOnClose;

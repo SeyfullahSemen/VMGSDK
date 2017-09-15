@@ -61,7 +61,7 @@ public class AboutVMGFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // You just need to add these two lines of code to load the add
-        frag.startVMG();
+        frag.startVMG(6194);
     }
 
 }

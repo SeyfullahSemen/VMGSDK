@@ -25,6 +25,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.vmg.ConfigVMG.VMGConfig;
+
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         changeView();
+        VMGConfig.loadConfig(getApplicationContext(),6194);
 
 
     }

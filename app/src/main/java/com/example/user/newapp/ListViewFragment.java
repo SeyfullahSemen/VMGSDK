@@ -37,7 +37,7 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setValues(listView);
-        frag.startVMG();
+        frag.startVMG(6194);
     }
 
     private void setValues(ListView listView) {

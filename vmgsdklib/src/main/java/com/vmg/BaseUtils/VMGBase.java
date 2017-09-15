@@ -207,13 +207,12 @@ public class VMGBase extends RelativeLayout {
      * so the user just needs to add this method to get the full functionallity
      */
     @SuppressLint("NewApi")
-    public void startVMG() {
+    public void startVMG(int placementId) {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         webView.setWebContentsDebuggingEnabled(true);
         webView.setWebViewClient(vmgClient);
-        VMGConfig.getVMGInstance(context);
-        webView.loadUrl(VMGUrlBuilder.getPlacementUrl());
+        webView.loadUrl(VMGUrlBuilder.getPlacementUrl(placementId));
     }
 
     /**
