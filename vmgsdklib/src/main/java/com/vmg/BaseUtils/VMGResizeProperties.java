@@ -35,7 +35,7 @@ public final class VMGResizeProperties {
     }
 
     public static int customClosePositionFromString(String name) {
-        final List<String> names = Arrays.asList(
+        final List<String> positions = Arrays.asList(
                 "top-left",
                 "top-center",
                 "top-right",
@@ -45,10 +45,10 @@ public final class VMGResizeProperties {
                 "bottom-right"
         );
 
-        int idx = names.indexOf(name);
+        int positionIndex = positions.indexOf(name);
 
-        if (idx != -1) {
-            return idx;
+        if (positionIndex != -1) {
+            return positionIndex;
         }
         return CUSTOM_CLOSE_POSITION_TOP_RIGHT;
     }
