@@ -26,7 +26,6 @@ import com.vmg.BaseUtils.VMGBase;
  * Created by Seyfullah Semen
  */
 public class BlankFragment extends Fragment {
-    private static final String TAG = "BlankFragment";
     private WebView webView;
     private boolean isViewable;
     private VMGBase frag;
@@ -49,7 +48,6 @@ public class BlankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_blank, container, false);
-        Log.d(TAG, "We zijn er "); // this is for debugging reasons
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
         rela = (RelativeLayout) v.findViewById(R.id.rela);
         webView = (WebView) v.findViewById(R.id.webView);

@@ -23,7 +23,6 @@ import com.vmg.BaseUtils.VMGBase;
 
 
 public class AboutVMGFragment extends Fragment {
-    private static final String TAG = "About fragment";
     private ImageView img_logo_about;
     private TextView text_about;
     private WebView view;
@@ -60,7 +59,6 @@ public class AboutVMGFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // You just need to add these two lines of code to load the add
         frag.startVMG(6194);
     }
 

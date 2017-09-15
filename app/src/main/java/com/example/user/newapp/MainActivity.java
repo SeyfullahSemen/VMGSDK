@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.vmg.ConfigVMG.VMGConfig;
+import com.vmg.LoggerPack.VMGLogs;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
         } catch (IllegalStateException ex) {
             System.err.println("An error occurred with the Fragment");
-            Log.e("Error Fragment ", " " + ex.getMessage());
+            VMGLogs.fatal("Error opening fragment:  "+ex.getMessage());
         }
 
     }
