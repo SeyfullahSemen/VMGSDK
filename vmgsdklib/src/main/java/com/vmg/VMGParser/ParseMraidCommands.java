@@ -11,15 +11,15 @@ import java.util.Map;
 public class ParseMraidCommands {
 
     public Map<String, String> parseMraidUrl(String commandUrl) {
-        String s = commandUrl.substring(8);
+        String command = commandUrl.substring(8);
         String commandMraid;
 
         Map<String, String> params = new HashMap<>();
 
-        int indexQuestionMark = s.indexOf('?');
+        int indexQuestionMark = command.indexOf('?');
         if (indexQuestionMark != -1) {
-            commandMraid = s.substring(0, indexQuestionMark);
-            String paramStr = s.substring(indexQuestionMark + 1);
+            commandMraid = command.substring(0, indexQuestionMark);
+            String paramStr = command.substring(indexQuestionMark + 1);
             String[] paramArray = paramStr.split("&");
 
             for (String param : paramArray) {
@@ -29,7 +29,7 @@ public class ParseMraidCommands {
                 params.put(key, val);
             }
         } else {
-            commandMraid = s;
+            commandMraid = command;
         }
 
         if (!checkCommands(commandMraid)) {

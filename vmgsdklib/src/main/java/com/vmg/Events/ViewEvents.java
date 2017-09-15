@@ -7,9 +7,6 @@ import com.vmg.BaseUtils.VMGBase;
  */
 
 public interface ViewEvents {
-    void mraidViewLoaded(VMGBase vmgView);
-
-    void mraidViewExpand(VMGBase vmgView);
 
     void mraidViewClose(VMGBase vmgView);
 

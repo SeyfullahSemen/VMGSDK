@@ -5,7 +5,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
+
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,7 +22,6 @@ import java.util.Map;
 
 public class VMGConfig {
     public static String baseUrl = "http://staging.vmg.host";
-
     private static final String TAG = "VMGConfig";
     private static VMGConfig VMGInstance = null;
     private static HashMap<String, Object> VMGValues = new HashMap<>();
@@ -140,9 +139,7 @@ public class VMGConfig {
                 VMGUrlBuilder.getConfigUrl(appId), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("confikus", " " + response);
                 VMGLogs.StandardLog(" " + response);
-
                 try {
                     boolean slideInOnStart;
                     boolean slideInOnClose;
