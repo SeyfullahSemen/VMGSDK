@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
 import com.vmg.Events.ViewEvents;
+import com.vmg.LoggerPack.VMGLogs;
 import com.vmg.MobileInfo.UserInfoMobile;
 import com.vmg.VMGParser.ParseMraidCommands;
 import com.vmg.vmgsdklib.R;
@@ -43,12 +44,14 @@ import com.vmg.vmgsdklib.R;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 @SuppressLint("ViewConstructor")
 public class VMGBase extends RelativeLayout {
 
     private static final String TAG = "VMGBaseFragment";
+    private Map<String, String> commandMap;
     private boolean isViewable;
     private boolean isClosing;
     private final static int LOADING = 0;
@@ -64,8 +67,8 @@ public class VMGBase extends RelativeLayout {
     private DisplayMetrics displayMetrics;
     private Handler handler;
     private WebView webView;
-    private int addWidth = 340;
-    private int addHeight = 255;
+    private int addWidth = 360;
+    private int addHeight;
     private Context context;
     private UserInfoMobile mobileInfo;
     private int state;
@@ -112,31 +115,11 @@ public class VMGBase extends RelativeLayout {
     }
 
     /**
-     * sets the add width
-     *
-     * @param addWidth
-     */
-    public void setAddWidth(int addWidth) {
-        this.addWidth = addWidth;
-        resizeProperties.width = this.addWidth;
-    }
-
-    /**
-     * sets the add height
-     *
-     * @param addHeight
-     */
-    public void setAdHeight(int addHeight) {
-        this.addHeight = addHeight;
-        resizeProperties.height = this.addHeight;
-    }
-
-    /**
      * gets the add width that is entered
      *
      * @return
      */
-    public int getAdWidth() {
+    private int getAdWidth() {
         return addWidth;
     }
 
@@ -145,7 +128,7 @@ public class VMGBase extends RelativeLayout {
      *
      * @return
      */
-    public int getAdHeight() {
+    private int getAdHeight() {
         return addHeight;
     }
 
@@ -166,6 +149,7 @@ public class VMGBase extends RelativeLayout {
             webview.evaluateJavascript(javascript, new ValueCallback<String>() {
                 @Override
                 public void onReceiveValue(String s) {
+
                 }
             });
         } else {
@@ -181,17 +165,16 @@ public class VMGBase extends RelativeLayout {
      * @param view
      */
     public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view) {
-        int[] location = {0, 0}; // save the locations x and y of the sroll
         double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
 
         double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
         double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
 
-        if (scrollY - webView.getY() > (getAdHeight() * topOffset)) {
+        if (scrollY - webView.getY() > (getAdHeight() * topOffset)) { // top
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             useJavascript("mraid.isViewable();");
-        } else if (scrollY + layoutH < webView.getY() + (getAdHeight() * bottomOffset)) {
+        } else if (scrollY + layoutH < webView.getY() + (getAdHeight() * bottomOffset)) { // bottom
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             useJavascript("mraid.isViewable();");
@@ -233,11 +216,11 @@ public class VMGBase extends RelativeLayout {
     private void openUrl(String url) {
         try {
             url = URLDecoder.decode(url, "UTF-8");
-            Log.d(TAG, " " + url);
+            VMGLogs.Information(url);
             openBrowser(url);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
-            Log.d(TAG, "Cannot open " + ex.getMessage());
+            VMGLogs.fatal("cannot open " + ex.getMessage());
         }
     }
 
@@ -247,51 +230,31 @@ public class VMGBase extends RelativeLayout {
      */
     private void parseUrl(String commandUrl) {
         ParseMraidCommands parser = new ParseMraidCommands();
-        Map<String, String> commandMap = parser.parseMraidUrl(commandUrl);
+        commandMap = parser.parseMraidUrl(commandUrl);
         String command = commandMap.get("command");
-
-        final String[] NoParameter = {
-                "close",
-                "resize",
-        };
-
-        final String[] WithString = {
-                "createCalendarEvent",
-                "expand",
-                "open",
-                "playVideo",
-                "storePicture",
-                "useCustomClose",
-        };
-
-        final String[] WithMap = {
-                "setOrientationProperties",
-                "setResizeProperties",
-        };
-
+        VMGLogs.debug(command);
         try {
-            if (Arrays.asList(NoParameter).contains(command)) {
-                Method method = getClass().getDeclaredMethod(command);
-                method.invoke(this);
-            } else if (Arrays.asList(WithString).contains(command)) {
-                Method method = getClass().getDeclaredMethod(command, String.class);
-                String key;
-                if (command.equals("createCalendarEvent")) {
-                    key = "eventJSON";
-                } else if (command.equals("useCustomClose")) {
-                    key = "useCustomClose";
-                } else {
-                    key = "url";
-                }
-                String val = commandMap.get(key);
-                method.invoke(this, val);
-            } else if (Arrays.asList(WithMap).contains(command)) {
-                Method method = getClass().getDeclaredMethod(command, Map.class);
-                method.invoke(this, commandMap);
+            if (command.equals("open")) {
+                openUrl(commandMap.get("url"));
+                VMGLogs.Information("Opening url " + commandMap.get("url"));
+            }
+            if (command.equals("resize")) {
+                resize();
+            }
+            if (command.equals("close")) {
+                close();
+                VMGLogs.Information("closing " + commandMap.get("close"));
+            }
+            if (command.equals("setResizeProperties")) {
+                setResizeProperties(commandMap);
+                VMGLogs.Information("resize properties  " + " width: " + commandMap.get("width") +
+                        " height: " + resizeProperties.height + " offsetX: " + commandMap.get("offsetX") + " offsetY:" + commandMap.get("offsetY"));
             }
         } catch (Exception e) {
-            Log.d(TAG, "Somthing went wrong: " + e.getMessage());
+            VMGLogs.fatal("Error while getting the method in VMGBase:" + e.getMessage());
         }
+
+
     }
 
 
@@ -355,7 +318,7 @@ public class VMGBase extends RelativeLayout {
     }
 
     /**
-     * this is a method which will set the add back to the resized size
+     * this is a method which will set the ad back to the resized size
      */
     private void setResizedSize() {
         int wDip = resizeProperties.width;
@@ -377,10 +340,11 @@ public class VMGBase extends RelativeLayout {
             @Override
             public void run() {
                 if (state == LOADING || state == DEFAULT || state == HIDDEN) {
+                    VMGLogs.Information("closing from state: " + getState());
                     return;
                 } else if (state == RESIZED) {
                     closeResized();
-                    Log.d(TAG, " Closing from resized");
+                    VMGLogs.Information("closing from resized ");
                 }
             }
         });
@@ -421,7 +385,7 @@ public class VMGBase extends RelativeLayout {
     }
 
     private void setMaxSize() {
-        useJavascript("mraid.setMaxSize('" + getAdWidth() + "','" + getAdHeight() + "');");
+        useJavascript("mraid.setMaxSize('" + getAdWidth() + "','" + resizeProperties.height + "');");
     }
 
     /**
@@ -450,8 +414,8 @@ public class VMGBase extends RelativeLayout {
      * this will be called when the states need to change
      */
     private void fireStateChangeEvent() {
-        String[] states = {"loading", "default", "expanded", "resized", "hidden"};
-        useJavascript("mraid.setState('" + states[state] + "');");
+        useJavascript("mraid.setState('" + getState() + "');");
+        VMGLogs.debug("state of the ad " + getState());
     }
 
 

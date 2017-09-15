@@ -80,7 +80,6 @@ public class VMGLogs {
             switch (id) {
                 case 1:
                     level = VMGFatal;
-
                     break;
                 case 2:
                     level = VMGVerbose;
@@ -100,6 +99,4 @@ public class VMGLogs {
             return id;
         }
     }
-
-
 }
