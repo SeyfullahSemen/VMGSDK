@@ -6,7 +6,32 @@
         But advertisers are confronted with a growing lack of visible, measurable, engaging and brand safe quality video inventory.
         Available on trusted and transparent publisher websites only. Dedicated to help overcome this situation,
         VMG offers publishers, broadcasters, ad networks and advertisers highly innovative, reliable video advertisement formats.
-        Plus a comprehensive high end monetization platform.</string>
+        Plus a comprehensive high end monetization platform.
+
+        Ut a turpis gravida, sagittis lacus vel, maximus lorem. Pellentesque et diam vitae enim mattis consectetur eu sit amet neque.
+        Etiam rutrum lectus quis quam tincidunt, a euismod ipsum consequat. Aenean pretium, lorem quis mollis dapibus, dui neque ornare enim,
+        at lobortis massa odio nec ipsum. Maecenas hendrerit ante vel metus mattis sagittis. Mauris laoreet mattis tincidunt. Duis eu vulputate diam, eget venenatis felis.
+
+Sed eget porttitor metus. Nam mattis maximus purus, ut eleifend dolor ullamcorper eget. Duis eget lectus et est aliquam convallis.
+        Sed vitae nibh at diam facilisis hendrerit. Nam ultricies pellentesque justo eget faucibus. Maecenas a erat odio.
+        Sed facilisis enim non sodales luctus. Proin iaculis vehicula semper. Donec at mi vitae elit malesuada imperdiet id quis orci.
+        Nulla facilisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque lacinia tincidunt enim,
+        a posuere ligula scelerisque et. Aenean quis viverra orci.
+
+         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sapien in ligula aliquet consectetur. Fusce felis felis,
+        cursus ut felis sit amet, interdum porttitor est. Morbi lacinia imperdiet erat, sed ullamcorper libero dictum non.
+        Aenean scelerisque accumsan aliquam. In et mauris in purus volutpat ullamcorper eget nec purus. Morbi pulvinar, metus et tempus malesuada,
+        sapien urna varius quam, vitae convallis massa nibh eu ante. Phasellus ornare diam risus, vitae finibus lacus ullamcorper eget. Sed nec mi nisi.
+        Suspendisse viverra urna tortor, in lobortis risus tincidunt eget. Nunc accumsan nec arcu a vehicula.
+
+
+        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris et mattis elit, sed ultricies quam.
+        Phasellus aliquam eget tortor at efficitur. Praesent iaculis, lectus vel rhoncus placerat, metus turpis accumsan ligula, a rutrum justo nisi vitae dolor.
+
+
+
+
+    </string>
 
     <string name="wat_hebben_wij_te_bieden">
          VIDEO STACK AND DASHBOARD
@@ -45,19 +70,22 @@ Duis pretium lorem in ante aliquam, quis tincidunt lectus elementum. Proin et qu
         Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris et mattis elit, sed ultricies quam.
         Phasellus aliquam eget tortor at efficitur. Praesent iaculis, lectus vel rhoncus placerat, metus turpis accumsan ligula, a rutrum justo nisi vitae dolor.
 
-Cras felis mi, varius sed pulvinar eget, laoreet at dolor. In sit amet nulla in diam pulvinar ullamcorper sit amet sit amet odio.
-        Vivamus id leo id ligula finibus efficitur. Aenean id bibendum ex, at egestas sapien. Donec luctus bibendum tincidunt.
-        Ut a turpis gravida, sagittis lacus vel, maximus lorem. Pellentesque et diam vitae enim mattis consectetur eu sit amet neque.
-        Etiam rutrum lectus quis quam tincidunt, a euismod ipsum consequat. Aenean pretium, lorem quis mollis dapibus, dui neque ornare enim,
-        at lobortis massa odio nec ipsum. Maecenas hendrerit ante vel metus mattis sagittis. Mauris laoreet mattis tincidunt. Duis eu vulputate diam, eget venenatis felis.
 
-Sed eget porttitor metus. Nam mattis maximus purus, ut eleifend dolor ullamcorper eget. Duis eget lectus et est aliquam convallis.
-        Sed vitae nibh at diam facilisis hendrerit. Nam ultricies pellentesque justo eget faucibus. Maecenas a erat odio.
-        Sed facilisis enim non sodales luctus. Proin iaculis vehicula semper. Donec at mi vitae elit malesuada imperdiet id quis orci.
-        Nulla facilisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque lacinia tincidunt enim,
-        a posuere ligula scelerisque et. Aenean quis viverra orci.
+Fusce hendrerit nisi non enim consectetur, eu rutrum augue porttitor. Curabitur efficitur lacus sed sollicitudin feugiat.
+        Ut pulvinar turpis sed arcu commodo semper. Maecenas a convallis orci. Duis pellentesque imperdiet rutrum.
+        Sed fermentum lectus vitae nulla lobortis, id porta purus tempus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+        Sed aliquet mi et mollis malesuada. Nam non enim condimentum odio accumsan ullamcorper. Etiam feugiat, metus vitae bibendum tempus, mi augue tempus velit,
+        non porta urna tellus ac est.
+
+
+
 
     </string>
+
+    <string name="home_hello">Welcome to our demo SDK Go to the navigation drawer and choose!</string>
+
+
+
 
 
 </resources>

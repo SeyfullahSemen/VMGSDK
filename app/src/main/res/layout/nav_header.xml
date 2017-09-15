@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="192dp"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:background="@color/colorPrimaryDark"
+    android:gravity="bottom"
+    android:weightSum="1"
+    android:elevation="12dp"
+    >
+
+
+    <ImageView
+        android:id="@+id/menu_foto"
+        android:layout_width="173dp"
+        android:layout_height="69dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:rotationX="20"
+
+        android:src="@mipmap/ic_launcher_logo" />
+
+    <TextView
+        android:id="@+id/bedrijf_naam"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@+id/menu_foto"
+        android:fontFamily="sans-serif-thin"
+        android:text="@string/app_name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_weight="0.24" />
+
+</LinearLayout>
