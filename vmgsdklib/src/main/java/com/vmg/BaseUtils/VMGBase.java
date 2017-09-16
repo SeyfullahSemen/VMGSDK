@@ -68,7 +68,6 @@ public class VMGBase extends RelativeLayout {
     private Handler handler;
     private WebView webView;
     private int addWidth = 360;
-    private int addHeight = 255;
     private Context context;
     private UserInfoMobile mobileInfo;
     private int state;
@@ -123,15 +122,7 @@ public class VMGBase extends RelativeLayout {
         return addWidth;
     }
 
-    /**
-     * gets the add height that is entered
-     *
-     * @return
-     */
-    private int getAdHeight() {
-        return addHeight;
-    }
-
+    
     /**
      * @param javascript
      */
