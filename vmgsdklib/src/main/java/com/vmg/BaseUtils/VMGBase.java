@@ -68,7 +68,7 @@ public class VMGBase extends RelativeLayout {
     private Handler handler;
     private WebView webView;
     private int addWidth = 360;
-    private int addHeight;
+    private int addHeight = 255;
     private Context context;
     private UserInfoMobile mobileInfo;
     private int state;
@@ -170,11 +170,11 @@ public class VMGBase extends RelativeLayout {
         double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
         double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
 
-        if (scrollY - webView.getY() > (getAdHeight() * topOffset)) { // top
+        if (scrollY - webView.getY() > (resizeProperties.height * topOffset)) { // top
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             useJavascript("mraid.isViewable();");
-        } else if (scrollY + layoutH < webView.getY() + (getAdHeight() * bottomOffset)) { // bottom
+        } else if (scrollY + layoutH < webView.getY() + (resizeProperties.height * bottomOffset)) { // bottom
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             useJavascript("mraid.isViewable();");
