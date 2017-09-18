@@ -102,9 +102,10 @@ public class VMGBase extends RelativeLayout {
         }
 
         LinearLayout.LayoutParams layoutWebview =
-                new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         layoutWebview.gravity = Gravity.CENTER; // sets the webview to the center
         this.webView.setElevation(16); // this sets the elevation
+        this.webView.setFitsSystemWindows(true);
         this.webView.setLayoutParams(layoutWebview); // set the params
 
         vmgClient = new VMGWebviewClient();
@@ -122,7 +123,7 @@ public class VMGBase extends RelativeLayout {
         return addWidth;
     }
 
-    
+
     /**
      * @param javascript
      */
@@ -211,7 +212,7 @@ public class VMGBase extends RelativeLayout {
             openBrowser(url);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
-            VMGLogs.fatal("cannot open " + ex.getMessage());
+            VMGLogs.fatal("cannot open URL " + ex.getMessage());
         }
     }
 

@@ -50,33 +50,37 @@ public class VMGConfig {
      */
     public static VMGConfig getVMGInstance(Context context) {
         if (VMGInstance == null) {
-            Class ConfigClass = VMGConfig.class;
-            synchronized (ConfigClass) {
-                if (VMGInstance == null) {
-                    VMGInstance = new VMGConfig(context);
-                    VMGValues.put("topOffset", 0.6);
-                    VMGValues.put("bottomOffset", 0.4);
-                    VMGValues.put("slideInOnStart", true);
-                    VMGValues.put("slideInOnClose", true);
-                    VMGValues.put("fadeInOnStart", false);
-                    VMGValues.put("fadeOutOnClose", false);
-                    VMGValues.put("debug", false);
-                    VMGValues.put("active", true);
-                    VMGValues.put("modDate", 1503180000);
+            try {
+                Class ConfigClass = VMGConfig.class;
+                synchronized (ConfigClass) {
+                    if (VMGInstance == null) {
+                        VMGInstance = new VMGConfig(context);
+                        VMGValues.put("topOffset", 0.6);
+                        VMGValues.put("bottomOffset", 0.4);
+                        VMGValues.put("slideInOnStart", true);
+                        VMGValues.put("slideInOnClose", true);
+                        VMGValues.put("fadeInOnStart", false);
+                        VMGValues.put("fadeOutOnClose", false);
+                        VMGValues.put("debug", false);
+                        VMGValues.put("active", true);
+                        VMGValues.put("modDate", 1503180000);
+                    }
                 }
+            } catch (Exception ex) {
+                VMGLogs.fatal("Something went wrong in VMGConfig method getVMGInstance :   " + ex.getMessage());
             }
         }
         return VMGInstance;
     }
 
-    public RequestQueue getRequestQueue() {
+    private RequestQueue getRequestQueue() {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
         return requestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req) {
+    private <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
     }
 
@@ -122,10 +126,14 @@ public class VMGConfig {
      */
     public Object retrieveSpecific(Object key) {
         Object val = null;
-        if (!JSONVals.containsKey(key)) {
-            return 0;
-        } else {
-            val = JSONVals.get(key);
+        try {
+            if (!JSONVals.containsKey(key)) {
+                return 0;
+            } else {
+                val = JSONVals.get(key);
+            }
+        } catch (Exception ex) {
+            VMGLogs.fatal("something went wrong in retrieving the a value Method retrieveSpecific:  " + ex.getMessage());
         }
         return val;
     }
@@ -217,7 +225,7 @@ public class VMGConfig {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                VMGLogs.fatal(error.getMessage());
+                VMGLogs.fatal("Someting went wrong in the method getVMGObject:  "+error.getMessage());
             }
         });
 
