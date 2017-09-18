@@ -14,10 +14,8 @@ android {
 
     }
     buildTypes {
-
         release {
-
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,5 +29,5 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.+'
     testCompile 'junit:junit:4.12'
-    compile files ('libs/volley.jar')
+    compile files('libs/volley.jar')
 }
