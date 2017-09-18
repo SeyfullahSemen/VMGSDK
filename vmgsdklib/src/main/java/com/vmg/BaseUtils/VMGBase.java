@@ -101,13 +101,6 @@ public class VMGBase extends RelativeLayout {
             orientationLocking = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
 
-        LinearLayout.LayoutParams layoutWebview =
-                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        layoutWebview.gravity = Gravity.CENTER; // sets the webview to the center
-        this.webView.setElevation(16); // this sets the elevation
-        this.webView.setFitsSystemWindows(true);
-        this.webView.setLayoutParams(layoutWebview); // set the params
-
         vmgClient = new VMGWebviewClient();
         mobileInfo = new UserInfoMobile(context);
         handler = new Handler(Looper.getMainLooper());
