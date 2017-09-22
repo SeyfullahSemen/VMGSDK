@@ -16,6 +16,7 @@ import android.webkit.WebView;
 
 import com.example.user.newapp.adapters.RecycleAdapter;
 import com.vmg.BaseUtils.VMGBase;
+import com.yalantis.phoenix.PullToRefreshView;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,7 @@ public class RecyclerFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     private WebView webbs;
     private VMGBase frag;
+    private PullToRefreshView refreshRecyclerview;
 
     public RecyclerFragment() {
 
@@ -34,6 +36,20 @@ public class RecyclerFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_recycler, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler);
         webbs = (WebView) v.findViewById(R.id.webbs); // get the id of the webview
+        refreshRecyclerview.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshRecyclerview.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshRecyclerview.setRefreshing(false);
+                        frag = new VMGBase(getActivity(), webbs);
+                        frag.startVMG(6194);
+
+                    }
+                }, 2000);
+            }
+        });
 
         frag = new VMGBase(getActivity(), webbs);
         frag.startVMG(6194);

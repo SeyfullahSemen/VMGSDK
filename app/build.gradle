@@ -41,5 +41,6 @@ dependencies {
     compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
     compile 'com.android.volley:volley:1.0.0'
+    compile 'com.yalantis:phoenix:1.2.3'
     compile project(':vmgsdklib')
 }

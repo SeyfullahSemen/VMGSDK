@@ -20,6 +20,7 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.vmg.BaseUtils.VMGBase;
+import com.yalantis.phoenix.PullToRefreshView;
 
 
 /**
@@ -31,6 +32,7 @@ public class BlankFragment extends Fragment {
     private VMGBase frag;
     private NestedScrollView scroll;
     private RelativeLayout rela;
+    private PullToRefreshView refreshScrollview;
 
     public BlankFragment() {
     }
@@ -51,7 +53,23 @@ public class BlankFragment extends Fragment {
         scroll = (NestedScrollView) v.findViewById(R.id.scroll);
         rela = (RelativeLayout) v.findViewById(R.id.rela);
         webView = (WebView) v.findViewById(R.id.webView);
+        refreshScrollview = (PullToRefreshView) v.findViewById(R.id.refresScrollview);
+        refreshScrollview.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshScrollview.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        refreshScrollview.setRefreshing(false);
+                        frag = new VMGBase(getActivity(), webView);
+
+                        frag.startVMG(6194); // this will start everything that you need to load inside the view
+                    }
+                }, 2000);
+
+            }
+        });
         frag = new VMGBase(getActivity(), webView);
 
         frag.startVMG(6194); // this will start everything that you need to load inside the view
