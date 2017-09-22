@@ -69,7 +69,7 @@ public class VMGBase extends RelativeLayout {
     private WebView webView;
     private int addWidth = 360;
     private Context context;
-    private UserInfoMobile mobileInfo;
+    private UserInfoMobile mobile;
     private int state;
 
 
@@ -102,9 +102,9 @@ public class VMGBase extends RelativeLayout {
         }
 
         vmgClient = new VMGWebviewClient();
-        mobileInfo = new UserInfoMobile(context);
+        mobile = new UserInfoMobile(context);
         handler = new Handler(Looper.getMainLooper());
-        VMGLogs.Information(UserInfoMobile.mobileInfo());
+        VMGLogs.Information(mobile.mobileInfo());
     }
 
     /**

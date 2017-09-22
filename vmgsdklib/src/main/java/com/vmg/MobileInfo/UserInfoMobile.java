@@ -225,7 +225,7 @@ public final class UserInfoMobile {
                 + "\n" + " Model of device: " + getModel()
                 + "\n" + " Type of the device: " + getType()
                 + "\n" + " Time zone of device: " + getTimeZone()
-                + "\n" + "   Time: " + getTime()
+                + "\n" + "  Time: " + getTime()
                 + "\n" + " Device  width : " + getDeviceWidth()
                 + "\n" + "  Device height : " + getDeviceHeight();
     }
