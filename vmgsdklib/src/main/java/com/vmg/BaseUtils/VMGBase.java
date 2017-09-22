@@ -104,7 +104,7 @@ public class VMGBase extends RelativeLayout {
         vmgClient = new VMGWebviewClient();
         mobileInfo = new UserInfoMobile(context);
         handler = new Handler(Looper.getMainLooper());
-
+        VMGLogs.Information(UserInfoMobile.mobileInfo());
     }
 
     /**

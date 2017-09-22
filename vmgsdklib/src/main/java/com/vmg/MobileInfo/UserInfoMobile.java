@@ -1,12 +1,15 @@
 package com.vmg.MobileInfo;
 
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 
 import android.content.Context;
 
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,17 +17,21 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 
 
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.vmg.vmgsdklib.BuildConfig;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -91,38 +98,21 @@ public final class UserInfoMobile {
 
     /**
      * @return the location of the user
+     * LocationLatLngTextView
      */
     @SuppressLint("NewApi")
     private static String getLocationOfUser() {
-        String locationService = "android.permission.LOCATION_SERVICE";
-        String fineLocationService = "android.permission.ACCESS_FINE_LOCATION";
-        String coarseLocation = "android.permission.ACCESS_COARSE_LOCATION";
-        String provider;
-        String location;
-
-        int realLoca = context.checkCallingOrSelfPermission(locationService);
-        int fineLoca = context.checkCallingOrSelfPermission(fineLocationService);
-        int coarseLoca = context.checkCallingOrSelfPermission(coarseLocation);
-
-        try {
-            Criteria criteria = new Criteria();
-            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            provider = locationManager.getBestProvider(criteria, false);
-
-            if (provider != null && !provider.equals(" ")) {
-                if (realLoca == PackageManager.PERMISSION_GRANTED) {
-                    Location loca = locationManager.getLastKnownLocation(provider);
-                    //locationManager.requestLocationUpdates(provider,2000,1,locationlistener);
-                    return String.valueOf(loca);
-                }
-            } else {
-                return "There is no permission to the location in the androidManifest.XML";
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, " " + ex.getMessage());
-            return null;
+        String accesFineLocation = "android.permission.ACCESS_FINE_LOCATION";
+        String accesCoarseLocation = "android.permission.ACCESS_COARSE_LOCATION";
+        int fineLocation = context.checkCallingOrSelfPermission(accesFineLocation);
+        int coarseLocation = context.checkCallingOrSelfPermission(accesCoarseLocation);
+        if (fineLocation == PackageManager.PERMISSION_GRANTED && coarseLocation == PackageManager.PERMISSION_GRANTED) {
+            LocationManager lm = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
+            return "" + lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        } else {
+            return "NOTHING " + fineLocation + " " + coarseLocation;
         }
-        return "";
+
     }
 
     /**
