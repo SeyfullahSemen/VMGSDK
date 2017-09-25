@@ -3,29 +3,24 @@ package com.vmg.BaseUtils;
 import java.util.Arrays;
 import java.util.List;
 
-public final class VMGResizeProperties {
+final class VMGResizeProperties {
 
-    public static final int CUSTOM_CLOSE_POSITION_TOP_LEFT = 0;
-    public static final int CUSTOM_CLOSE_POSITION_TOP_CENTER = 1;
-    public static final int CUSTOM_CLOSE_POSITION_TOP_RIGHT = 2;
-    public static final int CUSTOM_CLOSE_POSITION_CENTER = 3;
-    public static final int CUSTOM_CLOSE_POSITION_BOTTOM_LEFT = 4;
-    public static final int CUSTOM_CLOSE_POSITION_BOTTOM_CENTER = 5;
-    public static final int CUSTOM_CLOSE_POSITION_BOTTOM_RIGHT = 6;
 
-    public int width;
+    private static final int CUSTOM_CLOSE_POSITION_TOP_RIGHT = 0;
+
+    int width;
     public int height;
-    public int offsetX;
-    public int offsetY;
-    public int customClosePosition;
+    int offsetX;
+    int offsetY;
+    int customClosePosition;
 
-    public boolean allowOffscreen;
+    boolean allowOffscreen;
 
-    public VMGResizeProperties() {
+    VMGResizeProperties() {
         this(0, 0, 0, 0, CUSTOM_CLOSE_POSITION_TOP_RIGHT, true);
     }
 
-    public VMGResizeProperties(int width, int height, int offsetX, int offsetY, int customClosePosition, boolean allowOffscreen) {
+    private VMGResizeProperties(int width, int height, int offsetX, int offsetY, int customClosePosition, boolean allowOffscreen) {
         this.width = width;
         this.height = height;
         this.offsetX = offsetX;
@@ -34,7 +29,7 @@ public final class VMGResizeProperties {
         this.allowOffscreen = allowOffscreen;
     }
 
-    public static int customClosePositionFromString(String name) {
+    static int customClosePositionFromString(String name) {
         final List<String> positions = Arrays.asList(
                 "top-left",
                 "top-center",

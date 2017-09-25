@@ -3,8 +3,9 @@ package com.vmg.ConfigVMG;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+
 import android.content.Context;
-import android.util.Log;
+
 
 
 import com.android.volley.Request;
@@ -18,10 +19,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Map;
+
 
 public class VMGConfig {
-    public static String baseUrl = "http://staging.vmg.host";
+    static String baseUrl = "http://staging.vmg.host";
     private static final String TAG = "VMGConfig";
     private static VMGConfig VMGInstance = null;
     private static HashMap<String, Object> VMGValues = new HashMap<>();
@@ -82,40 +83,6 @@ public class VMGConfig {
 
     private <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
-    }
-
-    /**
-     * set a new value in the hashmap
-     *
-     * @param key
-     * @param value
-     * @param <T>
-     * @param <E>
-     */
-    public <T extends String, E> void setValue(T key, E value) {
-        if (VMGValues.containsKey(key)) {
-            VMGValues.remove(key);
-            VMGValues.put(key, value);
-        } else {
-            VMGValues.put(key, value);
-        }
-    }
-
-    /**
-     * get the values of the hashmap
-     *
-     * @return
-     */
-    public HashMap<String, Object> getValues() {
-        if (JSONVals.isEmpty()) {
-            Log.i(TAG, "There are no values");
-            return null;
-        } else {
-            for (Map.Entry<String, Object> entry : JSONVals.entrySet()) {
-                Log.i(TAG, " " + entry.getKey() + "  " + entry.getValue());
-            }
-            return JSONVals;
-        }
     }
 
     /**

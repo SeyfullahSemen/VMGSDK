@@ -20,7 +20,6 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -30,7 +29,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.vmg.ConfigVMG.VMGConfig;
@@ -41,17 +39,14 @@ import com.vmg.MobileInfo.UserInfoMobile;
 import com.vmg.VMGParser.ParseMraidCommands;
 import com.vmg.vmgsdklib.R;
 
-import java.lang.reflect.Method;
 import java.net.URLDecoder;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
+
 
 @SuppressLint("ViewConstructor")
 public class VMGBase extends RelativeLayout {
 
     private static final String TAG = "VMGBaseFragment";
-    private HashMap<String, String> commandMap;
     private boolean isViewable;
     private boolean isClosing;
     private final static int LOADING = 0;
@@ -69,7 +64,6 @@ public class VMGBase extends RelativeLayout {
     private WebView webView;
     private int addWidth = 360;
     private Context context;
-    private UserInfoMobile mobile;
     private int state;
 
 
@@ -102,7 +96,7 @@ public class VMGBase extends RelativeLayout {
         }
 
         vmgClient = new VMGWebviewClient();
-        mobile = new UserInfoMobile(context);
+        UserInfoMobile mobile = new UserInfoMobile(context);
         handler = new Handler(Looper.getMainLooper());
         VMGLogs.Information(mobile.mobileInfo());
     }
@@ -174,11 +168,11 @@ public class VMGBase extends RelativeLayout {
      * this is where the webview gets filled with the mraid file and it opens the webview
      * so the user just needs to add this method to get the full functionallity
      */
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
     public void startVMG(int placementId) {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        webView.setWebContentsDebuggingEnabled(true);
+        WebView.setWebContentsDebuggingEnabled(true);
         webView.setWebViewClient(vmgClient);
         webView.loadUrl(VMGUrlBuilder.getPlacementUrl(placementId));
     }
@@ -189,7 +183,7 @@ public class VMGBase extends RelativeLayout {
      *
      * @param url
      */
-    public void openBrowser(String url) {
+    private void openBrowser(String url) {
         getContext().startActivity(
                 new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
@@ -215,7 +209,7 @@ public class VMGBase extends RelativeLayout {
      */
     private void parseUrl(String commandUrl) {
         ParseMraidCommands parser = new ParseMraidCommands();
-        commandMap = parser.parseMraidUrl(commandUrl);
+        HashMap<String, String> commandMap = parser.parseMraidUrl(commandUrl);
         String command = commandMap.get("command");
         VMGLogs.debug(command);
         try {
@@ -249,7 +243,7 @@ public class VMGBase extends RelativeLayout {
      *
      * @param properties
      */
-    private void setResizeProperties(Map<String, String> properties) {
+    private void setResizeProperties(HashMap<String, String> properties) {
         int width = Integer.parseInt(properties.get("width"));
         int height = Integer.parseInt(properties.get("height"));
         int offsetX = Integer.parseInt(properties.get("offsetX"));
@@ -288,7 +282,7 @@ public class VMGBase extends RelativeLayout {
             removeAllViews();
             resizedView.addView(webView);
 
-            FrameLayout rootView = (FrameLayout) getRootView().findViewById(android.R.id.content);
+            FrameLayout rootView = getRootView().findViewById(android.R.id.content);
             rootView.addView(resizedView);
         }
 
@@ -326,7 +320,7 @@ public class VMGBase extends RelativeLayout {
             public void run() {
                 if (state == LOADING || state == DEFAULT || state == HIDDEN) {
                     VMGLogs.Information("closing from state: " + getState());
-                    return;
+
                 } else if (state == RESIZED) {
                     closeResized();
                     VMGLogs.Information("closing from resized ");
@@ -363,7 +357,7 @@ public class VMGBase extends RelativeLayout {
      */
     private void removeResizeView() {
         resizedView.removeAllViews();
-        FrameLayout rootView = (FrameLayout) ((Activity) context).findViewById(android.R.id.content);
+        FrameLayout rootView =  ((Activity) context).findViewById(android.R.id.content);
         rootView.removeView(resizedView);
         resizedView = null;
 

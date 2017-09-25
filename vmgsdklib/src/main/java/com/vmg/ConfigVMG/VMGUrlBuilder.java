@@ -13,12 +13,10 @@ package com.vmg.ConfigVMG;
 public class VMGUrlBuilder {
 
     public static String getConfigUrl(int appId) {
-        String configURL = "" + VMGConfig.baseUrl + "/adServ/config/id/\\" + appId + "";
-        return configURL;
+        return "" + VMGConfig.baseUrl + "/adServ/config/id/\\" + appId + "";
     }
 
     public static String getPlacementUrl(int placementId) {
-        String placementUrl = "" + VMGConfig.baseUrl + "/adServ/placement/id\\" + placementId + "";
-        return placementUrl;
+        return "" + VMGConfig.baseUrl + "/adServ/placement/id\\" + placementId + "";
     }
 }
