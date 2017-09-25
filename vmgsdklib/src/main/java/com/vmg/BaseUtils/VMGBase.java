@@ -51,7 +51,7 @@ import java.util.Map;
 public class VMGBase extends RelativeLayout {
 
     private static final String TAG = "VMGBaseFragment";
-    private Map<String, String> commandMap;
+    private HashMap<String, String> commandMap;
     private boolean isViewable;
     private boolean isClosing;
     private final static int LOADING = 0;

@@ -225,7 +225,7 @@ public class VMGConfig {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                VMGLogs.fatal("Someting went wrong in the method getVMGObject:  "+error.getMessage());
+                VMGLogs.fatal("Someting went wrong in the method getVMGObject:  " + error.getMessage());
             }
         });
 

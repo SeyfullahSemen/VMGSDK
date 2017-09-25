@@ -10,11 +10,11 @@ import java.util.Map;
 
 public class ParseMraidCommands {
 
-    public Map<String, String> parseMraidUrl(String commandUrl) {
+    public HashMap<String, String> parseMraidUrl(String commandUrl) {
         String command = commandUrl.substring(8);
         String commandMraid;
 
-        Map<String, String> params = new HashMap<>();
+        HashMap<String, String> params = new HashMap<>();
 
         int indexQuestionMark = command.indexOf('?');
         if (indexQuestionMark != -1) {

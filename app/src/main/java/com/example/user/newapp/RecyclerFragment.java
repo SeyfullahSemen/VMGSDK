@@ -36,6 +36,7 @@ public class RecyclerFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_recycler, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler);
         webbs = (WebView) v.findViewById(R.id.webbs); // get the id of the webview
+        refreshRecyclerview = (PullToRefreshView) v.findViewById(R.id.refreshRecyclerview);
         refreshRecyclerview.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
