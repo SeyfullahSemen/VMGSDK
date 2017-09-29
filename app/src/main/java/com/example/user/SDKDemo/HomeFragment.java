@@ -1,4 +1,4 @@
-package com.example.user.newapp;
+package com.example.user.SDKDemo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.VMG.SDKDemo.R;
+import com.example.user.SDKDemo.R;
 
 public class HomeFragment extends Fragment {
     private TextView txt_home;

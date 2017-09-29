@@ -1,4 +1,4 @@
-package com.example.user.newapp;
+package com.example.user.SDKDemo;
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  * <p>
@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-import com.VMG.SDKDemo.R;
-import com.example.user.newapp.adapters.RecycleAdapter;
+import com.example.user.SDKDemo.R;
+import com.example.user.SDKDemo.adapters.RecycleAdapter;
 import com.vmg.BaseUtils.VMGBase;
 import com.yalantis.phoenix.PullToRefreshView;
 

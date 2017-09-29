@@ -1,4 +1,4 @@
-package com.example.user.newapp;
+package com.example.user.SDKDemo;
 
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
@@ -7,8 +7,6 @@ package com.example.user.newapp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
-
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.VMG.SDKDemo.R;
 import com.vmg.BaseUtils.VMGBase;
 
 

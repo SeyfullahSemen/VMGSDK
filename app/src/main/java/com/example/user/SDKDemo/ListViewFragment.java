@@ -1,4 +1,4 @@
-package com.example.user.newapp;
+package com.example.user.SDKDemo;
 
 
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.VMG.SDKDemo.R;
+import com.example.user.SDKDemo.R;
 import com.vmg.BaseUtils.VMGBase;
 import com.yalantis.phoenix.PullToRefreshView;
 

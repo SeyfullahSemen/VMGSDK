@@ -6,7 +6,7 @@
 
     <WebView
         android:id="@+id/webber"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <com.yalantis.phoenix.PullToRefreshView
@@ -17,8 +17,8 @@
     <ListView
         android:elevation="16dp"
         android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:divider="@null"
         android:dividerHeight="0dp">
 

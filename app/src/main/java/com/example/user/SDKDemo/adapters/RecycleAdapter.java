@@ -4,7 +4,7 @@
  * Created by Seyfullah Semen
  */
 
-package com.example.user.newapp.adapters;
+package com.example.user.SDKDemo.adapters;
 
 
 import android.support.v7.widget.RecyclerView;
@@ -13,11 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.VMG.SDKDemo.R;
+import com.example.user.SDKDemo.R;
 
 import java.util.List;
 
-/**
+/*
  * Created by Seyfullah Semen on 8-8-2017.
  */
 

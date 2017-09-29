@@ -1,4 +1,4 @@
-package com.example.user.newapp;
+package com.example.user.SDKDemo;
 
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
@@ -25,7 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import com.VMG.SDKDemo.R;
+import com.example.user.SDKDemo.R;
 import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.LoggerPack.VMGLogs;
 

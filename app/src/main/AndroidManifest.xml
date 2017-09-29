@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.VMG.SDKDemo">
+    package="com.example.user.SDKDemo">
 
     <!-- Dit zorgt ervoor dat de website of iets online kan ingeladen worden -->
     <uses-permission android:name="android.permission.INTERNET" />

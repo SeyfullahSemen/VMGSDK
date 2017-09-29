@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -20,15 +21,18 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.autofill.AutofillValue;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.vmg.ConfigVMG.VMGConfig;
@@ -41,6 +45,8 @@ import com.vmg.vmgsdklib.R;
 
 import java.net.URLDecoder;
 import java.util.HashMap;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 
 @SuppressLint("ViewConstructor")
@@ -85,7 +91,7 @@ public class VMGBase extends RelativeLayout {
 
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
-        resizedView = new RelativeLayout(context);
+
 
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         if (context instanceof Activity) {
@@ -94,6 +100,7 @@ public class VMGBase extends RelativeLayout {
             orientationLocking = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
 
+
         vmgClient = new VMGWebviewClient();
         UserInfoMobile mobile = new UserInfoMobile(context);
         handler = new Handler(Looper.getMainLooper());
@@ -101,13 +108,17 @@ public class VMGBase extends RelativeLayout {
     }
 
     /**
-     * gets the add width that is entered
+     * calculates and sets the ad width
      *
      * @return the ad width
      */
-    private int getAdWidth() {
-        //DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
-        int addWidth = 360;
+    @SuppressLint("NewApi")
+    private double getAdWidth() {
+        double dpi = displayMetrics.densityDpi;
+        webView.setInitialScale((int) dpi);
+        double answer = dpi / 100;
+        double addWidth = webView.getMeasuredWidth() / answer;
+
         return addWidth;
     }
 
@@ -173,6 +184,8 @@ public class VMGBase extends RelativeLayout {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         WebView.setWebContentsDebuggingEnabled(true);
+
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         webView.setWebViewClient(vmgClient);
         webView.loadUrl(VMGUrlBuilder.getPlacementUrl(placementId));
     }

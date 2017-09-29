@@ -1,5 +1,5 @@
 
-package com.example.user.newapp;
+package com.example.user.SDKDemo;
 /**
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  */
@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
-import com.VMG.SDKDemo.R;
+import com.example.user.SDKDemo.R;
 import com.vmg.BaseUtils.VMGBase;
 import com.yalantis.phoenix.PullToRefreshView;
 
@@ -37,8 +37,8 @@ public class BlankFragment extends Fragment {
      * this is the method where the webview is filled with our index file
      * and tests are done to see whether the functions work correctly or not
      *
-     * @param inflater this will infate the layout
-     * @param container the container will get the view
+     * @param inflater           this will infate the layout
+     * @param container          the container will get the view
      * @param savedInstanceState check if there is savedinstances
      * @return return the inflated xml file
      */
@@ -60,15 +60,16 @@ public class BlankFragment extends Fragment {
                         refreshScrollview.setRefreshing(false);
                         frag = new VMGBase(getActivity(), webView);
 
-                        frag.startVMG(6340 ); // this will start everything that you need to load inside the view
+                        frag.startVMG(6340); // this will start everything that you need to load inside the view
                     }
                 }, 2000);
 
             }
         });
+
         frag = new VMGBase(getActivity(), webView);
 
-        frag.startVMG(6340 ); // this will start everything that you need to load inside the view
+        frag.startVMG(6340); // this will start everything that you need to load inside the view
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
