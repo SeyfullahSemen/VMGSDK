@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.VMG.SDKDemo.R;
 import com.vmg.BaseUtils.VMGBase;
 
 

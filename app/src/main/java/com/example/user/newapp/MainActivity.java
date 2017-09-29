@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.VMG.SDKDemo.R;
 import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.LoggerPack.VMGLogs;
 

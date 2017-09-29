@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
+import com.VMG.SDKDemo.R;
 import com.vmg.BaseUtils.VMGBase;
 import com.yalantis.phoenix.PullToRefreshView;
 
