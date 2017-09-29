@@ -34,9 +34,9 @@ public class RecyclerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_recycler, container, false);
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler);
-        webbs = (WebView) v.findViewById(R.id.webbs); // get the id of the webview
-        refreshRecyclerview = (PullToRefreshView) v.findViewById(R.id.refreshRecyclerview);
+        mRecyclerView = v.findViewById(R.id.recycler);
+        webbs = v.findViewById(R.id.webbs); // get the id of the webview
+        refreshRecyclerview = v.findViewById(R.id.refreshRecyclerview);
         refreshRecyclerview.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -45,7 +45,7 @@ public class RecyclerFragment extends Fragment {
                     public void run() {
                         refreshRecyclerview.setRefreshing(false);
                         frag = new VMGBase(getActivity(), webbs);
-                        frag.startVMG(6194);
+                        frag.startVMG(6342);
 
                     }
                 }, 2000);
@@ -53,7 +53,7 @@ public class RecyclerFragment extends Fragment {
         });
 
         frag = new VMGBase(getActivity(), webbs);
-        frag.startVMG(6194);
+        frag.startVMG(6342);
 
         return v;
     }

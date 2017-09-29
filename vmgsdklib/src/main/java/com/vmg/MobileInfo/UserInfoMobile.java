@@ -1,46 +1,41 @@
 package com.vmg.MobileInfo;
 
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 
 import android.content.Context;
 
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Criteria;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
+
 import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 
 
-import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.vmg.LoggerPack.VMGLogs;
 import com.vmg.vmgsdklib.BuildConfig;
 
-import java.io.IOException;
+
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.List;
+
 import java.util.Locale;
 import java.util.TimeZone;
 
 public final class UserInfoMobile {
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private static final String TAG = "UserInfoMobile";
 
     /**
-     * @param context
+     * @param context this is the context of the activity
      */
     public UserInfoMobile(Context context) {
         this.context = context;
@@ -62,12 +57,12 @@ public final class UserInfoMobile {
                     for (Enumeration<InetAddress> enumIpAddr = networkinterface.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                         InetAddress inetAddress = enumIpAddr.nextElement();
                         if (!inetAddress.isLoopbackAddress()) {
-                            return inetAddress.getHostAddress().toString();
+                            return inetAddress.getHostAddress();
                         }
                     }
                 }
             } catch (Exception ex) {
-                Log.e("Current IP", ex.toString());
+                VMGLogs.debug("Current IP " + ex.toString());
             }
         }
 
@@ -88,9 +83,7 @@ public final class UserInfoMobile {
             Log.i(TAG, "Permission network state is enabled");
             WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
-            String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-
-            return ip;
+            return Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
         } else {
             return null;
         }
@@ -167,8 +160,7 @@ public final class UserInfoMobile {
      * @return the time
      */
     private static Date getTime() {
-        Date currentTime;
-        return currentTime = Calendar.getInstance().getTime();
+        return Calendar.getInstance().getTime();
     }
 
     /**
@@ -197,8 +189,7 @@ public final class UserInfoMobile {
      */
     private static int getDeviceWidth() {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        int width = displayMetrics.widthPixels;
-        return width;
+        return displayMetrics.widthPixels;
     }
 
     /**
@@ -206,8 +197,7 @@ public final class UserInfoMobile {
      */
     private static int getDeviceHeight() {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        int height = displayMetrics.heightPixels;
-        return height;
+        return displayMetrics.heightPixels;
     }
 
     /**

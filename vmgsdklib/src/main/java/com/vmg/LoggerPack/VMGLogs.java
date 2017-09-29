@@ -3,7 +3,7 @@ package com.vmg.LoggerPack;
 
 import android.util.Log;
 
-/**
+/*
  * Created by Seyfullah on 15-9-2017.
  */
 
@@ -54,7 +54,7 @@ public class VMGLogs {
         }
     }
 
-    public static enum VMGLogLevels {
+    private static enum VMGLogLevels {
         VMGFatal(1),
         VMGVerbose(2),
         VMGInformation(3),
@@ -71,9 +71,6 @@ public class VMGLogs {
             return logLevel;
         }
 
-        public void setLogLevel(int level) {
-            this.logLevel = level;
-        }
 
         public static int getLevel(int id) {
             VMGLogLevels level = null;

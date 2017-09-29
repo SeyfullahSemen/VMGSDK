@@ -4,8 +4,8 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-
 
 
 import com.android.volley.Request;
@@ -24,9 +24,11 @@ import java.util.HashMap;
 public class VMGConfig {
     static String baseUrl = "http://staging.vmg.host";
     private static final String TAG = "VMGConfig";
+    @SuppressLint("StaticFieldLeak")
     private static VMGConfig VMGInstance = null;
     private static HashMap<String, Object> VMGValues = new HashMap<>();
     private static HashMap<String, Object> JSONVals = new HashMap<>();
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private RequestQueue requestQueue;
 
@@ -36,8 +38,8 @@ public class VMGConfig {
     }
 
     /**
-     * @param context
-     * @param appId
+     * @param context the context of the specific page will be given
+     * @param appId   the id will be given of the ad that needs to load
      */
     public static void loadConfig(Context context, int appId) {
         getVMGInstance(context);
@@ -88,8 +90,8 @@ public class VMGConfig {
     /**
      * get a specific value out of the hashmap
      *
-     * @param key
-     * @return
+     * @param key the key that needs to get retrieved
+     * @return the value that is asked for
      */
     public Object retrieveSpecific(Object key) {
         Object val = null;
@@ -106,7 +108,7 @@ public class VMGConfig {
     }
 
     /**
-     * @param context
+     * @param context the context of the page will be given
      */
     private static void getVMGObject(final Context context, int appId) {
 

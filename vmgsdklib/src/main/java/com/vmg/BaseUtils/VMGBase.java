@@ -62,7 +62,6 @@ public class VMGBase extends RelativeLayout {
     private DisplayMetrics displayMetrics;
     private Handler handler;
     private WebView webView;
-    private int addWidth = 360;
     private Context context;
     private int state;
 
@@ -74,8 +73,8 @@ public class VMGBase extends RelativeLayout {
      * I also instantiate the things we need to mak our app work in order to get no
      * nullpointerException
      *
-     * @param context
-     * @param webView
+     * @param context this is the context of the given page
+     * @param webView this is the webview to load the ad in
      */
     @SuppressLint("NewApi")
     public VMGBase(Context context, WebView webView) {
@@ -104,23 +103,24 @@ public class VMGBase extends RelativeLayout {
     /**
      * gets the add width that is entered
      *
-     * @return
+     * @return the ad width
      */
     private int getAdWidth() {
+        //DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        int addWidth = 360;
         return addWidth;
     }
 
-
     /**
-     * @param javascript
+     * @param javascript this is for the input of the javascript command
      */
     private void useJavascript(String javascript) {
         useJavascript(webView, javascript);
     }
 
     /**
-     * @param webview
-     * @param javascript
+     * @param webview    this will be the webview that needs to get manipulated bij the javascript code
+     * @param javascript enter the javascript command
      */
     @SuppressLint("NewApi")
     private void useJavascript(WebView webview, String javascript) {
@@ -139,9 +139,9 @@ public class VMGBase extends RelativeLayout {
     /**
      * this method can be used when the user has a nestedscrollview or a scrollview
      *
-     * @param scrollY
-     * @param scrollX
-     * @param view
+     * @param scrollY this value is the Y
+     * @param scrollX this value is the X
+     * @param view    this is the view to get the whole size of
      */
     public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view) {
         double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
@@ -181,7 +181,7 @@ public class VMGBase extends RelativeLayout {
      * this will open up a new browser when the user clicks on the add
      * it wil start a whole new browser when clicked on it
      *
-     * @param url
+     * @param url the given URL will be opened
      */
     private void openBrowser(String url) {
         getContext().startActivity(
@@ -241,7 +241,7 @@ public class VMGBase extends RelativeLayout {
      * this will make sure that the right add size will be set when the add
      * is loaded
      *
-     * @param properties
+     * @param properties this are the proper
      */
     private void setResizeProperties(HashMap<String, String> properties) {
         int width = Integer.parseInt(properties.get("width"));
@@ -357,7 +357,7 @@ public class VMGBase extends RelativeLayout {
      */
     private void removeResizeView() {
         resizedView.removeAllViews();
-        FrameLayout rootView =  ((Activity) context).findViewById(android.R.id.content);
+        FrameLayout rootView = ((Activity) context).findViewById(android.R.id.content);
         rootView.removeView(resizedView);
         resizedView = null;
 

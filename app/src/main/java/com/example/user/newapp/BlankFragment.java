@@ -6,16 +6,12 @@ package com.example.user.newapp;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
@@ -28,7 +24,6 @@ import com.yalantis.phoenix.PullToRefreshView;
  */
 public class BlankFragment extends Fragment {
     private WebView webView;
-    private boolean isViewable;
     private VMGBase frag;
     private NestedScrollView scroll;
     private RelativeLayout rela;
@@ -41,19 +36,19 @@ public class BlankFragment extends Fragment {
      * this is the method where the webview is filled with our index file
      * and tests are done to see whether the functions work correctly or not
      *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater this will infate the layout
+     * @param container the container will get the view
+     * @param savedInstanceState check if there is savedinstances
+     * @return return the inflated xml file
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_blank, container, false);
-        scroll = (NestedScrollView) v.findViewById(R.id.scroll);
-        rela = (RelativeLayout) v.findViewById(R.id.rela);
-        webView = (WebView) v.findViewById(R.id.webView);
-        refreshScrollview = (PullToRefreshView) v.findViewById(R.id.refresScrollview);
+        scroll = v.findViewById(R.id.scroll);
+        rela = v.findViewById(R.id.rela);
+        webView = v.findViewById(R.id.webView);
+        refreshScrollview = v.findViewById(R.id.refresScrollview);
         refreshScrollview.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -64,7 +59,7 @@ public class BlankFragment extends Fragment {
                         refreshScrollview.setRefreshing(false);
                         frag = new VMGBase(getActivity(), webView);
 
-                        frag.startVMG(6194); // this will start everything that you need to load inside the view
+                        frag.startVMG(6340 ); // this will start everything that you need to load inside the view
                     }
                 }, 2000);
 
@@ -72,7 +67,7 @@ public class BlankFragment extends Fragment {
         });
         frag = new VMGBase(getActivity(), webView);
 
-        frag.startVMG(6194); // this will start everything that you need to load inside the view
+        frag.startVMG(6340 ); // this will start everything that you need to load inside the view
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {

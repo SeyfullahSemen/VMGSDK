@@ -20,7 +20,7 @@ import com.example.user.newapp.R;
 import java.util.List;
 
 /**
- * Created by User on 8-8-2017.
+ * Created by Seyfullah Semen on 8-8-2017.
  */
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
@@ -55,13 +55,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         return mDataset.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
 
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
-            textView = (TextView) view.findViewById(R.id.listViewText);
+            textView = view.findViewById(R.id.listViewText);
 
         }
     }

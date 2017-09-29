@@ -2,7 +2,7 @@ package com.vmg.Events;
 
 import com.vmg.BaseUtils.VMGBase;
 
-/**
+/*
  * Created by Seyfullah Semen on 30-8-2017.
  */
 

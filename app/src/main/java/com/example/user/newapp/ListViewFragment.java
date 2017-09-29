@@ -37,7 +37,7 @@ public class ListViewFragment extends Fragment {
                     public void run() {
                         refreshListview.setRefreshing(false);
                         frag = new VMGBase(getActivity(), webber);
-                        frag.startVMG(6194);
+                        frag.startVMG(6341);
                     }
                 }, 2000);
             }
@@ -53,7 +53,7 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setValues(listView);
-        frag.startVMG(6194);
+        frag.startVMG(6341);
     }
 
     private void setValues(ListView listView) {

@@ -38,11 +38,11 @@ public class AboutVMGFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_about_vmg, container, false);
-        img_logo_about = (ImageView) v.findViewById(R.id.img_logo_about);
-        text_about = (TextView) v.findViewById(R.id.text_about);
-        view = (WebView) v.findViewById(R.id.web_about);
-        about__scroll = (NestedScrollView) v.findViewById(R.id.scroll__about);
-        layout_about = (LinearLayout) v.findViewById(R.id.layout_about);
+        img_logo_about = v.findViewById(R.id.img_logo_about);
+        text_about = v.findViewById(R.id.text_about);
+        view = v.findViewById(R.id.web_about);
+        about__scroll = v.findViewById(R.id.scroll__about);
+        layout_about = v.findViewById(R.id.layout_about);
 
         frag = new VMGBase(getActivity(), view);
 

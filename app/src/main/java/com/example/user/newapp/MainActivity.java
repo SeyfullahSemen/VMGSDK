@@ -4,12 +4,12 @@ package com.example.user.newapp;
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  * <p>
  * Created by Seyfullah Semen
+ * </p>
  */
 
 
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,8 +19,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
+
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FrameLayout frags_container;
     private HomeFragment fragment = new HomeFragment();
-    private NavigationView navigation_view;
     private DrawerLayout.DrawerListener drawerListener;
 
     @Override
@@ -42,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        frags_container = (FrameLayout) findViewById(R.id.frags_container);
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        frags_container = findViewById(R.id.frags_container);
         setSupportActionBar(toolbar);
         if (savedInstanceState == null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         changeView();
-        VMGConfig.loadConfig(getApplicationContext(),6194);
+        VMGConfig.loadConfig(getApplicationContext(), 6194);
 
 
     }
@@ -97,19 +96,13 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState, persistentState);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.drawer_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-
-    }
 
     private void changeView() {
-        Button about_drawer = (Button) findViewById(R.id.about_vmg);
-        Button home = (Button) findViewById(R.id.home);
-        Button scroll_drawer = (Button) findViewById(R.id.scrollview_vmg);
-        Button inReadTopListView = (Button) findViewById(R.id.in_read_top_listview);
-        Button inReadToprecyclerview = (Button) findViewById(R.id.in_read_top_recyclerview);
+        Button about_drawer = findViewById(R.id.about_vmg);
+        Button home = findViewById(R.id.home);
+        Button scroll_drawer = findViewById(R.id.scrollview_vmg);
+        Button inReadTopListView = findViewById(R.id.in_read_top_listview);
+        Button inReadToprecyclerview = findViewById(R.id.in_read_top_recyclerview);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
         } catch (IllegalStateException ex) {
             System.err.println("An error occurred with the Fragment");
-            VMGLogs.fatal("Error opening fragment:  "+ex.getMessage());
+            VMGLogs.fatal("Error opening fragment:  " + ex.getMessage());
         }
 
     }

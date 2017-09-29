@@ -20,8 +20,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_home, container, false);
-        txt_home = (TextView) v.findViewById(R.id.txt_home);
-        img_home = (ImageView) v.findViewById(R.id.img_home);
+        txt_home = v.findViewById(R.id.txt_home);
+        img_home = v.findViewById(R.id.img_home);
 
         return v;
     }
