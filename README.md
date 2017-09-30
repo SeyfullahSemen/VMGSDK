@@ -123,3 +123,6 @@ We added the line of code in the **MainActivity** now we need to add some code i
 ```
 As you can see it is just a little bit of code that you need to include. We hope these examples have helped you to add the technology into your app.
 
+# Author
+Seyfullah Semen -> Android developer at Video Media Group
+
