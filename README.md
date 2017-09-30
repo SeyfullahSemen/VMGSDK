@@ -15,7 +15,7 @@ This gradle dependencie includes everything so you can run your "outstream" adve
 
 // onderzoeken hoe ik de library als dependencie kan toevoegen
 
-## integrate the SDK
+## Integrate the SDK
 
 The first thing you need todo is compile the library as a gradle dependencie. After that is done, 
 you need to add the following line of code inside your **MainActivity**, in the `onCreate()` method.
