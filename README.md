@@ -1,47 +1,46 @@
-**Project omschrijving // **
-In App Video (sdk / mraid)
+# VMG Android SDK
 
-Om advertenties in een app te vertonen is een mobile sdk nodig.
+Welcome to our android SDK. What this SDK does, it allows you to play "outstream" video advertisment from VMG SSP ad server. 
+To get a feeling of how it works, we included a demo to see an example of how to make use of this library.
+It is a very easy to use library.
 
-Als we een integratie met een app willen hebben zonder afhankelijk te zijn van externe SSPS moeten we een eigen SDK hebben zodat we zelf het beheer hebben van de inventory.
+## Run the demo
+In order to run the demo app, you need to clone this repository and save it in a folder. Open Android studio and open the cloned repository and let the gradle build.
+Once the gradle is finished, click the run button and run the app.
 
-Implentatie van een app is meer werk dan een website, zaak is dus ook dat we de projecten inplannen en op de juiste manier en volgorde opleveren.
+## How to download the VMG SDK library
 
-**Bericht van Tim**
-Hey Seyfullah,
+The VMG SDK library is available as a gradle dependencie, which you can add to the gradle file of your android app
+This gradle dependencie includes everything so you can run your "outstream" advertisment.
 
-Hartstikke leuk dat je bij ons aan de slag gaat! Zoals je gehoord hebt ben ik 3 weken aan het luieren, maar aangezien ik ervaring heb met mobile development (wel iOS, dus in die termen schrijf ik ook), wilde ik je even mijn gedachten over de SDK mee geven ter inspiratie. Als je zelf een betere oplossing denkt te hebben kan dat! 
-Het probleem van de SDK is dat je vanuit de webview (javascript) geen native methodes aan kan spreken en je daar dus creatief voor meot zijn. Vanuit de native code kan je op iOS wel javascript methodes aanroepen, ik weet niet hoe dit in Android zit maar ik verwacht het zelfde.
+// onderzoeken hoe ik de library als dependencie kan toevoegen
 
-Wij willen vanuit de advertentie speler kunnen vertellen dat de native view uit moet klappen met een animatie. Om dit vanuit de advertentie speler aan te kunnen geven roepen we een URL aan met een custom URL schema, als event zeg maar, dus in plaats van http://www.google.com/ iets van vmgad://expand. De native webview gaat vervolgens proberen naar die URL te navigeren, alleen wordt dat eerst ondervangen door een stukje code die aan de delegate van de webview hangt, zoals deze methode: https://developer.apple.com/documentation/uikit/uiwebviewdelegate/1617945-webview
-In dat stukje code check je of de URL het URL schema er in zit, als dat het geval zeg je tegen de webview dat ie niet naar die URL moet navigeren, en omdat je zie dat er in de URL 'expand' staat, weet je dat de advertentie speler klaar is met laden en dat de native view uitgeplakt moet worden. 
-Dit expand event is maar 1 voorbeeld, in de toekomst komen er natuurlijk meer. Je kan ook eens kijk maar eens naar de MRAID specificaties, dat heeft Bert misschien ook al wel genoemd, dat is wat we uiteindelijk moeten bereiken.
+## How to ingrate SDK with an app
 
-**Fasering van het project voor Seyfullah door Bert**
-* app1 apk opleveren met daarin een webview met een html5 video die automatisch gaat spelen
-* app2 apk opleveren met daarin een webview die dichtgeklapt is en pas openklapt als de html5 video gaat spelen 
-* app3 apk opleveren met onze ad-player erin
-* app4 apk opleveren met mraid ondersteuning
-* app5 apk opleveren met mraid ondersteuning die onze player aanstuurt
+The first thing you need todo is compile the library as a gradle dependencie. After that is done, 
+you need to add the following line of code inside your **MainActivity**, in the `onCreate()` method.
+
+`VMGConfig.loadConfig(getApplicationContext(), configurationId);`
+
+This line of code will make sure that the configuration is loaded through the lifetime of the app.
+after you have added the line of code above, create a **Fragment**. After you have created the new **Fragment**,
+add the following lines of code:
+
+create a new private instance of the **VMGBase** class.
+`private VMGBase vmgBase;`
+
+after that is done, add the following line of code inside the `onCreate()` or inside the `onViewCreated()` method.
+`vmgBase = new VMGBase(getActivity(), webView);`.
+This will instanciate the class which we added **private**. You must at these lines of code in every **Fragment** You want to load your advertisment.
+This line of code also makes sure you can use the methodes you need to start the advertisment. Let's see how we can use that method.
+
+` vmgBase.startVMG(AdvertismentId); `. 
+This line of code will start the advertisment. The only thing you need to add is the id of the advertisment. After you made a call to this method, you don't need to worry about anything,
+because the rest will be done by this method.
+
+### VMG scroll event
 
 
-**Werkzaamneden vooronderzoek**
-initiele bouw van SDK 2x versie 0.1 : 
-webview met basic app interactie waar de werking wordt aangetoond versie 0.2 : interne exchange / ad-broker versie 1.0 beta : deployen op git met goeie documentatie testen versie 1.0 : verschillende view typen geïntegreerd en voorbeeld app proj // apk
-
-
-
-
-**Achtergrond informatie Android SDK**
-
-* https://www.iab.com/guidelines/mobile-rich-media-ad-interface-definitions-mraid/
-
-**Voorbeelden van concurrenten**
-
-* https://github.com/teads/TeadsSDK-iOS
-* https://github.com/teads/TeadsSDK-android
-* https://wiki.appnexus.com/display/sdk/MRAID+and+Mobile+Video+Tutorial
-* http://support.adform.com/documentation/build-mobile-mraid-banners/mraid/
 
 
 
