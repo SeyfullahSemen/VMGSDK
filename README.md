@@ -42,7 +42,7 @@ This line of code also makes sure you can use the methods you need to start the 
 This line of code will start the advertisment. The only thing you need to add is the id of the placement. After you made a call to this method, you don't need to worry about anything,
 because the rest will be done by this method.
 
-### VMG scroll event
+# VMG scroll event
 You add the following lines of code If you have an advertisment that needs to open inRead when the user of the app is scrolling through the app. 
  ```java
  private NestedScrollView scrollview;
