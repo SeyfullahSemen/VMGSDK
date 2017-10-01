@@ -46,7 +46,7 @@ because the rest will be done by this method.
 You add the following lines of code If you have an advertisment that needs to open inRead when the user of the app is scrolling through the app. 
  ```java
  private NestedScrollView scrollview;
- private RelativeLayout parentLayout;
+ private RelativeLayout rootLayout;
  
  @Override
  public View onViewCreated(LayoutInflater inflater, ViewGroup container, Bundle savedinstances){
@@ -55,7 +55,7 @@ You add the following lines of code If you have an advertisment that needs to op
     scrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener(){
             @Override
             public void onScrollChange(NestedScrollView v , int scrollX, int scrollY, int oldScrollX,int oldScrollY){
-                vmgBase.VMGScrollEvent(scrollY, scrollX,parentLayout);
+                vmgBase.VMGScrollEvent(scrollY, scrollX,rootLayout);
              }
          });
          
@@ -87,7 +87,7 @@ We added the line of code in the **MainActivity** now we need to add some code i
     private WebView webView;
     private VMGBase vmgBase;
     private NestedScrollView scrollView;
-    private RelativeLayout parentLayout;
+    private RelativeLayout rootLayout;
    
      public YourFragment() {
     }
@@ -111,7 +111,7 @@ We added the line of code in the **MainActivity** now we need to add some code i
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
             
-                vmgBase.VMGScrollEvent(scrollY, scrollX, parentLayout);
+                vmgBase.VMGScrollEvent(scrollY, scrollX, rootLayout);
             }
         });
 
