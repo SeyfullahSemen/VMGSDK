@@ -115,7 +115,7 @@ public class VMGBase extends RelativeLayout {
     @SuppressLint("NewApi")
     private double getAdWidth() {
         double dpi = displayMetrics.densityDpi;
-        webView.setInitialScale((int) dpi);
+        webView.setInitialScale((int)dpi);
         double answer = dpi / 100;
         double addWidth = webView.getMeasuredWidth() / answer;
 
