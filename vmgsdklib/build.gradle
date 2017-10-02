@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+//apply plugin: 'com.github.dcendents.android-maven'
+//group='com.github.SeyfullahSemen'
+//group ='https://gitlab.vmg.host/mobile/vmg-mraid-android'
 
 android {
     compileSdkVersion 26
@@ -31,5 +34,6 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
-    compile files('libs/volley.jar')
+    compile 'com.android.volley:volley:1.0.0'
+//    compile files('libs/volley.jar')
 }
