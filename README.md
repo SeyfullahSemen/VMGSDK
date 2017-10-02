@@ -1,21 +1,23 @@
-# VMG Android SDK
+# 1.VMG Android SDK
 
 Welcome to our android SDK. What this SDK does, it allows you to play "outstream" video advertisment from VMG SSP ad server. 
 To get a feeling of how it works, we included a demo to see an example of how to make use of this library.
-It is a very easy to use library.
+It is a very easy to use library. This library is compatible for every screen size and even for tablets. We made our library as simple as possible so you don't need to worry
+much about the code you need to implement, when your main focus should be the app you are devloping.
 
-## Run the demo
+## 1.2 Run the demo
 In order to run the demo app, you need to clone this repository and save it in a folder. Open Android studio and open the cloned repository and let the gradle build.
-Once the gradle is finished, click the run button and run the app.
+Once the gradle is finished, click the run button and run the app. We hope you enjoy this little demo.
 
-## How to download the VMG SDK library
+## 1.3 How to download the VMG SDK library
 
 The VMG SDK library is available as a gradle dependencie, which you can add to the gradle file of your android app.
 This gradle dependencie includes everything so you can run your "outstream" advertisment.
 
 // onderzoeken hoe ik de library als dependencie kan toevoegen
+# 2.How to integrate the library into your app?
 
-## Integrate the SDK
+## 2.1 Integrate the SDK
 
 The first thing you need todo is compile the library as a gradle dependencie. After that is done, 
 you need to add the following line of code inside your **MainActivity**, in the `onCreate()` method.
