@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -23,8 +24,6 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.autofill.AutofillManager;
-import android.view.autofill.AutofillValue;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -66,6 +65,7 @@ public class VMGBase extends RelativeLayout {
     private WebView webView;
     private Context context;
     private int state;
+    private final int originalRequestedOrientation;
 
 
     /**
@@ -110,12 +110,10 @@ public class VMGBase extends RelativeLayout {
     @SuppressLint("NewApi")
     private double getAdWidth() {
         double dpi = displayMetrics.densityDpi;
-        VMGLogs.Information(""+dpi);
-        webView.setInitialScale((int)dpi);
         double answer = dpi / 100;
-        double addWidth = webView.getMeasuredWidth()/answer;
+        double adWidth = webView.getMeasuredWidth() * DisplayMetrics.DENSITY_DEFAULT / displayMetrics.densityDpi;
 
-        return addWidth;
+        return adWidth;
     }
 
     /**
@@ -405,7 +403,7 @@ public class VMGBase extends RelativeLayout {
         VMGLogs.debug("state of the ad " + getState());
     }
 
-
+    
     /**
      * this is our own webviewclient  wihich takes care when the add is loaded
      * and when the user clicks on our add and needs to parse the urls that start with mraid://
