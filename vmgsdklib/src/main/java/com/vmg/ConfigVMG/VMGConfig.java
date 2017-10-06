@@ -1,17 +1,14 @@
 package com.vmg.ConfigVMG;
 
-import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.vmg.LoggerPack.VMGLogs;
 
@@ -26,7 +23,6 @@ public class VMGConfig {
     private static final String TAG = "VMGConfig";
     @SuppressLint("StaticFieldLeak")
     private static VMGConfig VMGInstance = null;
-    private static HashMap<String, Object> VMGValues = new HashMap<>();
     private static HashMap<String, Object> JSONVals = new HashMap<>();
     @SuppressLint("StaticFieldLeak")
     private static Context context;
@@ -58,15 +54,6 @@ public class VMGConfig {
                 synchronized (ConfigClass) {
                     if (VMGInstance == null) {
                         VMGInstance = new VMGConfig(context);
-                        VMGValues.put("topOffset", 0.6);
-                        VMGValues.put("bottomOffset", 0.4);
-                        VMGValues.put("slideInOnStart", true);
-                        VMGValues.put("slideInOnClose", true);
-                        VMGValues.put("fadeInOnStart", false);
-                        VMGValues.put("fadeOutOnClose", false);
-                        VMGValues.put("debug", false);
-                        VMGValues.put("active", true);
-                        VMGValues.put("modDate", 1503180000);
                     }
                 }
             } catch (Exception ex) {

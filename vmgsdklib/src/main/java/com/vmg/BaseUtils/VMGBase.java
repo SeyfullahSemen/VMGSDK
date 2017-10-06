@@ -13,7 +13,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -21,18 +20,15 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.autofill.AutofillValue;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.vmg.ConfigVMG.VMGConfig;
@@ -45,8 +41,6 @@ import com.vmg.vmgsdklib.R;
 
 import java.net.URLDecoder;
 import java.util.HashMap;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 
 @SuppressLint("ViewConstructor")
@@ -80,10 +74,9 @@ public class VMGBase extends RelativeLayout {
      * nullpointerException
      *
      * @param context this is the context of the given page
-     * @param webView this is the webview to load the ad in
      */
     @SuppressLint("NewApi")
-    public VMGBase(Context context, WebView webView) {
+    public VMGBase(Context context, WebView webView, int placementId) {
         super(context);
 
         this.context = context;
@@ -103,6 +96,7 @@ public class VMGBase extends RelativeLayout {
 
         vmgClient = new VMGWebviewClient();
         UserInfoMobile mobile = new UserInfoMobile(context);
+        startVMG(placementId);
         handler = new Handler(Looper.getMainLooper());
         VMGLogs.Information(mobile.mobileInfo());
     }
@@ -114,10 +108,10 @@ public class VMGBase extends RelativeLayout {
      */
     @SuppressLint("NewApi")
     private double getAdWidth() {
-        double dpi = displayMetrics.densityDpi;
-        webView.setInitialScale((int) dpi);
+        double dpi = displayMetrics.widthPixels;
+        webView.setInitialScale(100);
         double answer = dpi / 100;
-        double addWidth = webView.getMeasuredWidth() / answer;
+        double addWidth = webView.getMeasuredWidth()/answer;
 
         return addWidth;
     }
@@ -180,12 +174,11 @@ public class VMGBase extends RelativeLayout {
      * so the user just needs to add this method to get the full functionallity
      */
     @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
-    public void startVMG(int placementId) {
+    private void startVMG(int placementId) {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         WebView.setWebContentsDebuggingEnabled(true);
 
-        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         webView.setWebViewClient(vmgClient);
         webView.loadUrl(VMGUrlBuilder.getPlacementUrl(placementId));
     }

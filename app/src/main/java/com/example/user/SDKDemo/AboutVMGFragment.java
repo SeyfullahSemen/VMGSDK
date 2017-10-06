@@ -42,8 +42,7 @@ public class AboutVMGFragment extends Fragment {
         about__scroll = v.findViewById(R.id.scroll__about);
         layout_about = v.findViewById(R.id.layout_about);
 
-        frag = new VMGBase(getActivity(), view);
-
+        frag = new VMGBase(getActivity(), view, 6194);
         about__scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -57,7 +56,7 @@ public class AboutVMGFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        frag.startVMG(6194);
+
     }
 
 }

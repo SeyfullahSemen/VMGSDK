@@ -45,16 +45,16 @@ public class RecyclerFragment extends Fragment {
                     @Override
                     public void run() {
                         refreshRecyclerview.setRefreshing(false);
-                        frag = new VMGBase(getActivity(), webbs);
-                        frag.startVMG(6342);
+                        frag = new VMGBase(getActivity(), webbs, 6342);
+                        //frag.startVMG(6342);
 
                     }
                 }, 2000);
             }
         });
 
-        frag = new VMGBase(getActivity(), webbs);
-        frag.startVMG(6342);
+        frag = new VMGBase(getActivity(), webbs, 6342);
+        // frag.startVMG(6342);
 
         return v;
     }

@@ -2,16 +2,11 @@ package com.vmg.MobileInfo;
 
 
 import android.annotation.SuppressLint;
-
 import android.content.Context;
-
 import android.content.pm.PackageManager;
-
 import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-
-
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -19,13 +14,11 @@ import android.util.Log;
 import com.vmg.LoggerPack.VMGLogs;
 import com.vmg.vmgsdklib.BuildConfig;
 
-
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
-
 import java.util.Locale;
 import java.util.TimeZone;
 
