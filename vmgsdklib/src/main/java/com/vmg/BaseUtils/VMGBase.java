@@ -23,6 +23,8 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.autofill.AutofillManager;
+import android.view.autofill.AutofillValue;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -81,7 +83,6 @@ public class VMGBase extends RelativeLayout {
 
         this.context = context;
         this.webView = webView;
-
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
 
@@ -108,8 +109,9 @@ public class VMGBase extends RelativeLayout {
      */
     @SuppressLint("NewApi")
     private double getAdWidth() {
-        double dpi = displayMetrics.widthPixels;
-        webView.setInitialScale(100);
+        double dpi = displayMetrics.densityDpi;
+        VMGLogs.Information(""+dpi);
+        webView.setInitialScale((int)dpi);
         double answer = dpi / 100;
         double addWidth = webView.getMeasuredWidth()/answer;
 
@@ -178,9 +180,9 @@ public class VMGBase extends RelativeLayout {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         WebView.setWebContentsDebuggingEnabled(true);
-
         webView.setWebViewClient(vmgClient);
         webView.loadUrl(VMGUrlBuilder.getPlacementUrl(placementId));
+
     }
 
     /**
