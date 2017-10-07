@@ -406,7 +406,7 @@ public class VMGBase extends RelativeLayout {
         useJavascript("mraid.fireEvent(mraid.EVENTS.SIZECHANGE);");
     }
 
-    public void observerOrientation() {
+    private void observerOrientation() {
         VMGLogs.Information("change !!!");
         OrientationEventListener orientationEventListener = new OrientationEventListener(context, SensorManager.SENSOR_DELAY_NORMAL) {
             @Override
