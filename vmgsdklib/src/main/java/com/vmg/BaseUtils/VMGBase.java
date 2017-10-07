@@ -14,6 +14,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.drawable.GradientDrawable;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -21,7 +23,10 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
+import android.view.OrientationEventListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.ValueCallback;
@@ -31,6 +36,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
@@ -42,6 +48,8 @@ import com.vmg.vmgsdklib.R;
 
 import java.net.URLDecoder;
 import java.util.HashMap;
+
+import static android.content.Context.WINDOW_SERVICE;
 
 
 @SuppressLint("ViewConstructor")
@@ -55,7 +63,6 @@ public class VMGBase extends RelativeLayout {
     private final static int EXPANDED = 2;
     private final static int RESIZED = 3;
     private final static int HIDDEN = 4;
-    private final int orientationLocking;
     private VMGResizeProperties resizeProperties;
     private ViewEvents listener;
     private VMGWebviewClient vmgClient;
@@ -65,7 +72,6 @@ public class VMGBase extends RelativeLayout {
     private WebView webView;
     private Context context;
     private int state;
-    private final int originalRequestedOrientation;
 
 
     /**
@@ -86,15 +92,8 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
 
-
+        observerOrientation();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        if (context instanceof Activity) {
-            orientationLocking = ((Activity) context).getRequestedOrientation();
-        } else {
-            orientationLocking = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
-        }
-
-
         vmgClient = new VMGWebviewClient();
         UserInfoMobile mobile = new UserInfoMobile(context);
         startVMG(placementId);
@@ -110,11 +109,11 @@ public class VMGBase extends RelativeLayout {
     @SuppressLint("NewApi")
     private double getAdWidth() {
         double dpi = displayMetrics.densityDpi;
-        double answer = dpi / 100;
-        double adWidth = webView.getMeasuredWidth() * DisplayMetrics.DENSITY_DEFAULT / displayMetrics.densityDpi;
+        double adWidth = webView.getMeasuredWidth() * DisplayMetrics.DENSITY_DEFAULT / dpi;
 
         return adWidth;
     }
+
 
     /**
      * @param javascript this is for the input of the javascript command
@@ -282,7 +281,7 @@ public class VMGBase extends RelativeLayout {
         }
 
         state = RESIZED;
-
+        VMGLogs.Information("firing resize method");
         if (resizedView == null) {
             resizedView = new RelativeLayout(context);
             removeAllViews();
@@ -403,7 +402,38 @@ public class VMGBase extends RelativeLayout {
         VMGLogs.debug("state of the ad " + getState());
     }
 
-    
+    private void fireSizeChangeEvent() {
+        useJavascript("mraid.fireEvent(mraid.EVENTS.SIZECHANGE);");
+    }
+
+    public void observerOrientation() {
+        VMGLogs.Information("change !!!");
+        OrientationEventListener orientationEventListener = new OrientationEventListener(context, SensorManager.SENSOR_DELAY_NORMAL) {
+            @Override
+            public void onOrientationChanged(int i) {
+                int orientation = context.getResources().getConfiguration().orientation;
+                switch (orientation) {
+                    case Configuration.ORIENTATION_PORTRAIT:
+                        VMGLogs.Information("We are in portrait mode ");
+                        fireSizeChangeEvent();
+                        resize();
+                        setMaxSize();
+                        break;
+                    case Configuration.ORIENTATION_LANDSCAPE:
+                        VMGLogs.Information("We are in landscape mode ");
+                        fireSizeChangeEvent();
+                        resize();
+                        setMaxSize();
+                        break;
+                }
+            }
+        };
+        orientationEventListener.enable();
+        orientationEventListener.canDetectOrientation();
+
+    }
+
+
     /**
      * this is our own webviewclient  wihich takes care when the add is loaded
      * and when the user clicks on our add and needs to parse the urls that start with mraid://
