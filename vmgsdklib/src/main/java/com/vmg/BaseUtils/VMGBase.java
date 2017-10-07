@@ -12,9 +12,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.graphics.drawable.GradientDrawable;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
@@ -23,10 +20,8 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.OrientationEventListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.ValueCallback;
@@ -48,8 +43,6 @@ import com.vmg.vmgsdklib.R;
 
 import java.net.URLDecoder;
 import java.util.HashMap;
-
-import static android.content.Context.WINDOW_SERVICE;
 
 
 @SuppressLint("ViewConstructor")
@@ -92,10 +85,11 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
 
-        observerOrientation();
+
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         vmgClient = new VMGWebviewClient();
         UserInfoMobile mobile = new UserInfoMobile(context);
+        observerOrientation();
         startVMG(placementId);
         handler = new Handler(Looper.getMainLooper());
         VMGLogs.Information(mobile.mobileInfo());
@@ -403,33 +397,27 @@ public class VMGBase extends RelativeLayout {
     }
 
     private void fireSizeChangeEvent() {
-        useJavascript("mraid.fireEvent(mraid.EVENTS.SIZECHANGE);");
+        useJavascript("mraid.fireSizeChangeEvent();");
+        //useJavascript("mraid.fireEvent(mraid.EVENTS.SIZECHANGE);");
     }
 
     private void observerOrientation() {
         VMGLogs.Information("change !!!");
-        OrientationEventListener orientationEventListener = new OrientationEventListener(context, SensorManager.SENSOR_DELAY_NORMAL) {
+        OrientationEventListener orientationEventListener = new OrientationEventListener(context, SensorManager.SENSOR_DELAY_FASTEST) {
             @Override
             public void onOrientationChanged(int i) {
-                int orientation = context.getResources().getConfiguration().orientation;
-                switch (orientation) {
-                    case Configuration.ORIENTATION_PORTRAIT:
-                        VMGLogs.Information("We are in portrait mode ");
-                        fireSizeChangeEvent();
-                        resize();
-                        setMaxSize();
-                        break;
-                    case Configuration.ORIENTATION_LANDSCAPE:
-                        VMGLogs.Information("We are in landscape mode ");
-                        fireSizeChangeEvent();
-                        resize();
-                        setMaxSize();
-                        break;
+//                i = context.getResources().getConfiguration().orientation;
+                if (i == 1) {
+                    Toast.makeText(context, "Portrait mode ", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Landscape mode ", Toast.LENGTH_SHORT).show();
                 }
             }
         };
-        orientationEventListener.enable();
-        orientationEventListener.canDetectOrientation();
+        if (orientationEventListener.canDetectOrientation()) {
+            orientationEventListener.enable();
+        }
+
 
     }
 
