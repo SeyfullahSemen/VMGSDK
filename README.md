@@ -5,20 +5,43 @@ To get a feeling of how it works, we included a demo to see an example of how to
 It is a very easy to use library. This library is compatible for every screen size and even for tablets. We made our library as simple as possible so you don't need to worry
 much about the code you need to implement, when your main focus should be the app you are devloping.
 
+We as VMG are very dedicated to our customers and we want our customers to have the most simple, elegant but strong systems. We as VMG are very proud to share with you our SDK.
+We are very proud that our library is both elegant and strong. So it is easy for you to implement and do only the things that you need and the rest will be handled by our library.
+
+What we want to achieve in this documentation is showing you how to implement our library into your project. We have a couple of simple steps. After you have red the steps,
+we have a full example, this is mainly for if you did not understand a part of the steps. 
+
+Enjoy our library!
+
+![alt text](http://www.videomediagroup.com/wp-content/uploads/2016/01/logo-transparant-website.png)
+
+
 ## 1.2 Run the demo
-In order to run the demo app, you need to clone this repository and save it in a folder. Open Android studio and open the cloned repository and let the gradle build.
-Once the gradle is finished, click the run button and run the app. We hope you enjoy this little demo.
+Are you a little bit unpatient? Well for you who are inpatient to see it in action, we provided a little demo app, so you can see it in action.
+In order to run the demo app, you need to do the following things:
+* clone this repository
+* save it in a folder
+* open android studio
+* open the cloned repository and let the gradle build
+
+Once the waiting is done and the gradle is build, you can run the demo. We hope you enjoy this demo as much as we liked to build it.
 
 ## 1.3 How to download the VMG SDK library
+In order to use this library you can add it to your project as a gradle dependency. You can add this gradle dependency inside your gradle file.
+Once you have implemented this dependency, you can use the methods of the classes inside the library. This library contains all the classes you need to load a advertisment
+in your application. 
+We have a little example on how to add the dependency.
 
-The VMG SDK library is available as a gradle dependencie, which you can add to the gradle file of your android app.
-This gradle dependencie includes everything so you can run your "outstream" advertisment.
+**onderzoeken hoe ik de library als dependencie kan toevoegen**
 
-// onderzoeken hoe ik de library als dependencie kan toevoegen
+**toevoegen van code fragmenten voor het invoegen van de gradle dependency**
+
+in the following paragraphs you will see how to integrate library and where to add code.
 # 2.How to integrate the library into your app?
 
  In the following sections, we will explain how to use the library and how to implement the library code inside your app. Just follow the simple steps 
- and everything will be allright.
+ and everything will be allright. If you don't understand something you can always scroll back and check it. If you still don't understand it, you can scroll down
+ and check the full example. Let's begin.
  
 ## 2.1 Integrate the SDK
 
@@ -27,6 +50,20 @@ you need to add the following line of code inside your **MainActivity**, in the 
 
 `VMGConfig.loadConfig(getApplicationContext(), configurationId);`
 
+so this will look like this:
+```java
+public class MainActivity extends AppCompatActivity {
+   
+ @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+       
+        VMGConfig.loadConfig(getApplicationContext(), configurationId);
+}
+```
+
 This line of code will make sure that the configuration is loaded through the lifetime of the app.
 after you have added the line of code above, create a **Fragment**. Add the following lines of code:
 
@@ -34,44 +71,78 @@ create a new private instance of the **VMGBase** class.
 `private VMGBase vmgBase;`
 
 after that is done, add the following line of code inside the `onCreate()` or inside the `onViewCreated()` method.
-`vmgBase = new VMGBase(getActivity(), webView);`.
+`vmgBase = new VMGBase(getActivity(), webView,placementId);`.
 This will instantiate the **VMGBase class** and we need to give it two arguments:
 
 * the context (getActivity())
 * The WebView you want to load the advertisment in
+* and the placementId of the ad
 
+This will look like this:
+```java
+    public class ExampleFragment extends Fragment {
+    private WebView webView;
+    private VMGBase vmgBase;
+
+    public ExampleFragment() {
+    }
+
+ 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_example, container, false);
+      
+        webView = v.findViewById(R.id.webView);
+        
+        vmgBase = new VMGBase(getActivity(), webView, placementId);
+       
+        return view;
+    }
+}
+```
 You must add these lines of code in every **Fragment** You want to load your advertisment.
-This line of code also makes sure you can use the methods that you need to start the advertisment. Let's see how we can use that method.
-
-## 2.2 The start method
-After completing section 2.1, now it is time to see how to start the advertisment. 
-
-Just add this line of code.
-` vmgBase.startVMG(PlacementId); `. 
-This line of code will start the advertisment. The only thing you need to add is the **placementId**. After you made a call to this method, you don't need to worry about anything,
-because the rest will be done by this method.
+We have a special scroll event which you need to implement when you have an advertisment that needs to load inRead. In the following section we will see how you can implement this.
 
 ## 2.3 VMG scroll event
-You add the following lines of code If you have an advertisment that needs to open inRead when the user of the app is scrolling through the app. 
+You add the following lines of code If you have an advertisment that needs to open inRead when the user of the app is scrolling through the app.
+
  ```java
- private NestedScrollView scrollview;
- private RelativeLayout rootLayout;
- 
- @Override
- public View onViewCreated(LayoutInflater inflater, ViewGroup container, Bundle savedinstances){
-    final View view = inflater.inflate(R.layout.layout_you_want_to_inflate,container,false);
+ public class ExampleFragment extends Fragment {
+    private WebView webView;
+    private VMGBase vmgBase;
+    private NestedScrollView nestedScrollView;
+    private RelativeLayout rootLayout;
     
-    scrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener(){
+
+    public ExampleFragment() {
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_blank, container, false);
+        
+        nestedScrollView = v.findViewById(R.id.scrollview);
+        rootLayout = v.findViewById(R.id.rootLayout);
+        webView = v.findViewById(R.id.webView);
+        
+        vmgBase = new VMGBase(getActivity(), webView, placementId);
+        
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onScrollChange(NestedScrollView v , int scrollX, int scrollY, int oldScrollX,int oldScrollY){
-                vmgBase.VMGScrollEvent(scrollY, scrollX,rootLayout);
-             }
-         });
-         
-    return view;
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                vmgBase.VMGScrollEvent(scrollY, scrollX, rootLayout);
+            }
+        });
+
+
+        return view;
+    }
 }
+
  ```
-Above you see how to add the **scrollEvent** inside the **Fragment class** you want to load the advertisment.
+Above you see how to add the **scrollEvent** inside the **Fragment class** you want to load the advertisment. These were the simple steps to make use of our library.
+Easy right? In the following section we have a full example. 
 
 # 3.Full example
 We will show you a full example of how it is done. First we start with the line of code we need to add in the **MainActivity**
@@ -112,9 +183,8 @@ We added the line of code in the **MainActivity** now we need to add some code i
         parentLayout = v.findViewById(R.id.parentLayout);
         webView = v.findViewById(R.id.webView);
         
-        vmgBase = new VMGBase(getActivity(), webView);
+        vmgBase = new VMGBase(getActivity(), webView, placementId);
 
-        vmgBase.startVMG(placementId);
         
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
