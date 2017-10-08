@@ -18,7 +18,6 @@
 
         <activity
             android:name=".MainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="true">
             >
             <intent-filter>
