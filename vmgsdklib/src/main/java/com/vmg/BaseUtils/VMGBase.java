@@ -1,9 +1,6 @@
-/**
+/*
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  * <p>
- * this is a class to make everything more efficient it is our very own fragment that the client
- * can use whenever he makes a new fragment or layout he just needs to add a couple of simple
- * methods
  */
 package com.vmg.BaseUtils;
 
@@ -12,8 +9,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -22,7 +17,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
-import android.view.OrientationEventListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -34,7 +28,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
@@ -68,8 +61,6 @@ public class VMGBase extends RelativeLayout {
     private WebView webView;
     private Context context;
     private int state;
-    int orentation = 0; // 0 - Portariat; 1 - Right; 2 - Left
-    int newOrentation = 0;
 
 
     /**
@@ -411,7 +402,7 @@ public class VMGBase extends RelativeLayout {
         int rotation = display.getRotation();
         if (rotation == 0) {
             VMGLogs.Information("we are in portrait");
-        }else {
+        } else {
             VMGLogs.Information("We are in landscape");
             setMaxSize();
             fireSizeChangeEvent();
