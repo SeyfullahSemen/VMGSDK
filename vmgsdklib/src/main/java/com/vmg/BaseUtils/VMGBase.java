@@ -21,8 +21,10 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.OrientationEventListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.ValueCallback;
@@ -92,7 +94,7 @@ public class VMGBase extends RelativeLayout {
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         vmgClient = new VMGWebviewClient();
         UserInfoMobile mobile = new UserInfoMobile(context);
-        //observerOrientation();
+        observeOrientation();
         startVMG(placementId);
         handler = new Handler(Looper.getMainLooper());
         VMGLogs.Information(mobile.mobileInfo());
@@ -402,6 +404,18 @@ public class VMGBase extends RelativeLayout {
     private void fireSizeChangeEvent() {
         //useJavascript("mraid.fireSizeChangeEvent();");
         useJavascript("mraid.fireEvent(mraid.EVENTS.SIZECHANGE);");
+    }
+
+    private void observeOrientation() {
+        Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int rotation = display.getRotation();
+        if (rotation == 0) {
+            VMGLogs.Information("we are in portrait");
+        }else {
+            VMGLogs.Information("We are in landscape");
+            setMaxSize();
+            fireSizeChangeEvent();
+        }
     }
 
     /**
