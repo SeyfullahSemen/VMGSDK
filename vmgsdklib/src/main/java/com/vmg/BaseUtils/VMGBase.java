@@ -12,6 +12,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
@@ -65,6 +66,8 @@ public class VMGBase extends RelativeLayout {
     private WebView webView;
     private Context context;
     private int state;
+    int orentation = 0; // 0 - Portariat; 1 - Right; 2 - Left
+    int newOrentation = 0;
 
 
     /**
@@ -89,7 +92,7 @@ public class VMGBase extends RelativeLayout {
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         vmgClient = new VMGWebviewClient();
         UserInfoMobile mobile = new UserInfoMobile(context);
-        observerOrientation();
+        //observerOrientation();
         startVMG(placementId);
         handler = new Handler(Looper.getMainLooper());
         VMGLogs.Information(mobile.mobileInfo());
@@ -397,30 +400,9 @@ public class VMGBase extends RelativeLayout {
     }
 
     private void fireSizeChangeEvent() {
-        useJavascript("mraid.fireSizeChangeEvent();");
-        //useJavascript("mraid.fireEvent(mraid.EVENTS.SIZECHANGE);");
+        //useJavascript("mraid.fireSizeChangeEvent();");
+        useJavascript("mraid.fireEvent(mraid.EVENTS.SIZECHANGE);");
     }
-
-    private void observerOrientation() {
-        VMGLogs.Information("change !!!");
-        OrientationEventListener orientationEventListener = new OrientationEventListener(context, SensorManager.SENSOR_DELAY_FASTEST) {
-            @Override
-            public void onOrientationChanged(int i) {
-//                i = context.getResources().getConfiguration().orientation;
-                if (i == 1) {
-                    Toast.makeText(context, "Portrait mode ", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Landscape mode ", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-        if (orientationEventListener.canDetectOrientation()) {
-            orientationEventListener.enable();
-        }
-
-
-    }
-
 
     /**
      * this is our own webviewclient  wihich takes care when the add is loaded
