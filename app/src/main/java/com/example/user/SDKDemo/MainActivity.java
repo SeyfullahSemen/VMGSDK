@@ -1,6 +1,6 @@
 package com.example.user.SDKDemo;
 
-/**
+/*
  * Copyright © 2017 Video Media Group, Seyfullah Semen All rights reserved
  * <p>
  * Created by Seyfullah Semen

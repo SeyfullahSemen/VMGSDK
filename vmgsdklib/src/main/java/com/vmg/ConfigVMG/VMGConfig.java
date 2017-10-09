@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 
 public class VMGConfig {
-    static String baseUrl = "http://staging.vmg.host";
+    static String baseUrl = "https://vmg.host";
     private static final String TAG = "VMGConfig";
     @SuppressLint("StaticFieldLeak")
     private static VMGConfig VMGInstance = null;

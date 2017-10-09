@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-import com.example.user.SDKDemo.R;
 import com.example.user.SDKDemo.adapters.RecycleAdapter;
 import com.vmg.BaseUtils.VMGBase;
 import com.yalantis.phoenix.PullToRefreshView;
@@ -46,7 +45,7 @@ public class RecyclerFragment extends Fragment {
                     public void run() {
                         refreshRecyclerview.setRefreshing(false);
                         frag = new VMGBase(getActivity(), webbs, 6342);
-                        //frag.startVMG(6342);
+
 
                     }
                 }, 2000);
@@ -54,7 +53,7 @@ public class RecyclerFragment extends Fragment {
         });
 
         frag = new VMGBase(getActivity(), webbs, 6342);
-        // frag.startVMG(6342);
+
 
         return v;
     }

@@ -393,16 +393,14 @@ public class VMGBase extends RelativeLayout {
     }
 
     private void fireSizeChangeEvent() {
-        //useJavascript("mraid.fireSizeChangeEvent();");
-        useJavascript("mraid.fireEvent(mraid.EVENTS.SIZECHANGE);");
+        useJavascript("mraid.fireSizeChangeEvent();");
+        VMGLogs.Information("we just fired the fireSizeChangeEvent();");
     }
 
     private void observeOrientation() {
         Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int rotation = display.getRotation();
-        if (rotation == 0) {
-            VMGLogs.Information("we are in portrait");
-        } else {
+        if (rotation != 0) {
             VMGLogs.Information("We are in landscape");
             setMaxSize();
             fireSizeChangeEvent();
