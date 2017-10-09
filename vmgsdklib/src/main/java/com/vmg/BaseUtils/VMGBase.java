@@ -9,12 +9,14 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Size;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.ViewGroup;
@@ -360,6 +362,7 @@ public class VMGBase extends RelativeLayout {
 
     private void setMaxSize() {
         useJavascript("mraid.setMaxSize('" + getAdWidth() + "','" + resizeProperties.height + "');");
+        VMGLogs.Information("setting max size ");
     }
 
     /**
