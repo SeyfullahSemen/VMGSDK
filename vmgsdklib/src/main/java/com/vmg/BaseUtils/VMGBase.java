@@ -402,6 +402,7 @@ public class VMGBase extends RelativeLayout {
         int rotation = display.getRotation();
         if (rotation != 0) {
             VMGLogs.Information("We are in landscape");
+            resize();
             setMaxSize();
             fireSizeChangeEvent();
         }
