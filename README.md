@@ -142,7 +142,7 @@ You add the following lines of code If you have an advertisment that needs to op
 
  ```
 What we mean by **rootLayout** is the container you use as the parent in your **layout XML file**.
-```XML
+```java
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
