@@ -1,7 +1,5 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.github.dcendents.android-maven'
-//group='com.github.SeyfullahSemen'
-//group ='https://gitlab.vmg.host/mobile/vmg-mraid-android'
+
 
 android {
     compileSdkVersion 26
@@ -31,3 +29,35 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
 
 }
+
+ext {
+
+    //For bintray and jcenter distribution
+    bintrayRepo = 'maven'
+    bintrayName = 'sample-library'
+
+    publishedGroupId = 'com.example.sample'
+    libraryName = 'SampleLibrary'
+    artifact = 'sample-library' //This artifact name should be the same with library module name
+
+    libraryDescription = 'Simple, clean and short description'
+
+    siteUrl = 'https://github.com/username/sample-library'
+    gitUrl = 'https://github.com/username/sample-library.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'your_id'
+    developerName = 'your_name'
+    developerEmail = 'your_email'
+    organization = 'your_organization' // if you push to organization's repository.
+    licenseName = 'The Apache Software License, Version 2.0'  //Example for license
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+
+}
+//These two remote files contain Bintray configuration as described above.
+apply from: 'https://raw.githubusercontent.com/quangctkm9207/template-files/master/android/gradle/install.gradle'
+apply from: 'https://raw.githubusercontent.com/quangctkm9207/template-files/master/android/gradle/bintray.gradle'
+
+
