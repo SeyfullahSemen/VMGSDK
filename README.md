@@ -146,13 +146,15 @@ What we mean by **rootLayout** is the container you use as the parent in your **
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootLayout"
+    android:id="@+id/rootLayout" 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     tools:context="com.example.SDKDemo.ScrollPage">
 
 ```
+As you can see by rootLayout I mean the layout that is on top of the XML file.
+
 Above you see how to add the **scrollEvent** inside the **Fragment class** you want to load the advertisment. These were the simple steps to make use of our library.
 Easy right? In the following section we have a full example. 
 
