@@ -3,10 +3,10 @@
 Welcome to our android SDK. What this SDK does, it allows you to play "outstream" video advertisment from VMG SSP ad server. 
 To get a feeling of how it works, we included a demo to see an example of how to make use of this library.
 It is a very easy to use library. This library is compatible for every screen size and even for tablets. We made our library as simple as possible so you don't need to worry
-much about the code you need to implement, when your main focus should be the app you are devloping.
+much about the code you need to implement, when your main focus should be the app you are developing.
 
 We as VMG are very dedicated to our customers and we want our customers to have the most simple, elegant but strong systems. We as VMG are very proud to share with you our SDK.
-We are very proud that our library is both elegant and strong. So it is easy for you to implement and do only the things that you need and the rest will be handled by our library.
+
 
 What we want to achieve in this documentation is showing you how to implement our library into your project. We have a couple of simple steps. After you have red the steps,
 we have a full example, this is mainly for if you did not understand a part of the steps. 
@@ -36,10 +36,10 @@ We have a little example on how to add the dependency.
 
 **toevoegen van code fragmenten voor het invoegen van de gradle dependency**
 
-in the following paragraphs you will see how to integrate library and where to add code.
+in the following section you will see how to integrate the library and where to add the code.
 # 2.How to integrate the library into your app?
 
- In the following sections, we will explain how to use the library and how to implement the library code inside your app. Just follow the simple steps 
+ Now we will explain how to use the library and how to implement the library code inside your app. Just follow the simple steps 
  and everything will be allright. If you don't understand something you can always scroll back and check it. If you still don't understand it, you can scroll down
  and check the full example. Let's begin.
  
@@ -72,7 +72,7 @@ create a new private instance of the **VMGBase** class.
 
 after that is done, add the following line of code inside the `onCreate()` or inside the `onViewCreated()` method.
 `vmgBase = new VMGBase(getActivity(), webView,placementId);`.
-This will instantiate the **VMGBase class** and we need to give it two arguments:
+This will instantiate the **VMGBase class** and we need to give it three arguments:
 
 * the context (getActivity())
 * The WebView you want to load the advertisment in
@@ -92,7 +92,7 @@ This will look like this:
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_example, container, false);
       
-        webView = v.findViewById(R.id.webView);
+        webView = view.findViewById(R.id.webView);
         
         vmgBase = new VMGBase(getActivity(), webView, placementId);
        
@@ -120,11 +120,11 @@ You add the following lines of code If you have an advertisment that needs to op
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_blank, container, false);
+        final View view = inflater.inflate(R.layout.fragment_example, container, false);
         
-        nestedScrollView = v.findViewById(R.id.scrollview);
-        rootLayout = v.findViewById(R.id.rootLayout);
-        webView = v.findViewById(R.id.webView);
+        nestedScrollView = view.findViewById(R.id.scrollview);
+        rootLayout = view.findViewById(R.id.rootLayout);
+        webView = view.findViewById(R.id.webView);
         
         vmgBase = new VMGBase(getActivity(), webView, placementId);
         
@@ -141,6 +141,20 @@ You add the following lines of code If you have an advertisment that needs to op
 }
 
  ```
+What we mean by **rootLayout** is the layout you use as the parent in your **layout XML file**.
+```java
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context="com.example.SDKDemo.ScrollPage">
+
+```
+As you can see by rootLayout we mean the layout that is on top of the XML file.
+
 Above you see how to add the **scrollEvent** inside the **Fragment class** you want to load the advertisment. These were the simple steps to make use of our library.
 Easy right? In the following section we have a full example. 
 
@@ -174,14 +188,13 @@ We added the line of code in the **MainActivity** now we need to add some code i
 
    
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
                              
         final View view = inflater.inflate(R.layout.fragment_your, container, false);
         
-        scrollView = v.findViewById(R.id.scrollView);
-        parentLayout = v.findViewById(R.id.parentLayout);
-        webView = v.findViewById(R.id.webView);
+        scrollView = view.findViewById(R.id.scrollView);
+        rootLayout = view.findViewById(R.id.rootLayout);
+        webView = view.findViewById(R.id.webView);
         
         vmgBase = new VMGBase(getActivity(), webView, placementId);
 
