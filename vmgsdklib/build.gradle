@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 
-
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -29,28 +28,27 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
 
 }
-
 ext {
 
     //For bintray and jcenter distribution
-    bintrayRepo = 'maven'
-    bintrayName = 'sample-library'
+    bintrayRepo = 'VMG'
+    bintrayName = 'vmgsdk'
 
-    publishedGroupId = 'com.example.sample'
-    libraryName = 'SampleLibrary'
-    artifact = 'sample-library' //This artifact name should be the same with library module name
+    publishedGroupId = 'com.VMG.sdklibrary'
+    libraryName = 'VMGSDK'
+    artifact = 'vmgsdklib' //This artifact name should be the same with library module name
 
-    libraryDescription = 'Simple, clean and short description'
+    libraryDescription = 'this is our official sdk enjoy'
 
     siteUrl = 'https://github.com/username/sample-library'
     gitUrl = 'https://github.com/username/sample-library.git'
 
     libraryVersion = '1.0.0'
 
-    developerId = 'your_id'
-    developerName = 'your_name'
-    developerEmail = 'your_email'
-    organization = 'your_organization' // if you push to organization's repository.
+    developerId = 'videomediagroupsdk'
+    developerName = 'seyfullah'
+    developerEmail = 'seyfullah.semen@videomediagroup.com'
+    organization = 'videomediagroup' // if you push to organization's repository.
     licenseName = 'The Apache Software License, Version 2.0'  //Example for license
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
@@ -59,5 +57,7 @@ ext {
 //These two remote files contain Bintray configuration as described above.
 apply from: 'https://raw.githubusercontent.com/quangctkm9207/template-files/master/android/gradle/install.gradle'
 apply from: 'https://raw.githubusercontent.com/quangctkm9207/template-files/master/android/gradle/bintray.gradle'
+
+
 
 
