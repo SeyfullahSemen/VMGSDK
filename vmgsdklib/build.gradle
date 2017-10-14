@@ -14,13 +14,8 @@ android {
 
     }
     buildTypes {
-        debug{
-
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
         release {
+            debuggable false
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -37,7 +32,7 @@ ext {
 
     //For bintray and jcenter distribution
     bintrayRepo = 'VMG'
-    bintrayName = 'vmgsdk'
+    bintrayName = 'vmgsdklib'
 
     publishedGroupId = 'com.VMG.sdklibrary'
     libraryName = 'VMGSDK'
