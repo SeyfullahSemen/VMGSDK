@@ -15,9 +15,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url  "https://videomediagroup.bintray.com/VMG"
-        }
+
     }
 }
 

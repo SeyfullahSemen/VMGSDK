@@ -38,5 +38,5 @@ dependencies {
     compile 'com.android.support:support-v4:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
     compile 'com.yalantis:phoenix:1.2.3'
-    compile 'com.VMG.sdklibrary:vmgsdklib:1.0.0'
+    compile project(':vmgsdklib')
 }
