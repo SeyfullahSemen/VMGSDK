@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.toolbar);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        frags_container = findViewById(R.id.frags_container);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        frags_container = (FrameLayout) findViewById(R.id.frags_container);
         setSupportActionBar(toolbar);
         if (savedInstanceState == null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         changeView();
-        VMGConfig.loadConfig(getApplicationContext(), 6194);
+        VMGConfig.loadConfig(getApplicationContext(), 4426);
 
 
     }
@@ -99,11 +99,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void changeView() {
-        Button about_drawer = findViewById(R.id.about_vmg);
-        Button home = findViewById(R.id.home);
-        Button scroll_drawer = findViewById(R.id.scrollview_vmg);
-        Button inReadTopListView = findViewById(R.id.in_read_top_listview);
-        Button inReadToprecyclerview = findViewById(R.id.in_read_top_recyclerview);
+        Button about_drawer = (Button) findViewById(R.id.about_vmg);
+        Button home = (Button) findViewById(R.id.home);
+        Button scroll_drawer = (Button) findViewById(R.id.scrollview_vmg);
+        Button inReadTopListView = (Button) findViewById(R.id.in_read_top_listview);
+        Button inReadToprecyclerview = (Button) findViewById(R.id.in_read_top_recyclerview);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

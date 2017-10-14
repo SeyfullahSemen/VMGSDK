@@ -44,7 +44,7 @@ public class RecyclerFragment extends Fragment {
                     @Override
                     public void run() {
                         refreshRecyclerview.setRefreshing(false);
-                        frag = new VMGBase(getActivity(), webbs, 6342);
+                        frag = new VMGBase(getActivity(), webbs, 6370);
 
 
                     }
@@ -52,7 +52,7 @@ public class RecyclerFragment extends Fragment {
             }
         });
 
-        frag = new VMGBase(getActivity(), webbs, 6342);
+        frag = new VMGBase(getActivity(), webbs, 6370);
 
 
         return v;

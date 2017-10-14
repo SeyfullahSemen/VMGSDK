@@ -58,7 +58,7 @@ public class BlankFragment extends Fragment {
                     public void run() {
 
                         refreshScrollview.setRefreshing(false);
-                        frag = new VMGBase(getActivity(), webView, 6194);
+                        frag = new VMGBase(getActivity(), webView, 6370);
 
                     }
                 }, 2000);
@@ -66,7 +66,7 @@ public class BlankFragment extends Fragment {
             }
         });
 
-        frag = new VMGBase(getActivity(), webView, 6194);
+        frag = new VMGBase(getActivity(), webView, 6370);
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {

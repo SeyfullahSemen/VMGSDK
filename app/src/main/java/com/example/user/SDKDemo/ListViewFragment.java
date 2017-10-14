@@ -36,7 +36,7 @@ public class ListViewFragment extends Fragment {
                     @Override
                     public void run() {
                         refreshListview.setRefreshing(false);
-                        frag = new VMGBase(getActivity(), webber, 6341);
+                        frag = new VMGBase(getActivity(), webber, 6370);
 
                     }
                 }, 2000);
@@ -44,7 +44,7 @@ public class ListViewFragment extends Fragment {
         });
         listView = (ListView) v.findViewById(R.id.listView);
         webber = (WebView) v.findViewById(R.id.webber); // get the id of the custom webview
-        frag = new VMGBase(getActivity(), webber, 6341);
+        frag = new VMGBase(getActivity(), webber, 6370);
 
         return v;
     }
