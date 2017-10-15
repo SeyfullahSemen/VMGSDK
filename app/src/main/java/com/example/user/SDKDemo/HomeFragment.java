@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.user.SDKDemo.R;
-
 public class HomeFragment extends Fragment {
     private TextView txt_home;
     private ImageView img_home;

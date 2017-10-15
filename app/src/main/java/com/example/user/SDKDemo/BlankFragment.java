@@ -11,11 +11,9 @@ import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
-import com.example.user.SDKDemo.R;
 import com.vmg.BaseUtils.VMGBase;
 import com.yalantis.phoenix.PullToRefreshView;
 
