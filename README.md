@@ -56,7 +56,7 @@ add this line of code **compile 'com.VMG.sdklibrary:vmgsdklib:1.0.0@aar'**. Just
 ```
 You don't need to add:
 
-```android
+```java
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
