@@ -3,8 +3,8 @@
     package="com.example.user.SDKDemo">
 
     <!-- Dit zorgt ervoor dat de website of iets online kan ingeladen worden -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--<uses-permission android:name="android.permission.INTERNET" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
 
 
     <application
