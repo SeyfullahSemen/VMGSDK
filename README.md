@@ -32,11 +32,39 @@ Once you have implemented this dependency, you can use the methods of the classe
 in your application. 
 We have a little example on how to add the dependency.
 
-**onderzoeken hoe ik de library als dependencie kan toevoegen**
+First of all add our Maven repository
+```java
+repositories {
+    maven {
+        url  "https://videomediagroup.bintray.com/VMG"
+    }
+}
+```
+After this step you need to compile our gradle dependency inside your **Build.gradle** in the **Build.gradle (Module:app)**. Here you need to 
+add this line of code **compile 'com.VMG.sdklibrary:vmgsdklib:1.0.0@aar'**. Just like this:
 
-**toevoegen van code fragmenten voor het invoegen van de gradle dependency**
+```java
+    dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+   
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
 
+    })
+    compile 'com.VMG.sdklibrary:vmgsdklib:1.0.0@aar'
+}
+```
+You don't need to add:
+
+```android
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+```
+in your **AndroidManifest.XML**. This will be done by our library.
+Congratulations on finishing the first steps,now you can start using our libary.
 in the following section you will see how to integrate the library and where to add the code.
+
 # 2.How to integrate the library into your app?
 
  Now we will explain how to use the library and how to implement the library code inside your app. Just follow the simple steps 
