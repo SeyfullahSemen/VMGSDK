@@ -46,7 +46,7 @@ add this line of code **compile 'com.VMG.sdklibrary:vmgsdklib:1.0.0@aar'**. Just
 ```java
     dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.2'
+   compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.2'
 }
 ```
 You don't need to add:
