@@ -65,6 +65,40 @@ in your **AndroidManifest.XML**. This will be done by our library.
 Congratulations on finishing the first steps,now you can start using our libary.
 in the following section you will see how to integrate the library and where to add the code.
 
+Here you will find a full example:
+
+```java
+ apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        applicationId "demo.videomediagroup.com.vmgdemo"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+repositories {
+    maven {
+        url  "https://dl.bintray.com/videomediagroupsdk/vmgsdk"
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.0'
+}
+
+```
 # 2.How to integrate the library into your app?
 
  Now we will explain how to use the library and how to implement the library code inside your app. Just follow the simple steps 
