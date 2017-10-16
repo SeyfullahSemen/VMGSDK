@@ -36,7 +36,7 @@ First of all add our Maven repository
 ```java
 repositories {
     maven {
-        url  "https://videomediagroup.bintray.com/VMG"
+        url  "https://dl.bintray.com/videomediagroupsdk/vmgsdk"
     }
 }
 ```
@@ -51,7 +51,7 @@ add this line of code **compile 'com.VMG.sdklibrary:vmgsdklib:1.0.0@aar'**. Just
         exclude group: 'com.android.support', module: 'support-annotations'
 
     })
-    compile 'com.VMG.sdklibrary:vmgsdklib:1.0.0@aar'
+   compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.0'
 }
 ```
 You don't need to add:
