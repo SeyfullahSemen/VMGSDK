@@ -28,8 +28,8 @@ dependencies {
 ext {
 
     //For bintray and jcenter distribution
-    bintrayRepo = 'vmgsdk'
-    bintrayName = 'SDK'
+    bintrayRepo = 'VMG'
+    bintrayName = 'vmgsdklib'
 
     publishedGroupId = 'com.VMG.Vmgsdklibrary'
     libraryName = 'VMGAndroidSdk'
@@ -40,12 +40,12 @@ ext {
     siteUrl = 'https://github.com/username/sample-library'
     gitUrl = 'https://github.com/username/sample-library.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.1'
 
     developerId = 'videomediagroupsdk'
     developerName = 'seyfullah'
     developerEmail = 'seyfullah.semen@videomediagroup.com'
-    organization = '' // if you push to organization's repository.
+    organization = 'videomediagroup' // if you push to organization's repository.
     licenseName = 'The Apache Software License, Version 2.0'  //Example for license
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]

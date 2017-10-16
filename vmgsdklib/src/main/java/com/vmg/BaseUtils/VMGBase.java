@@ -19,8 +19,6 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -35,7 +33,6 @@ import com.vmg.Events.ViewEvents;
 import com.vmg.LoggerPack.VMGLogs;
 import com.vmg.MobileInfo.UserInfoMobile;
 import com.vmg.VMGParser.ParseMraidCommands;
-import com.vmg.vmgsdklib.R;
 
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -99,7 +96,7 @@ public class VMGBase extends RelativeLayout {
     @SuppressLint("NewApi")
     private double getAdWidth() {
         int metrics = context.getResources().getDisplayMetrics().densityDpi;
-        double adWidth = webView.getMeasuredWidth() * DisplayMetrics.DENSITY_DEFAULT/ metrics;
+        double adWidth = webView.getMeasuredWidth() * DisplayMetrics.DENSITY_DEFAULT / metrics;
 
         return adWidth;
     }
@@ -418,9 +415,6 @@ public class VMGBase extends RelativeLayout {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
 
-            Animation slideAnimation =
-                    AnimationUtils.loadAnimation(context,
-                            R.anim.slide_in);
 
             if (state == LOADING) {
                 state = DEFAULT;
@@ -428,7 +422,7 @@ public class VMGBase extends RelativeLayout {
                 setMaxSize();
                 fireReadyChangeEvent();
                 fireViewableChangeEvent();
-                view.setAnimation(slideAnimation);
+
 
             }
         }
