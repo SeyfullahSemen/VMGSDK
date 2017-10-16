@@ -46,12 +46,7 @@ add this line of code **compile 'com.VMG.sdklibrary:vmgsdklib:1.0.0@aar'**. Just
 ```java
     dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-   
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-
-    })
-   compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.0'
+    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.0'
 }
 ```
 You don't need to add:
