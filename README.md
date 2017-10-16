@@ -34,9 +34,9 @@ We have a little example on how to add the dependency.
 
 First of all add our Maven repository
 ```java
-repositories {
+repositories{
     maven {
-        url  "https://dl.bintray.com/videomediagroupsdk/vmgsdk"
+        url  "http://dl.bintray.com/videomediagroup/VMG"
     }
 }
 ```
@@ -46,7 +46,7 @@ add this line of code **compile 'com.VMG.sdklibrary:vmgsdklib:1.0.0@aar'**. Just
 ```java
     dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.0'
+    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.2'
 }
 ```
 You don't need to add:
@@ -83,14 +83,14 @@ android {
         }
     }
 }
-repositories {
+repositories{
     maven {
-        url  "https://dl.bintray.com/videomediagroupsdk/vmgsdk"
+        url  "http://dl.bintray.com/videomediagroup/VMG"
     }
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.0'
+    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.2'
 }
 
 ```
