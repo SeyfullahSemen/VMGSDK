@@ -2,7 +2,7 @@
 
 The VMG SDK allows you to play outstream video advertisment from VMG SSP ad server. This repository includes a demo to show how to make use of this library.
 
-Below follows a quick integration guide to help you implement our SDK in your app. For your integration you'll need some, unique to you, idenfitiers, if you haven't received these yet, contact your account manager to acquire these. 
+Below follows a quick integration guide to help you implement our SDK in your app. For your integration you'll need some, unique to you, idenfitiers for the app configuration and placements. If you haven't received these yet, contact your account manager to acquire these. 
 
 ![VMG Logo](http://www.videomediagroup.com/wp-content/uploads/2016/01/logo-transparant-website.png)
 
@@ -112,7 +112,7 @@ We will show you a full example of how it is done. First we start with the line 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        VMGConfig.loadConfig(getApplicationContext(), configurationId);
+        VMGConfig.loadConfig(getApplicationContext(), <app_id>);
  }
 
 ```
@@ -138,7 +138,7 @@ We added the line of code in the **MainActivity** now we need to add some code i
         rootLayout = view.findViewById(R.id.rootLayout);
         webView = view.findViewById(R.id.webView);
         
-        vmgBase = new VMGBase(getActivity(), webView, placementId);
+        vmgBase = new VMGBase(getActivity(), webView, <placement_id>);
 
         
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
