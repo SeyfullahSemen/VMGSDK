@@ -40,7 +40,7 @@ ext {
     siteUrl = 'https://github.com/username/sample-library'
     gitUrl = 'https://github.com/username/sample-library.git'
 
-    libraryVersion = '1.0.1'
+    libraryVersion = '1.0.2'
 
     developerId = 'videomediagroupsdk'
     developerName = 'seyfullah'

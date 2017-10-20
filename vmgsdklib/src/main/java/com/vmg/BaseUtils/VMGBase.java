@@ -25,6 +25,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.vmg.ConfigVMG.VMGConfig;
@@ -58,6 +59,7 @@ public class VMGBase extends RelativeLayout {
     private WebView webView;
     private Context context;
     private int state;
+    private ViewGroup viewGroup;
 
 
     /**
@@ -86,6 +88,33 @@ public class VMGBase extends RelativeLayout {
         startVMG(placementId);
         handler = new Handler(Looper.getMainLooper());
         VMGLogs.Information(mobile.mobileInfo());
+    }
+
+    @SuppressLint("NewApi")
+    public VMGBase(Context context, ViewGroup viewGroup, int placementId) {
+        super(context);
+        this.context = context;
+        this.webView = new WebView(context);
+        this.viewGroup = viewGroup;
+        resizeProperties = new VMGResizeProperties();
+        displayMetrics = new DisplayMetrics();
+
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        if (viewGroup instanceof LinearLayout) {
+            viewGroup.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+        }
+
+        vmgClient = new VMGWebviewClient();
+        viewGroup.addView(webView);
+
+
+        startVMG(placementId);
+        handler = new Handler(Looper.getMainLooper());
+
+
+        observeOrientation();
     }
 
     /**

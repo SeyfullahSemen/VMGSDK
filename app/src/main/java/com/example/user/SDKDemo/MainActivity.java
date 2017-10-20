@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FrameLayout frags_container;
     private HomeFragment fragment = new HomeFragment();
+
     private DrawerLayout.DrawerListener drawerListener;
 
     @Override
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         Button scroll_drawer = (Button) findViewById(R.id.scrollview_vmg);
         Button inReadTopListView = (Button) findViewById(R.id.in_read_top_listview);
         Button inReadToprecyclerview = (Button) findViewById(R.id.in_read_top_recyclerview);
+        Button testNewView = (Button) findViewById(R.id.testview_vmg);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +136,12 @@ public class MainActivity extends AppCompatActivity {
                 openNewFragment(new RecyclerFragment());
             }
         });
-
+        testNewView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openNewFragment(new TestNewVersion());
+            }
+        });
     }
 
     private void openNewFragment(Fragment fragment) {
