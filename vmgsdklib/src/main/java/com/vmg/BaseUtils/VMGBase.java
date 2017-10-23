@@ -13,10 +13,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.widget.NestedScrollView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.ValueCallback;
@@ -103,18 +105,18 @@ public class VMGBase extends RelativeLayout {
         if (viewGroup instanceof LinearLayout) {
             viewGroup.setLayoutParams(new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            viewGroup.removeAllViews();
+            viewGroup.addView(webView);
         }
-
         vmgClient = new VMGWebviewClient();
-        viewGroup.addView(webView);
 
 
         startVMG(placementId);
+
         handler = new Handler(Looper.getMainLooper());
 
 
-        observeOrientation();
     }
 
     /**
@@ -156,24 +158,18 @@ public class VMGBase extends RelativeLayout {
         }
     }
 
-    /**
-     * this method can be used when the user has a nestedscrollview or a scrollview
-     *
-     * @param scrollY this value is the Y
-     * @param scrollX this value is the X
-     * @param view    this is the view to get the whole size of
-     */
-    public void VMGScrollEvent(float scrollY, float scrollX, ViewGroup view) {
-        double layoutH = view.getMeasuredHeight(); // get the height of the layout where the webview is saved in
+    public void VMGScrollEvent(NestedScrollView scrollView, View view) {
 
-        double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
-        double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
-
-        if (scrollY - webView.getY() > (resizeProperties.height * topOffset)) { // top
+        double relativeScrollPosition = scrollView.getHeight() + scrollView.getY();
+        double scrollYPos = scrollView.getY();
+        final double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
+        final double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
+        if (scrollYPos - view.getY() > resizeProperties.height * topOffset) { // top
+            VMGLogs.Information(" "+scrollYPos);
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             useJavascript("mraid.isViewable();");
-        } else if (scrollY + layoutH < webView.getY() + (resizeProperties.height * bottomOffset)) { // bottom
+        } else if (relativeScrollPosition - view.getY() < resizeProperties.height * bottomOffset) { // bottom
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             useJavascript("mraid.isViewable();");
@@ -183,6 +179,7 @@ public class VMGBase extends RelativeLayout {
             useJavascript("mraid.isViewable();");
         }
     }
+
 
     /**
      * this is where the webview gets filled with the mraid file and it opens the webview

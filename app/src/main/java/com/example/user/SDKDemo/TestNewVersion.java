@@ -36,14 +36,14 @@ public class TestNewVersion extends Fragment {
         relative = view.findViewById(R.id.relative);
         nested = view.findViewById(R.id.nested);
 
-
-
+        base = new VMGBase(getActivity(), linearlayout, 6370);
         nested.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                base.VMGScrollEvent(scrollY, scrollX, relative);
+                base.VMGScrollEvent(nested,linearlayout);
             }
         });
+
         return view;
     }
 
@@ -51,6 +51,6 @@ public class TestNewVersion extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        base = new VMGBase(getActivity(), linearlayout, 6370);
+
     }
 }
