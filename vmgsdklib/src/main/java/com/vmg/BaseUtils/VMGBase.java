@@ -158,14 +158,15 @@ public class VMGBase extends RelativeLayout {
         }
     }
 
-    public void VMGScrollEvent(NestedScrollView scrollView, View view) {
+    public void VMGScrollEvent(int scrollY, NestedScrollView scrollView, View view) {
 
-        double relativeScrollPosition = scrollView.getHeight() + scrollView.getY();
-        double scrollYPos = scrollView.getY();
+        double relativeScrollPosition = scrollView.getHeight() + scrollY;
+        double scrollYPos = scrollView.getScrollY();
         final double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
         final double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
-        if (scrollYPos - view.getY() > resizeProperties.height * topOffset) { // top
-            VMGLogs.Information(" "+scrollYPos);
+
+        if (scrollY - view.getY() - resizeProperties.height - resizeProperties.height > resizeProperties.height * topOffset) { // top
+            VMGLogs.Information(" ypos " + scrollYPos + "  view top  " + view.getY() + " height " + resizeProperties.height);
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             useJavascript("mraid.isViewable();");

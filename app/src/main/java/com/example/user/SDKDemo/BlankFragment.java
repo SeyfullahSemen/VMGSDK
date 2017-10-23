@@ -69,7 +69,7 @@ public class BlankFragment extends Fragment {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 //frag.VMGScrollEvent(scrollY, scrollX, rela);
-                frag.VMGScrollEvent(scroll,webView);
+                frag.VMGScrollEvent(scrollY,scroll,webView);
             }
         });
 
