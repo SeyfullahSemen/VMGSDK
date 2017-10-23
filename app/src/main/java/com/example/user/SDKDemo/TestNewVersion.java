@@ -40,7 +40,7 @@ public class TestNewVersion extends Fragment {
         nested.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                base.VMGScrollEvent(scrollY,nested,linearlayout);
+                base.VMGScrollEvent(nested,linearlayout);
             }
         });
 

@@ -104,49 +104,35 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
 
+
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        LayoutParams params = new LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
         if (viewGroup instanceof LinearLayout) {
             viewGroup.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-
+                    params));
         }
         if (viewGroup instanceof RelativeLayout) {
             viewGroup.setLayoutParams(new RelativeLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-
-
+                    params));
         }
         if (viewGroup instanceof ConstraintLayout) {
             viewGroup.setLayoutParams(new ConstraintLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-
+                    params));
         }
         if (viewGroup instanceof FrameLayout) {
             viewGroup.setLayoutParams(new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-
+                    params));
         }
         if (viewGroup instanceof TableLayout) {
             viewGroup.setLayoutParams(new TableLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-
+                    params));
         }
         if (viewGroup instanceof TableRow) {
             viewGroup.setLayoutParams(new TableRow.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-
+                    params));
         }
 
         viewGroup.addView(webView);
@@ -199,14 +185,14 @@ public class VMGBase extends RelativeLayout {
         }
     }
 
-    public void VMGScrollEvent(int scrollY, NestedScrollView scrollView, View view) {
+    public void VMGScrollEvent(NestedScrollView scrollView, View view) {
 
-        double relativeScrollPosition = scrollView.getHeight() + scrollY;
+        double relativeScrollPosition = scrollView.getHeight() + scrollView.getScrollY();
         double scrollYPos = scrollView.getScrollY();
         final double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
         final double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
 
-        if (scrollY - view.getY() - resizeProperties.height - resizeProperties.height > resizeProperties.height * topOffset) { // top
+        if (scrollYPos - view.getY() - resizeProperties.height - resizeProperties.height > resizeProperties.height * topOffset) { // top
             VMGLogs.Information(" ypos " + scrollYPos + "  view top  " + view.getY() + " height " + resizeProperties.height);
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
