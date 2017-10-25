@@ -85,7 +85,6 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
 
-
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         vmgClient = new VMGWebviewClient();
         UserInfoMobile mobile = new UserInfoMobile(context);
@@ -98,12 +97,13 @@ public class VMGBase extends RelativeLayout {
     @SuppressLint("NewApi")
     public VMGBase(Context context, ViewGroup viewGroup, int placementId) {
         super(context);
+
         this.context = context;
         this.webView = new WebView(context);
         this.viewGroup = viewGroup;
+
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
-
 
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         LayoutParams params = new LayoutParams(
@@ -112,15 +112,18 @@ public class VMGBase extends RelativeLayout {
         );
         if (viewGroup instanceof LinearLayout) {
             viewGroup.setLayoutParams(new LinearLayout.LayoutParams(
-                    params));
+                    params
+            ));
         }
         if (viewGroup instanceof RelativeLayout) {
             viewGroup.setLayoutParams(new RelativeLayout.LayoutParams(
-                    params));
+                    params
+            ));
         }
         if (viewGroup instanceof ConstraintLayout) {
             viewGroup.setLayoutParams(new ConstraintLayout.LayoutParams(
-                    params));
+                    params
+            ));
         }
         if (viewGroup instanceof FrameLayout) {
             viewGroup.setLayoutParams(new FrameLayout.LayoutParams(
@@ -128,22 +131,21 @@ public class VMGBase extends RelativeLayout {
         }
         if (viewGroup instanceof TableLayout) {
             viewGroup.setLayoutParams(new TableLayout.LayoutParams(
-                    params));
+                    params
+            ));
         }
         if (viewGroup instanceof TableRow) {
             viewGroup.setLayoutParams(new TableRow.LayoutParams(
-                    params));
+                    params
+            ));
         }
 
         viewGroup.addView(webView);
         vmgClient = new VMGWebviewClient();
 
-
         startVMG(placementId);
 
         handler = new Handler(Looper.getMainLooper());
-
-
     }
 
     /**
@@ -185,6 +187,7 @@ public class VMGBase extends RelativeLayout {
         }
     }
 
+
     public void VMGScrollEvent(NestedScrollView scrollView, View view) {
 
         double relativeScrollPosition = scrollView.getHeight() + scrollView.getScrollY();
@@ -192,12 +195,9 @@ public class VMGBase extends RelativeLayout {
         final double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
         final double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
 
-        if (scrollYPos - view.getY() - resizeProperties.height - resizeProperties.height > resizeProperties.height * topOffset) { // top
-            VMGLogs.Information(" ypos " + scrollYPos + "  view top  " + view.getY() + " height " + resizeProperties.height);
-            isViewable = false;
-            useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
-            useJavascript("mraid.isViewable();");
-        } else if (relativeScrollPosition - view.getY() < resizeProperties.height * bottomOffset) { // bottom
+        if (scrollYPos - view.getBottom()+resizeProperties.height > resizeProperties.height * topOffset
+                || relativeScrollPosition - view.getTop() < resizeProperties.height * bottomOffset) {
+            VMGLogs.Information(" "+view.getBottom());
             isViewable = false;
             useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
             useJavascript("mraid.isViewable();");
@@ -469,15 +469,12 @@ public class VMGBase extends RelativeLayout {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
 
-
             if (state == LOADING) {
                 state = DEFAULT;
                 fireStateChangeEvent();
                 setMaxSize();
                 fireReadyChangeEvent();
                 fireViewableChangeEvent();
-
-
             }
         }
 
