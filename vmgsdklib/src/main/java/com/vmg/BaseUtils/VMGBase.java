@@ -104,14 +104,12 @@ public class VMGBase extends RelativeLayout {
 
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
-        ViewParent parent = checkParent(viewGroup);
+        checkParent(viewGroup);
 
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-
         viewGroup.addView(webView);
         vmgClient = new VMGWebviewClient();
-
+        observeOrientation();
         startVMG(placementId);
 
         handler = new Handler(Looper.getMainLooper());
@@ -120,16 +118,17 @@ public class VMGBase extends RelativeLayout {
     @SuppressLint("NewApi")
     private ViewParent checkParent(ViewGroup viewGroup) {
         ViewParent parent = viewGroup.getParent();
+
         LayoutParams params = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
         );
+
         if (parent instanceof LinearLayout) {
             viewGroup.setLayoutParams(new LinearLayout.LayoutParams(
                     params
             ));
-            LinearLayout layout = new LinearLayout(context);
-            layout.setOrientation(LinearLayout.VERTICAL);
+
         }
         if (parent instanceof RelativeLayout) {
             viewGroup.setLayoutParams(new RelativeLayout.LayoutParams(

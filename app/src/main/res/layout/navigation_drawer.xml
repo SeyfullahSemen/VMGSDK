@@ -63,21 +63,6 @@
             android:textColor="#212121"
 
             />
-        <Button
-            android:id="@+id/testviewR_vmg"
-            style="?android:attr/borderlessButtonStyle"
-
-            android:theme="?android:selectableItemBackground"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:background="#90CAF9"
-            android:text="relativeTest"
-            android:elevation="4dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textColor="#212121"
-
-            />
 
         <TextView
             android:layout_width="match_parent"
