@@ -21,6 +21,7 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.WindowManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
@@ -30,8 +31,7 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.ScrollView;
 
 import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
@@ -104,41 +104,10 @@ public class VMGBase extends RelativeLayout {
 
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
+        ViewParent parent = checkParent(viewGroup);
 
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        LayoutParams params = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        if (viewGroup instanceof LinearLayout) {
-            viewGroup.setLayoutParams(new LinearLayout.LayoutParams(
-                    params
-            ));
-        }
-        if (viewGroup instanceof RelativeLayout) {
-            viewGroup.setLayoutParams(new RelativeLayout.LayoutParams(
-                    params
-            ));
-        }
-        if (viewGroup instanceof ConstraintLayout) {
-            viewGroup.setLayoutParams(new ConstraintLayout.LayoutParams(
-                    params
-            ));
-        }
-        if (viewGroup instanceof FrameLayout) {
-            viewGroup.setLayoutParams(new FrameLayout.LayoutParams(
-                    params));
-        }
-        if (viewGroup instanceof TableLayout) {
-            viewGroup.setLayoutParams(new TableLayout.LayoutParams(
-                    params
-            ));
-        }
-        if (viewGroup instanceof TableRow) {
-            viewGroup.setLayoutParams(new TableRow.LayoutParams(
-                    params
-            ));
-        }
+
 
         viewGroup.addView(webView);
         vmgClient = new VMGWebviewClient();
@@ -146,6 +115,48 @@ public class VMGBase extends RelativeLayout {
         startVMG(placementId);
 
         handler = new Handler(Looper.getMainLooper());
+    }
+
+    @SuppressLint("NewApi")
+    private ViewParent checkParent(ViewGroup viewGroup) {
+        ViewParent parent = viewGroup.getParent();
+        LayoutParams params = new LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        if (parent instanceof LinearLayout) {
+            viewGroup.setLayoutParams(new LinearLayout.LayoutParams(
+                    params
+            ));
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.VERTICAL);
+        }
+        if (parent instanceof RelativeLayout) {
+            viewGroup.setLayoutParams(new RelativeLayout.LayoutParams(
+                    params
+            ));
+        }
+        if (parent instanceof ConstraintLayout) {
+            viewGroup.setLayoutParams(new ConstraintLayout.LayoutParams(
+                    params
+            ));
+        }
+        if (parent instanceof FrameLayout) {
+            viewGroup.setLayoutParams(new FrameLayout.LayoutParams(
+                    params
+            ));
+        }
+        if (parent instanceof NestedScrollView) {
+            viewGroup.setLayoutParams(new NestedScrollView.LayoutParams(
+                    params
+            ));
+        }
+        if (parent instanceof ScrollView) {
+            viewGroup.setLayoutParams(new ScrollView.LayoutParams(
+                    params
+            ));
+        }
+        return parent;
     }
 
     /**
@@ -195,17 +206,16 @@ public class VMGBase extends RelativeLayout {
         final double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
         final double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
 
-        if (scrollYPos - view.getBottom()+resizeProperties.height > resizeProperties.height * topOffset
+        isViewable = true;
+
+        if (scrollYPos - view.getBottom() + resizeProperties.height > resizeProperties.height * topOffset
                 || relativeScrollPosition - view.getTop() < resizeProperties.height * bottomOffset) {
-            VMGLogs.Information(" "+view.getBottom());
+            VMGLogs.Information(" " + view.getBottom());
             isViewable = false;
-            useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
-            useJavascript("mraid.isViewable();");
-        } else {
-            isViewable = true;
-            useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
-            useJavascript("mraid.isViewable();");
         }
+
+        useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
+        useJavascript("mraid.isViewable();");
     }
 
 

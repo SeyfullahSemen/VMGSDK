@@ -103,6 +103,13 @@ public class MainActivity extends AppCompatActivity {
         Button inReadTopListView = (Button) findViewById(R.id.in_read_top_listview);
         Button inReadToprecyclerview = (Button) findViewById(R.id.in_read_top_recyclerview);
         Button testNewView = (Button) findViewById(R.id.testview_vmg);
+        Button testviewR_vmg = (Button) findViewById(R.id.testviewR_vmg);
+        testviewR_vmg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openNewFragment(new testWithReltive());
+            }
+        });
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -25,11 +25,11 @@
                 android:text="@string/lorem_ipsum"
                 android:textColor="@android:color/black" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/linearlayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                />
 
             <TextView
                 android:id="@+id/testLorem3"
@@ -37,8 +37,8 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:fontFamily="casual"
-                android:textColor="@android:color/black"
-                android:text="@string/lorem_ipsum" />
+                android:text="@string/lorem_ipsum"
+                android:textColor="@android:color/black" />
 
 
         </LinearLayout>
