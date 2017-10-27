@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import com.vmg.BaseUtils.VMGBase;
 
 public class InPageScrollWithRelativeLayout extends Fragment {
-    private RelativeLayout linearlayout;
+    private RelativeLayout relativeLayout;
     private NestedScrollView nested;
     private RelativeLayout relative;
     private VMGBase base;
@@ -28,15 +28,15 @@ public class InPageScrollWithRelativeLayout extends Fragment {
                              Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_test_new_version, container, false);
-        linearlayout = view.findViewById(R.id.linearlayout);
+        relativeLayout = view.findViewById(R.id.relativeLayout);
         relative = view.findViewById(R.id.relative);
         nested = view.findViewById(R.id.nested);
 
-        base = new VMGBase(getActivity(), linearlayout, 6194);
+        base = new VMGBase(getActivity(), relativeLayout, 6194);
         nested.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                base.VMGScrollEvent(nested, linearlayout);
+                base.VMGScrollEvent(nested, relativeLayout);
             }
         });
 
