@@ -101,7 +101,6 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
 
-
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         viewGroup.addView(webView);
         vmgClient = new VMGWebviewClient();
@@ -110,6 +109,8 @@ public class VMGBase extends RelativeLayout {
 
         handler = new Handler(Looper.getMainLooper());
     }
+
+
 
     /**
      * calculates and sets the ad width

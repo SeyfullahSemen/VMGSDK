@@ -8,15 +8,10 @@ import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.vmg.BaseUtils.VMGBase;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class InPageScrollWithRelativeLayout extends Fragment {
     private RelativeLayout linearlayout;
     private NestedScrollView nested;
