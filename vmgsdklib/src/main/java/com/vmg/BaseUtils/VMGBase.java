@@ -104,7 +104,7 @@ public class VMGBase extends RelativeLayout {
 
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
-        checkParent(viewGroup);
+
 
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         viewGroup.addView(webView);
@@ -113,48 +113,6 @@ public class VMGBase extends RelativeLayout {
         startVMG(placementId);
 
         handler = new Handler(Looper.getMainLooper());
-    }
-
-    @SuppressLint("NewApi")
-    private ViewParent checkParent(ViewGroup viewGroup) {
-        ViewParent parent = viewGroup.getParent();
-
-        LayoutParams params = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        if (parent instanceof LinearLayout) {
-            viewGroup.setLayoutParams(new LinearLayout.LayoutParams(
-                    params
-            ));
-
-        }
-        if (parent instanceof RelativeLayout) {
-            viewGroup.setLayoutParams(new RelativeLayout.LayoutParams(
-                    params
-            ));
-        }
-        if (parent instanceof ConstraintLayout) {
-            viewGroup.setLayoutParams(new ConstraintLayout.LayoutParams(
-                    params
-            ));
-        }
-        if (parent instanceof FrameLayout) {
-            viewGroup.setLayoutParams(new FrameLayout.LayoutParams(
-                    params
-            ));
-        }
-        if (parent instanceof NestedScrollView) {
-            viewGroup.setLayoutParams(new NestedScrollView.LayoutParams(
-                    params
-            ));
-        }
-        if (parent instanceof ScrollView) {
-            viewGroup.setLayoutParams(new ScrollView.LayoutParams(
-                    params
-            ));
-        }
-        return parent;
     }
 
     /**
@@ -208,7 +166,6 @@ public class VMGBase extends RelativeLayout {
 
         if (scrollYPos - view.getBottom() + resizeProperties.height > resizeProperties.height * topOffset
                 || relativeScrollPosition - view.getTop() < resizeProperties.height * bottomOffset) {
-            VMGLogs.Information(" " + view.getBottom());
             isViewable = false;
         }
 
