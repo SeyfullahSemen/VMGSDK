@@ -37,7 +37,7 @@ public class TestNewVersion extends Fragment {
         relative = view.findViewById(R.id.relative);
         nested = view.findViewById(R.id.nested);
 
-        base = new VMGBase(getActivity(), linearlayout, 6370);
+        base = new VMGBase(getActivity(), linearlayout, 6194);
         nested.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
