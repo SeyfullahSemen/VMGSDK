@@ -56,26 +56,28 @@ Sed eget porttitor metus. Nam mattis maximus purus, ut eleifend dolor ullamcorpe
     </string>
 
     <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales sapien in ligula aliquet consectetur. Fusce felis felis,
-        cursus ut felis sit amet, interdum porttitor est. Morbi lacinia imperdiet erat, sed ullamcorper libero dictum non.
-        Aenean scelerisque accumsan aliquam. In et mauris in purus volutpat ullamcorper eget nec purus. Morbi pulvinar, metus et tempus malesuada,
-        sapien urna varius quam, vitae convallis massa nibh eu ante. Phasellus ornare diam risus, vitae finibus lacus ullamcorper eget. Sed nec mi nisi.
-        Suspendisse viverra urna tortor, in lobortis risus tincidunt eget. Nunc accumsan nec arcu a vehicula.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut lorem sit amet leo sollicitudin mattis.
+        Nullam eget diam id nibh tristique porttitor. Cras ullamcorper, justo eget fermentum molestie, sapien ipsum convallis erat,
+        eu tincidunt purus dolor eget augue. Cras nulla lectus, lobortis in sem at, vestibulum rutrum lorem. Vestibulum semper dolor
+        non lectus ultricies fermentum. Fusce ac malesuada erat, nec lobortis ante. Aliquam cursus quam nisl, id varius erat facilisis
+        eget. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec semper enim quam,
+        ac molestie nulla interdum vitae. Donec cursus odio vel nibh placerat, in dapibus mi posuere. Aenean ac porta tellus.
+        Nunc cursus facilisis laoreet. Pellentesque et tellus interdum, accumsan dolor in, consectetur odio.
 
-Duis pretium lorem in ante aliquam, quis tincidunt lectus elementum. Proin et quam nec nulla viverra rutrum a vel lectus.
-        Aliquam sollicitudin finibus magna, at fringilla mi sodales non. Vestibulum cursus tortor a sem mattis, eu dapibus mauris volutpat.
-        Maecenas posuere elit sit amet metus gravida finibus. Vestibulum quis dapibus nisi, vel euismod lectus. Aliquam non nunc tempus, gravida justo eu,
-        ultrices dui. Sed interdum, nunc quis dignissim viverra, lectus lectus vulputate diam, volutpat semper magna nunc et massa. Etiam sagittis nunc tellus,
-        et finibus elit blandit id. In pretium egestas ipsum, ut mattis mauris viverra ac. Sed efficitur eros quam, eget maximus sapien malesuada quis.
-        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris et mattis elit, sed ultricies quam.
-        Phasellus aliquam eget tortor at efficitur. Praesent iaculis, lectus vel rhoncus placerat, metus turpis accumsan ligula, a rutrum justo nisi vitae dolor.
+        Phasellus vitae maximus enim. Nulla quis sapien neque. Etiam ac malesuada sapien. Vestibulum congue quam ante.
+        Curabitur non volutpat sem. Phasellus imperdiet porta pretium. Pellentesque eu tristique lacus.
+        Donec pulvinar faucibus fermentum. Quisque nec ligula quis magna rhoncus efficitur vitae ac quam.
+        Vestibulum tincidunt tincidunt massa, vel convallis lectus suscipit in. Sed rutrum, nulla a suscipit feugiat,
+        quam velit fermentum erat, eget aliquet ante lectus et leo. Morbi lacinia ultricies condimentum.
+        Suspendisse semper nisl sed dignissim euismod.
 
-
-Fusce hendrerit nisi non enim consectetur, eu rutrum augue porttitor. Curabitur efficitur lacus sed sollicitudin feugiat.
-        Ut pulvinar turpis sed arcu commodo semper. Maecenas a convallis orci. Duis pellentesque imperdiet rutrum.
-        Sed fermentum lectus vitae nulla lobortis, id porta purus tempus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-        Sed aliquet mi et mollis malesuada. Nam non enim condimentum odio accumsan ullamcorper. Etiam feugiat, metus vitae bibendum tempus, mi augue tempus velit,
-        non porta urna tellus ac est.
+Nam lacinia sit amet libero sit amet convallis. Suspendisse nec sollicitudin orci. Nullam posuere sollicitudin purus.
+        Pellentesque tempor dolor non dapibus rhoncus. Aenean porttitor et neque in consequat.
+        Cras suscipit urna ut ligula facilisis, dapibus hendrerit magna feugiat.
+        Integer sodales sapien ut nulla sollicitudin bibendum. Integer vel felis porta, iaculis enim quis, ornare nibh.
+        Fusce eget dui a magna congue tempus ut ut urna. Proin velit sem, pellentesque ut quam non, tincidunt egestas
+        ex. Praesent congue leo erat, maximus tincidunt metus hendrerit et. Aenean eu convallis augue.
+        Vivamus non diam tincidunt, finibus sem ac, rhoncus arcu. Phasellus egestas venenatis tristique.
 
 
 
@@ -83,9 +85,6 @@ Fusce hendrerit nisi non enim consectetur, eu rutrum augue porttitor. Curabitur 
     </string>
 
     <string name="home_hello">Welcome to our demo SDK Go to the navigation drawer and choose!</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

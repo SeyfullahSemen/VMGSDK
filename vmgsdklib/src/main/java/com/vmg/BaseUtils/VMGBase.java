@@ -123,7 +123,6 @@ public class VMGBase extends RelativeLayout {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
         );
-
         if (parent instanceof LinearLayout) {
             viewGroup.setLayoutParams(new LinearLayout.LayoutParams(
                     params

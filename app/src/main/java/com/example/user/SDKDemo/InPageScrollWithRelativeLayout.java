@@ -17,13 +17,13 @@ import com.vmg.BaseUtils.VMGBase;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TestNewVersion extends Fragment {
+public class InPageScrollWithRelativeLayout extends Fragment {
     private RelativeLayout linearlayout;
     private NestedScrollView nested;
     private RelativeLayout relative;
     private VMGBase base;
 
-    public TestNewVersion() {
+    public InPageScrollWithRelativeLayout() {
 
     }
 
@@ -41,7 +41,7 @@ public class TestNewVersion extends Fragment {
         nested.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                base.VMGScrollEvent(nested,linearlayout);
+                base.VMGScrollEvent(nested, linearlayout);
             }
         });
 

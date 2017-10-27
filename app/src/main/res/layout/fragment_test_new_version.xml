@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/relative"
-    tools:context="com.example.user.SDKDemo.TestNewVersion">
+    tools:context="com.example.user.SDKDemo.InPageScrollWithRelativeLayout">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nested"
@@ -23,7 +23,10 @@
                 android:background="@android:color/white"
                 android:fontFamily="casual"
                 android:text="@string/lorem_ipsum"
-                android:textColor="@android:color/black" />
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:typeface="serif" />
 
             <RelativeLayout
                 android:id="@+id/linearlayout"
@@ -38,7 +41,10 @@
                 android:background="@android:color/white"
                 android:fontFamily="casual"
                 android:text="@string/lorem_ipsum"
-                android:textColor="@android:color/black" />
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:typeface="serif" />
 
 
         </LinearLayout>

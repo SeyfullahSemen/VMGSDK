@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         testNewView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openNewFragment(new TestNewVersion());
+                openNewFragment(new InPageScrollWithRelativeLayout());
             }
         });
     }
