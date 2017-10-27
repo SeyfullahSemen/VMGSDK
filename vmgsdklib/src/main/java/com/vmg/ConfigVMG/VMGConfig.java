@@ -1,6 +1,6 @@
 package com.vmg.ConfigVMG;
 
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -19,13 +19,12 @@ import java.util.HashMap;
 
 
 public class VMGConfig {
-    static String baseUrl = "https://vmg.host";
+
     private static final String TAG = "VMGConfig";
-    @SuppressLint("StaticFieldLeak")
+
     private static VMGConfig VMGInstance = null;
     private static HashMap<String, Object> JSONVals = new HashMap<>();
-    @SuppressLint("StaticFieldLeak")
-    private static Context context;
+    private Context context;
     private RequestQueue requestQueue;
 
     private VMGConfig(Context context) {

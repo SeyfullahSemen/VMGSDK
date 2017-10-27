@@ -11,12 +11,12 @@ package com.vmg.ConfigVMG;
  * Created by Seyfullah Semen on 21-8-2017.
  */
 public class VMGUrlBuilder {
-
+    private  static String baseUrl = "https://vmg.host";
     static String getConfigUrl(int appId) {
-        return "" + VMGConfig.baseUrl + "/adServ/config/id/\\" + appId + "";
+        return "" + baseUrl + "/adServ/config/id/\\" + appId + "";
     }
 
     public static String getPlacementUrl(int placementId) {
-        return "" + VMGConfig.baseUrl + "/adServ/placement/id\\" + placementId + "";
+        return "" + baseUrl + "/adServ/placement/id\\" + placementId + "";
     }
 }

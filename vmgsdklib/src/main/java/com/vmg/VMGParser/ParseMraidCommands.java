@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
+/*
  * Created by Seyfullah Semen on 30-8-2017.
  */
 
