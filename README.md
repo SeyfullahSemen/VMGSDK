@@ -46,7 +46,7 @@ This will make sure that the SDK configuration is loaded and available.
 
 ### 3. Add a fragment
 
-First add a webview to your fragment layout file and give it the size properties that you want it to have. Next create a new private variable for the of the `VMGBase` class
+First add a `WebView` or a `ViewGroup` to your fragment layout file and give it the size properties that you want it to have. Next create a new private variable for the of the `VMGBase` class
 
 ```java
 private VMGBase vmgBase;
@@ -59,7 +59,7 @@ vmgBase = new VMGBase(getActivity(), webView, <placement_id>);
 ```
 Or you can load the ad inside a `ViewGroup`. than add the following line of code
 ```java
-    vmgBase = new VMGBase(getActivity, ViewGroup, <placement_id>);
+vmgBase = new VMGBase(getActivity, ViewGroup, <placement_id>);
 ```
 ### 4. Inside a scrollView
 
@@ -181,7 +181,7 @@ The first example was about, how you can load an ad with the help of a webview, 
         constraint = view.findViewById(R.id.constraint);
        nestedScrollView= view.findViewById(R.id.nestedScrollView);
 
-        base = new VMGBase(getActivity(), constraint, 6194);
+        base = new VMGBase(getActivity(), constraint, <placement_id>);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
