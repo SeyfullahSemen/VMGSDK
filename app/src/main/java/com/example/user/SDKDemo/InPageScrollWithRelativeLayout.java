@@ -3,6 +3,7 @@ package com.example.user.SDKDemo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
@@ -13,7 +14,7 @@ import android.widget.RelativeLayout;
 import com.vmg.BaseUtils.VMGBase;
 
 public class InPageScrollWithRelativeLayout extends Fragment {
-    private RelativeLayout relativeLayout;
+    private ConstraintLayout relativeLayout;
     private NestedScrollView nested;
     private RelativeLayout relative;
     private VMGBase base;
