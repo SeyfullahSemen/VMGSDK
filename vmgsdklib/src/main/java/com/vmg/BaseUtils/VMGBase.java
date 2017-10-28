@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.widget.NestedScrollView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
@@ -33,7 +32,6 @@ import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
 import com.vmg.Events.ViewEvents;
 import com.vmg.LoggerPack.VMGLogs;
-import com.vmg.MobileInfo.UserInfoMobile;
 import com.vmg.VMGParser.ParseMraidCommands;
 
 import java.net.URLDecoder;
@@ -83,11 +81,9 @@ public class VMGBase extends RelativeLayout {
 
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         vmgClient = new VMGWebviewClient();
-        UserInfoMobile mobile = new UserInfoMobile(context);
         observeOrientation();
         startVMG(placementId);
         handler = new Handler(Looper.getMainLooper());
-        VMGLogs.Information(mobile.mobileInfo());
     }
 
     @SuppressLint("NewApi")
@@ -109,7 +105,6 @@ public class VMGBase extends RelativeLayout {
 
         handler = new Handler(Looper.getMainLooper());
     }
-
 
 
     /**
@@ -456,7 +451,6 @@ public class VMGBase extends RelativeLayout {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             final String URL = request.getUrl().toString();
-            Log.d(TAG, "shouldOverrideUrlLoading: " + URL);
             if (URL.startsWith("mraid://")) {
                 parseUrl(URL);
                 return true;
