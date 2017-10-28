@@ -9,17 +9,15 @@ import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.vmg.BaseUtils.VMGBase;
 
-public class InPageScrollWithRelativeLayout extends Fragment {
-    private ConstraintLayout relativeLayout;
+public class InPageScrollWithLayout extends Fragment {
+    private ConstraintLayout constraint;
     private NestedScrollView nested;
-    private RelativeLayout relative;
     private VMGBase base;
 
-    public InPageScrollWithRelativeLayout() {
+    public InPageScrollWithLayout() {
 
     }
 
@@ -28,16 +26,15 @@ public class InPageScrollWithRelativeLayout extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_test_new_version, container, false);
-        relativeLayout = view.findViewById(R.id.relativeLayout);
-        relative = view.findViewById(R.id.relative);
+        final View view = inflater.inflate(R.layout.in_page_scroll_with_layout, container, false);
+        constraint = view.findViewById(R.id.constraint);
         nested = view.findViewById(R.id.nested);
 
-        base = new VMGBase(getActivity(), relativeLayout, 6194);
+        base = new VMGBase(getActivity(), constraint, 6194);
         nested.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                base.VMGScrollEvent(nested, relativeLayout);
+                base.VMGScrollEvent(nested, constraint);
             }
         });
 

@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         scroll_drawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNewFragment(new BlankFragment());
+                openNewFragment(new InPageScrollView());
             }
         });
 
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         testNewView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openNewFragment(new InPageScrollWithRelativeLayout());
+                openNewFragment(new InPageScrollWithLayout());
             }
         });
     }

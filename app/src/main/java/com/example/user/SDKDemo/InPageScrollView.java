@@ -21,14 +21,14 @@ import com.yalantis.phoenix.PullToRefreshView;
 /**
  * Created by Seyfullah Semen
  */
-public class BlankFragment extends Fragment {
+public class InPageScrollView extends Fragment {
     private WebView webView;
     private VMGBase frag;
     private NestedScrollView scroll;
     private RelativeLayout rela;
     private PullToRefreshView refreshScrollview;
 
-    public BlankFragment() {
+    public InPageScrollView() {
     }
 
     /**
@@ -43,7 +43,7 @@ public class BlankFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_blank, container, false);
+        final View v = inflater.inflate(R.layout.in_page_scrollview, container, false);
         scroll = v.findViewById(R.id.scroll);
         rela = v.findViewById(R.id.rela);
         webView = v.findViewById(R.id.webView);
@@ -69,7 +69,7 @@ public class BlankFragment extends Fragment {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 //frag.VMGScrollEvent(scrollY, scrollX, rela);
-                frag.VMGScrollEvent(scroll,webView);
+                frag.VMGScrollEvent(scroll, webView);
             }
         });
 

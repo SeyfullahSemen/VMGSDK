@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context="com.example.user.SDKDemo.BlankFragment">
+    tools:context="com.example.user.SDKDemo.InPageScrollView">
 
 <com.yalantis.phoenix.PullToRefreshView
     android:id="@+id/refresScrollview"
