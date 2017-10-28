@@ -63,7 +63,8 @@ vmgBase = new VMGBase(getActivity, ViewGroup, <placement_id>);
 ```
 ### 4. Inside a scrollView
 
-Inside scrollviews we need to get informed of the scroll sate of the view. By doing so, the SDK will control the ad view expansion and playback state. To do this, call the `VMGScrollEvent` method on the fragment with the scroll position and root layout as arguments. 
+Inside scrollviews we need to get informed of the scroll sate of the view. By doing so, the SDK will control the ad view expansion and playback state. To do this, call the `VMGScrollEvent` 
+method on the fragment with the `NestedScrollView` and the `WebView` or the `ViewGroup` as arguments. 
 
 
 ```java
@@ -87,7 +88,6 @@ Inside scrollviews we need to get informed of the scroll sate of the view. By do
         return view;
 	}
 ```
-As a parameter you need to give it a `NestedScrollView` and a `View` where the will be loaded in.
 
 ### 5. Full example
 We will show you a full example of how it is done. First we start with the line of code we need to add in the `MainActivity`
