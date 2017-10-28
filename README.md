@@ -32,7 +32,7 @@ dependencies {
     compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.3'
 }
 ```
-There is no need to add special permissions in your `AndroidManifest.XML`, this will be done by our library.
+There is no need to add internet permissions in your `AndroidManifest.XML`, this will be done by our library.
  
 ### 2. Initialise SDK with config
 
@@ -59,7 +59,7 @@ vmgBase = new VMGBase(getActivity(), webView, <placement_id>);
 ```
 Or you can load the ad inside a `ViewGroup`. than add the following line of code
 ```java
-    vmgBas = new VMGBase(getActivity, ViewGroup, <placement_id>);
+    vmgBase = new VMGBase(getActivity, ViewGroup, <placement_id>);
 ```
 ### 4. Inside a scrollView
 
