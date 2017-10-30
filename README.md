@@ -59,7 +59,7 @@ mVmgBase = new VMGBase(getActivity(), webView, <placement_id>);
 ```
 Or you can load the ad inside a `ViewGroup`. than add the following line of code
 ```java
-mVmgBase = new VMGBase(getActivity, ViewGroup, <placement_id>);
+mVmgBase = new VMGBase(getActivity(), ViewGroup, <placement_id>);
 ```
 ### 4. Inside a scrollView
 
