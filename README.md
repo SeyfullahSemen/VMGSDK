@@ -29,10 +29,10 @@ After this step you can add our gradle dependency inside your `Build.gradle` fil
 ```java
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.2'
+    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.3'
 }
 ```
-There is no need to add special permissions in your `AndroidManifest.XML`, this will be done by our library.
+There is no need to add internet permissions in your `AndroidManifest.XML`, this will be done by our library.
  
 ### 2. Initialise SDK with config
 
@@ -46,21 +46,25 @@ This will make sure that the SDK configuration is loaded and available.
 
 ### 3. Add a fragment
 
-First add a webview to your fragment layout file and give it the size properties that you want it to have. Next create a new private variable for the of the `VMGBase` class
+First add a `WebView` or a `ViewGroup` to your fragment layout file and give it the size properties that you want it to have. Next create a new private variable for the of the `VMGBase` class
 
 ```java
-private VMGBase vmgBase;
+private VMGBase mVmgBase;
 ```
 
 After that, inside the `onCreate()` or `onViewCreated()` initialize the fragment with a `placement_id`.
 
 ```java
-vmgBase = new VMGBase(getActivity(), webView, <placement_id>);
+mVmgBase = new VMGBase(getActivity(), webView, <placement_id>);
 ```
-
+Or you can load the ad inside a `ViewGroup`. than add the following line of code
+```java
+mVmgBase = new VMGBase(getActivity(), ViewGroup, <placement_id>);
+```
 ### 4. Inside a scrollView
 
-Inside scrollviews we need to get informed of the scroll sate of the view. By doing so, the SDK will control the ad view expansion and playback state. To do this, call the `VMGScrollEvent` method on the fragment with the scroll position and root layout as arguments. 
+Inside scrollviews we need to get informed of the scroll sate of the view. By doing so, the SDK will control the ad view expansion and playback state. To do this, call the `VMGScrollEvent` 
+method on the fragment with the `NestedScrollView` and the `WebView` or the `ViewGroup` as arguments. 
 
 
 ```java
@@ -68,36 +72,21 @@ Inside scrollviews we need to get informed of the scroll sate of the view. By do
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_example, container, false);
         
-        nestedScrollView = view.findViewById(R.id.scrollview);
-        rootLayout = view.findViewById(R.id.rootLayout);
-        webView = view.findViewById(R.id.webView);
+        mNestedScrollView = view.findViewById(R.id.scrollview);
+        mWebView = view.findViewById(R.id.webView);
         
-        vmgBase = new VMGBase(getActivity(), webView, <placement_id>);
+        mVmgBase = new VMGBase(getActivity(), webView, <placement_id>);
         
-        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                vmgBase.VMGScrollEvent(scrollY, scrollX, rootLayout);
+                vmgBase.VMGScrollEvent(mNestedScrollView,mWebView);
             }
         });
 
 
         return view;
 	}
-```
-
-
-In this case the `rootLayout` is the layout you use as the parent in your `layout XML file`, e.g.:
-```java
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootLayout" 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    tools:context="com.example.SDKDemo.ScrollPage">
-
 ```
 
 ### 5. Full example
@@ -120,10 +109,9 @@ We added the line of code in the **MainActivity** now we need to add some code i
 
 ```java
     public class YourFragment extends Fragment {
-    private WebView webView;
-    private VMGBase vmgBase;
-    private NestedScrollView scrollView;
-    private RelativeLayout rootLayout;
+    private WebView mWebView;
+    private VMGBase mVmgBase;
+    private NestedScrollView mScrollView;
    
      public YourFragment() {
     }
@@ -134,18 +122,17 @@ We added the line of code in the **MainActivity** now we need to add some code i
                              
         final View view = inflater.inflate(R.layout.fragment_your, container, false);
         
-        scrollView = view.findViewById(R.id.scrollView);
-        rootLayout = view.findViewById(R.id.rootLayout);
-        webView = view.findViewById(R.id.webView);
+        mScrollView = view.findViewById(R.id.scrollView);
+        mWebView = view.findViewById(R.id.webView);
         
-        vmgBase = new VMGBase(getActivity(), webView, <placement_id>);
+        mVmgBase = new VMGBase(getActivity(), webView, <placement_id>);
 
         
-        scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
             
-                vmgBase.VMGScrollEvent(scrollY, scrollX, rootLayout);
+                vmgBase.VMGScrollEvent(mScrollView,mWebView);
             }
         });
 
@@ -153,6 +140,55 @@ We added the line of code in the **MainActivity** now we need to add some code i
         return view;
     }
 }
+
+```
+### 5.1 Full Example with layout
+The first example was about, how you can load an ad with the help of a webview, but you can also load an ad inside a `ViewGroup`.
+
+```java
+    public class MainActivity extends AppCompatActivity {
+    
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        VMGConfig.loadConfig(getApplicationContext(), <app_id>);
+ }
+
+```
+
+```java
+    public class InPageScrollWithLayout extends Fragment {
+    private ConstraintLayout mConstraint;
+    private NestedScrollView mNestedScrollView;
+    private VMGBase mVmgBase;
+
+    public InPageScrollWithLayout() {
+
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        final View view = inflater.inflate(R.layout.in_page_scroll_with_layout, container, false);
+        mConstraint = view.findViewById(R.id.constraint);
+       mNestedScrollView= view.findViewById(R.id.nestedScrollView);
+
+        mVmgBase = new VMGBase(getActivity(), constraint, <placement_id>);
+        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                mVmgBase.VMGScrollEvent(mNestedScrollView, mConstraint);
+            }
+        });
+
+        return view;
+    }
 
 ```
 As you can see it is just a little bit of code that you need to include. We hope these examples have helped you to add the technology into your app.
