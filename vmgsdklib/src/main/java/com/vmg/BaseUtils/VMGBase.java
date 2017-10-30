@@ -41,7 +41,6 @@ import java.util.HashMap;
 @SuppressLint("ViewConstructor")
 public class VMGBase extends RelativeLayout {
 
-    private static final String TAG = "VMGBaseFragment";
     private boolean isViewable;
     private boolean isClosing;
     private final static int LOADING = 0;
@@ -51,7 +50,7 @@ public class VMGBase extends RelativeLayout {
     private final static int HIDDEN = 4;
     private VMGResizeProperties resizeProperties;
     private ViewEvents listener;
-    private VMGWebviewClient vmgClient;
+    private VMGWebviewClient vmgClient = new VMGWebviewClient();
     private RelativeLayout resizedView;
     private DisplayMetrics displayMetrics;
     private Handler handler;
@@ -80,7 +79,6 @@ public class VMGBase extends RelativeLayout {
         displayMetrics = new DisplayMetrics();
 
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        vmgClient = new VMGWebviewClient();
         observeOrientation();
         startVMG(placementId);
         handler = new Handler(Looper.getMainLooper());
@@ -99,7 +97,6 @@ public class VMGBase extends RelativeLayout {
 
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         viewGroup.addView(webView);
-        vmgClient = new VMGWebviewClient();
         observeOrientation();
         startVMG(placementId);
 
@@ -115,9 +112,8 @@ public class VMGBase extends RelativeLayout {
     @SuppressLint("NewApi")
     private double getAdWidth() {
         int metrics = context.getResources().getDisplayMetrics().densityDpi;
-        double adWidth = webView.getMeasuredWidth() * DisplayMetrics.DENSITY_DEFAULT / metrics;
 
-        return adWidth;
+        return (double) (webView.getMeasuredWidth() * DisplayMetrics.DENSITY_DEFAULT / metrics);
     }
 
 
@@ -151,15 +147,11 @@ public class VMGBase extends RelativeLayout {
 
         double relativeScrollPosition = scrollView.getHeight() + scrollView.getScrollY();
         double scrollYPos = scrollView.getScrollY();
-        final double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("topOffset");
-        final double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific("bottomOffset");
+        final double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific(8, "topOffset");
+        final double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific(9, "bottomOffset");
 
-        isViewable = true;
-
-        if (scrollYPos - view.getBottom() + resizeProperties.height > resizeProperties.height * topOffset
-                || relativeScrollPosition - view.getTop() < resizeProperties.height * bottomOffset) {
-            isViewable = false;
-        }
+        isViewable = !(scrollYPos - view.getBottom() + resizeProperties.height > resizeProperties.height * topOffset
+                || relativeScrollPosition - view.getTop() < resizeProperties.height * bottomOffset);
 
         useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
         useJavascript("mraid.isViewable();");
@@ -174,7 +166,7 @@ public class VMGBase extends RelativeLayout {
     private void startVMG(int placementId) {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        WebView.setWebContentsDebuggingEnabled(true);
+        WebView.setWebContentsDebuggingEnabled(false);
         webView.setWebViewClient(vmgClient);
         webView.loadUrl(VMGUrlBuilder.getPlacementUrl(placementId));
 
@@ -432,18 +424,6 @@ public class VMGBase extends RelativeLayout {
                 setMaxSize();
                 fireReadyChangeEvent();
                 fireViewableChangeEvent();
-            }
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.startsWith("mraid://")) {
-                parseUrl(url);
-                return true;
-            } else {
-                openUrl(url);
-                return true;
             }
         }
 
