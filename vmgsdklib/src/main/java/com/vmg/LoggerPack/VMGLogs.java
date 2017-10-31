@@ -72,28 +72,5 @@ public class VMGLogs {
         }
 
 
-        public static int getLevel(int id) {
-            VMGLogLevels level = null;
-            switch (id) {
-                case 1:
-                    level = VMGFatal;
-                    break;
-                case 2:
-                    level = VMGVerbose;
-                    break;
-                case 3:
-                    level = VMGInformation;
-                    break;
-                case 4:
-                    level = VMGDebug;
-                    break;
-                case 5:
-                    level = VMGWarning;
-                    break;
-                default:
-                    break;
-            }
-            return id;
-        }
     }
 }

@@ -4,7 +4,6 @@ package com.vmg.MobileInfo;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.text.format.Formatter;
@@ -23,8 +22,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public final class UserInfoMobile {
-    @SuppressLint("StaticFieldLeak")
-    private static Context context;
+    private Context context;
     private static final String TAG = "UserInfoMobile";
 
     /**
@@ -39,7 +37,7 @@ public final class UserInfoMobile {
      *
      * @return the mobile ip address of the user
      */
-    private static String getMobileIpAddress() {
+    private String getMobileIpAddress() {
         String wifiPermission = "android.permission.ACCESS_NETWORK_STATE";
         int wifi = context.checkCallingOrSelfPermission(wifiPermission);
         if (wifi == PackageManager.PERMISSION_GRANTED) {
@@ -69,7 +67,7 @@ public final class UserInfoMobile {
      */
     @SuppressLint("WifiManagerPotentialLeak")
     @SuppressWarnings("deprecation")
-    private static String getWifiIpAddress() {
+    private String getWifiIpAddress() {
         String wifiPermission = "android.permission.ACCESS_NETWORK_STATE";
         int wifi = context.checkCallingOrSelfPermission(wifiPermission);
         if (wifi == PackageManager.PERMISSION_GRANTED) {
@@ -82,24 +80,6 @@ public final class UserInfoMobile {
         }
     }
 
-    /**
-     * @return the location of the user
-     * LocationLatLngTextView
-     */
-    @SuppressLint("NewApi")
-    private static String getLocationOfUser() {
-        String accesFineLocation = "android.permission.ACCESS_FINE_LOCATION";
-        String accesCoarseLocation = "android.permission.ACCESS_COARSE_LOCATION";
-        int fineLocation = context.checkCallingOrSelfPermission(accesFineLocation);
-        int coarseLocation = context.checkCallingOrSelfPermission(accesCoarseLocation);
-        if (fineLocation == PackageManager.PERMISSION_GRANTED && coarseLocation == PackageManager.PERMISSION_GRANTED) {
-            LocationManager lm = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
-            return "" + lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } else {
-            return "NOTHING " + fineLocation + " " + coarseLocation;
-        }
-
-    }
 
     /**
      * @return the build version of the mobile used
@@ -124,7 +104,7 @@ public final class UserInfoMobile {
     /**
      * @return our library name
      */
-    private static String getPackageName() {
+    private String getPackageName() {
         return context.getPackageName();
     }
 
@@ -180,7 +160,7 @@ public final class UserInfoMobile {
     /**
      * @return the height and width of device
      */
-    private static int getDeviceWidth() {
+    private int getDeviceWidth() {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return displayMetrics.widthPixels;
     }
@@ -188,7 +168,7 @@ public final class UserInfoMobile {
     /**
      * @return the height of the device
      */
-    private static int getDeviceHeight() {
+    private int getDeviceHeight() {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return displayMetrics.heightPixels;
     }
@@ -196,11 +176,10 @@ public final class UserInfoMobile {
     /**
      * @return the information of the mobile device of the user
      */
-    public static String mobileInfo() {
+    public String mobileInfo() {
         return " \nandroid mobile version:  "
                 + getAndroidVersion() + "\n SDK version:  " + getOurSdkVersion() + "\n"
                 + (getWifiIpAddress().equals("0.0.0.0") ? " Mobile Ip: " + getMobileIpAddress() : " Wifi Ip: " + getWifiIpAddress())
-                + "\n" + " Location:  " + getLocationOfUser()
                 + "\n" + " App name: " + getPackageName()
                 + "\n" + " brand of device: " + getBrand()
                 + "\n" + " Hardware Info: " + getHardware()

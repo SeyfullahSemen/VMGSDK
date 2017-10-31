@@ -68,7 +68,6 @@ public class InPageScrollView extends Fragment {
         scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                //frag.VMGScrollEvent(scrollY, scrollX, rela);
                 frag.VMGScrollEvent(scroll, webView);
             }
         });

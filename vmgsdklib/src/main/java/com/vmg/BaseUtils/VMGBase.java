@@ -78,7 +78,7 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
 
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+      ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         observeOrientation();
         startVMG(placementId);
         handler = new Handler(Looper.getMainLooper());
@@ -95,7 +95,7 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
 
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+   ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         viewGroup.addView(webView);
         observeOrientation();
         startVMG(placementId);
@@ -149,9 +149,11 @@ public class VMGBase extends RelativeLayout {
         double scrollYPos = scrollView.getScrollY();
         final double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific(8, "topOffset");
         final double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific(9, "bottomOffset");
-
-        isViewable = !(scrollYPos - view.getBottom() + resizeProperties.height > resizeProperties.height * topOffset
-                || relativeScrollPosition - view.getTop() < resizeProperties.height * bottomOffset);
+        isViewable = true;
+        if(scrollYPos - view.getBottom() + resizeProperties.height > resizeProperties.height * topOffset
+                || relativeScrollPosition - view.getTop() < resizeProperties.height * bottomOffset){
+            isViewable = false;
+        }
 
         useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
         useJavascript("mraid.isViewable();");
@@ -166,7 +168,6 @@ public class VMGBase extends RelativeLayout {
     private void startVMG(int placementId) {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        WebView.setWebContentsDebuggingEnabled(false);
         webView.setWebViewClient(vmgClient);
         webView.loadUrl(VMGUrlBuilder.getPlacementUrl(placementId));
 
@@ -426,7 +427,23 @@ public class VMGBase extends RelativeLayout {
                 fireViewableChangeEvent();
             }
         }
-
+        /*
+            this is important to work properly on older SDK versions
+            otherwise it won't work on older devices
+         */
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url.startsWith("mraid://")) {
+                parseUrl(url);
+                return true;
+            } else {
+                openUrl(url);
+                return true;
+            }
+        }
+        /*
+            this one is for newer mobile phones
+         */
         @TargetApi(Build.VERSION_CODES.N)
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
