@@ -9,6 +9,8 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -78,9 +80,13 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
 
-      ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         observeOrientation();
-        startVMG(placementId);
+        if (isNetworkAvailable()) {
+            startVMG(placementId);
+        } else {
+            VMGLogs.Information("No internet found ");
+        }
         handler = new Handler(Looper.getMainLooper());
     }
 
@@ -95,14 +101,29 @@ public class VMGBase extends RelativeLayout {
         resizeProperties = new VMGResizeProperties();
         displayMetrics = new DisplayMetrics();
 
-   ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         viewGroup.addView(webView);
         observeOrientation();
-        startVMG(placementId);
+        if (isNetworkAvailable()) {
+            startVMG(placementId);
+        } else {
+            VMGLogs.Information(" No internet found ");
+        }
 
         handler = new Handler(Looper.getMainLooper());
     }
 
+    /**
+     * check the internet connection of the users phone
+     *
+     * @return true or false
+     */
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
     /**
      * calculates and sets the ad width
@@ -144,17 +165,17 @@ public class VMGBase extends RelativeLayout {
 
 
     public void VMGScrollEvent(NestedScrollView scrollView, View view) {
+        if (isNetworkAvailable()) {
+            double relativeScrollPosition = scrollView.getHeight() + scrollView.getScrollY();
+            double scrollYPos = scrollView.getScrollY();
+            final double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific(8, "topOffset");
+            final double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific(9, "bottomOffset");
 
-        double relativeScrollPosition = scrollView.getHeight() + scrollView.getScrollY();
-        double scrollYPos = scrollView.getScrollY();
-        final double topOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific(8, "topOffset");
-        final double bottomOffset = (double) VMGConfig.getVMGInstance(context).retrieveSpecific(9, "bottomOffset");
-        isViewable = true;
-        if(scrollYPos - view.getBottom() + resizeProperties.height > resizeProperties.height * topOffset
-                || relativeScrollPosition - view.getTop() < resizeProperties.height * bottomOffset){
-            isViewable = false;
+            isViewable = !(scrollYPos - view.getBottom() + resizeProperties.height > resizeProperties.height * topOffset
+                    || relativeScrollPosition - view.getTop() < resizeProperties.height * bottomOffset);
+        } else {
+            VMGLogs.Information("No internet found");
         }
-
         useJavascript("mraid.fireViewableChangeEvent(" + isViewable + ");");
         useJavascript("mraid.isViewable();");
     }
@@ -169,6 +190,11 @@ public class VMGBase extends RelativeLayout {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         webView.setWebViewClient(vmgClient);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else {
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
         webView.loadUrl(VMGUrlBuilder.getPlacementUrl(placementId));
 
     }
@@ -427,6 +453,7 @@ public class VMGBase extends RelativeLayout {
                 fireViewableChangeEvent();
             }
         }
+
         /*
             this is important to work properly on older SDK versions
             otherwise it won't work on older devices
@@ -441,6 +468,7 @@ public class VMGBase extends RelativeLayout {
                 return true;
             }
         }
+
         /*
             this one is for newer mobile phones
          */
