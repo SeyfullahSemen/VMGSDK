@@ -20,7 +20,7 @@ import org.json.JSONObject;
 public class VMGConfig {
 
     private static final String TAG = "VMGConfig";
-    private static volatile VMGConfig VMGInstance;
+    private static final ThreadLocal<VMGConfig> VMGInstance = new ThreadLocal<>();
     private static SparseArray<Object> JSONVals = new SparseArray<>();
     private Context context;
     private RequestQueue requestQueue;
@@ -45,19 +45,19 @@ public class VMGConfig {
      * @return VMGInstance
      */
     public static VMGConfig getVMGInstance(Context context) {
-        if (VMGInstance == null) {
+        if (VMGInstance.get() == null) {
             try {
                 Class ConfigClass = VMGConfig.class;
                 synchronized (ConfigClass) {
-                    if (VMGInstance == null) {
-                        VMGInstance = new VMGConfig(context);
+                    if (VMGInstance.get() == null) {
+                        VMGInstance.set(new VMGConfig(context));
                     }
                 }
             } catch (Exception ex) {
                 VMGLogs.fatal("Something went wrong in VMGConfig method getVMGInstance :   " + ex.getMessage());
             }
         }
-        return VMGInstance;
+        return VMGInstance.get();
     }
 
     private RequestQueue getRequestQueue() {
@@ -77,13 +77,13 @@ public class VMGConfig {
      * @param key the key that needs to get retrieved
      * @return the value that is asked for
      */
-    public Object retrieveSpecific(int key,String value) {
+    public Object retrieveSpecific(int key, String value) {
         Object val = null;
         try {
             if (JSONVals.size() == 0) {
                 return 0;
             } else {
-                val = JSONVals.get(key,value);
+                val = JSONVals.get(key, value);
             }
         } catch (Exception ex) {
             VMGLogs.fatal("something went wrong in retrieving the a value Method retrieveSpecific:  " + ex.getMessage());

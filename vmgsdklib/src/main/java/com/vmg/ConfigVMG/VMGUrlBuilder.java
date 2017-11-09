@@ -10,7 +10,7 @@ package com.vmg.ConfigVMG;
 /*
  * Created by Seyfullah Semen on 21-8-2017.
  */
-public class VMGUrlBuilder {
+public final class VMGUrlBuilder {
     private  static String baseUrl = "https://vmg.host";
     static String getConfigUrl(int appId) {
         return "" + baseUrl + "/adServ/config/id/\\" + appId + "";
