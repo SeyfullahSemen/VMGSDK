@@ -17,7 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class VMGConfig {
+public final class VMGConfig {
 
     private static final String TAG = "VMGConfig";
     private static final ThreadLocal<VMGConfig> VMGInstance = new ThreadLocal<>();
