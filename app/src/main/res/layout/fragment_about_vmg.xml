@@ -27,7 +27,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.02"
-                android:background="@color/cast_expanded_controller_ad_label_background_color"
                 android:elevation="16dp"
                 app:srcCompat="@mipmap/ic_launcher_logo" />
 
