@@ -34,6 +34,7 @@ import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.ConfigVMG.VMGUrlBuilder;
 import com.vmg.Events.ViewEvents;
 import com.vmg.LoggerPack.VMGLogs;
+import com.vmg.MobileInfo.UserInfoMobile;
 import com.vmg.VMGParser.ParseMraidCommands;
 
 import java.net.URLDecoder;
@@ -88,6 +89,7 @@ public class VMGBase extends RelativeLayout {
             VMGLogs.Information("No internet found ");
         }
         handler = new Handler(Looper.getMainLooper());
+
     }
 
     @SuppressLint("NewApi")

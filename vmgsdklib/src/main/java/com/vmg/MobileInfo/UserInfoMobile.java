@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,8 +15,11 @@ import android.util.Log;
 import com.vmg.LoggerPack.VMGLogs;
 import com.vmg.vmgsdklib.BuildConfig;
 
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
@@ -174,6 +179,84 @@ public final class UserInfoMobile {
     }
 
     /**
+     * @return carrier name of the phone
+     */
+    private String getCarrier() {
+        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return manager.getNetworkOperatorName();
+    }
+
+    /**
+     * @return the device id converted to MD5
+     */
+    private String getDeviceHashInMD5() {
+        String android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return md5(android_id).toUpperCase();
+    }
+
+    /**
+     * @return the device id converted to SHA1
+     */
+    private String getDeviceHashInSHA1() {
+        String android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return SHA1(android_id).toUpperCase();
+    }
+
+
+    /**
+     * @param s
+     * @return the md5 converted String
+     */
+    private String md5(String s) {
+        try {
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest)
+                hexString.append(Integer.toHexString(0xFF & aMessageDigest));
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * @param s
+     * @return the SHA1 converted String
+     */
+    private String SHA1(String s) {
+        String sha1 = "";
+        try {
+            MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+            crypt.reset();
+            crypt.update(s.getBytes("UTF-8"));
+            sha1 = byteToHex(crypt.digest());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return sha1;
+    }
+
+    /**
+     * @param hash
+     * @return the converted byte array
+     */
+    private String byteToHex(final byte[] hash) {
+        java.util.Formatter formatter = new java.util.Formatter();
+        for (byte b : hash) {
+            formatter.format("%02x", b);
+        }
+        String result = formatter.toString();
+        formatter.close();
+        return result;
+    }
+
+    /**
      * @return the information of the mobile device of the user
      */
     public String mobileInfo() {
@@ -189,7 +272,11 @@ public final class UserInfoMobile {
                 + "\n" + " Time zone of device: " + getTimeZone()
                 + "\n" + "  Time: " + getTime()
                 + "\n" + " Device  width : " + getDeviceWidth()
-                + "\n" + "  Device height : " + getDeviceHeight();
+                + "\n" + "  Device height : " + getDeviceHeight()
+                + "\n" + " MD5 hashed device id " + getDeviceHashInMD5()
+                + "\n" + " SHA1 hashed device id " + getDeviceHashInSHA1()
+                + "\n" + " Carrier " + getCarrier();
+
     }
 
 }

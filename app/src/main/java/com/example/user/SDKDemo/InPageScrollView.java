@@ -75,4 +75,5 @@ public class InPageScrollView extends Fragment {
 
         return v; // return the view
     }
+
 }
