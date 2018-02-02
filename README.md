@@ -19,7 +19,7 @@ Once you have added this dependency, you can use the methods of the classes insi
 ```java
 repositories {
 	maven {
-        url "http://dl.bintray.com/videomediagroup/VMG"
+        url "https://dl.bintray.com/videomediagroupsdk/vmgsdk"
     }
 }
 ```
@@ -29,7 +29,7 @@ After this step you can add our gradle dependency inside your `Build.gradle` fil
 ```java
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.3'
+    compile 'com.VMG.Vmgsdklibrary:vmgsdklib:1.0.4'
 }
 ```
 There is no need to add internet permissions in your `AndroidManifest.XML`, this will be done by our library.
