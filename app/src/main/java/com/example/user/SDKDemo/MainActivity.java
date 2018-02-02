@@ -27,6 +27,7 @@ import com.vmg.ConfigVMG.VMGConfig;
 import com.vmg.LoggerPack.VMGLogs;
 
 public class MainActivity extends AppCompatActivity {
+    //TODO: See If you can make it more efficient and faster than it already is
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar toolbar;
