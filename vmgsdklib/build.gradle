@@ -22,6 +22,7 @@ android {
 
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.android.support:support-v4:27.1.1'
 
@@ -42,7 +43,7 @@ ext {
     siteUrl = 'https://github.com/username/sample-library'
     gitUrl = 'https://github.com/username/sample-library.git'
 
-    libraryVersion = '1.0.4'
+    libraryVersion = '1.0.5'
 
     developerId = 'videomediagroupsdk'
     developerName = 'seyfullah'
